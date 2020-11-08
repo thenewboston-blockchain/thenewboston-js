@@ -1,13 +1,13 @@
-const ServerNode = require("../server-node");
+import { ServerNode } from "./server-node";
 
-class Bank extends ServerNode {
-  constructor(url, options = {}) {
+export class Bank extends ServerNode {
+  constructor(url: string, options = {}) {
     super(url, options);
   }
 
   /**
    * Gets the accounts for the given bank in a paginated format.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getAccounts(options = {}) {
     return await this.getPaginatedData("/accounts", options);
@@ -17,7 +17,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets the transactions for the given bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getTransactions(options = {}) {
     return await this.getPaginatedData("/bank_transactions", options);
@@ -25,7 +25,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets the connected banks for the given bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getBanks(options = {}) {
     return await this.getPaginatedData("/banks", options);
@@ -35,7 +35,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets the blocks for the given bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getBlocks(options = {}) {
     return await this.getPaginatedData("/blocks", options);
@@ -52,7 +52,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets the confirmation blocks for the given bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getConfirmationBlocks(options = {}) {
     return await this.getPaginatedData("/confirmation_blocks", options);
@@ -62,7 +62,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets the invalid blocks for the given bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getInvalidBlocks(options = {}) {
     return await this.getPaginatedData("/invalid_blocks", options);
@@ -74,7 +74,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets the validator confirmation services for the given bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getValidatorConfirmationServices(options = {}) {
     return await this.getPaginatedData(
@@ -89,7 +89,7 @@ class Bank extends ServerNode {
 
   /**
    * Gets all of the validators for the current bank.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param options The optional object for the pagination options.
    */
   async getValidators(options = {}) {
     return await this.getPaginatedData("/validators", options);
@@ -97,5 +97,3 @@ class Bank extends ServerNode {
 
   // TODO: PATCH /validators/<node_identifier>
 }
-
-module.exports = Bank;

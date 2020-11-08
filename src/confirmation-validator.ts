@@ -1,7 +1,7 @@
-const Validator = require("../validator");
+import { Validator } from "./validator";
 
-class ConfirmationValidator extends Validator {
-  constructor(url, options = {}) {
+export class ConfirmationValidator extends Validator {
+  constructor(url: string, options = {}) {
     super(url, options);
   }
 
@@ -17,5 +17,3 @@ class ConfirmationValidator extends Validator {
 
   // TODO: POST /upgrade_request
 }
-
-module.exports = ConfirmationValidator;

@@ -1,7 +1,7 @@
-const ServerNode = require("../server-node");
+import { ServerNode } from "./server-node";
 
-class Validator extends ServerNode {
-  constructor(url, options = {}) {
+export class Validator extends ServerNode {
+  constructor(url: string, options = {}) {
     super(url, options);
   }
 
@@ -9,11 +9,11 @@ class Validator extends ServerNode {
     return await this.getPaginatedData("/accounts", options);
   }
 
-  async getAccountBalance(id) {
+  async getAccountBalance(id: string) {
     return await this.getData(`/accounts/${id}/balance`);
   }
 
-  async getAccountBalanceLock(id) {
+  async getAccountBalanceLock(id: string) {
     return await this.getData(`/accounts/${id}/balance_lock`);
   }
 
@@ -25,11 +25,11 @@ class Validator extends ServerNode {
     return await this.getData("/config");
   }
 
-  async getQueuedConfirmationBlock(id) {
+  async getQueuedConfirmationBlock(id: string) {
     return await this.getData(`/confirmation_blocks/${id}/queued`);
   }
 
-  async getValidConfirmationBlock(id) {
+  async getValidConfirmationBlock(id: string) {
     return await this.getData(`/confirmation_blocks/${id}/valid`);
   }
 
@@ -37,5 +37,3 @@ class Validator extends ServerNode {
     return await this.getPaginatedData(`/validators`, options);
   }
 }
-
-module.exports = Validator;

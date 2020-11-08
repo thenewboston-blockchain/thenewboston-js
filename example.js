@@ -1,10 +1,14 @@
-const { Bank, PrimaryValidator, ConfirmationValidator } = require("./");
+const {
+  Bank,
+  PrimaryValidator,
+  ConfirmationValidator,
+} = require("./dist/thenewboston");
 
 async function main() {
   {
     const bank = new Bank("http://143.110.137.54");
     // All paginated endpoints can have a `limit` and `offset` key/value pair in the optional object
-    await bank.getAccounts({ limit: 1 });
+    await bank.getAccounts({ limit: "asdf" });
     await bank.getTransactions();
     await bank.getBanks();
     await bank.getBlocks({ offset: 32 });
