@@ -1,7 +1,8 @@
 import { ServerNode } from "./server-node";
+import type { ServerNodeOptions, PaginationOptions } from "./models";
 
 export class Bank extends ServerNode {
-  constructor(url: string, options = {}) {
+  constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
     super(url, options);
   }
 
@@ -9,7 +10,7 @@ export class Bank extends ServerNode {
    * Gets the accounts for the given bank in a paginated format.
    * @param options The optional object for the pagination options.
    */
-  async getAccounts(options = {}) {
+  async getAccounts(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/accounts", options);
   }
 
@@ -19,7 +20,7 @@ export class Bank extends ServerNode {
    * Gets the transactions for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getTransactions(options = {}) {
+  async getTransactions(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/bank_transactions", options);
   }
 
@@ -27,7 +28,7 @@ export class Bank extends ServerNode {
    * Gets the connected banks for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getBanks(options = {}) {
+  async getBanks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/banks", options);
   }
 
@@ -37,7 +38,7 @@ export class Bank extends ServerNode {
    * Gets the blocks for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getBlocks(options = {}) {
+  async getBlocks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/blocks", options);
   }
 
@@ -54,7 +55,7 @@ export class Bank extends ServerNode {
    * Gets the confirmation blocks for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getConfirmationBlocks(options = {}) {
+  async getConfirmationBlocks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/confirmation_blocks", options);
   }
 
@@ -64,7 +65,7 @@ export class Bank extends ServerNode {
    * Gets the invalid blocks for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getInvalidBlocks(options = {}) {
+  async getInvalidBlocks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/invalid_blocks", options);
   }
 
@@ -76,7 +77,9 @@ export class Bank extends ServerNode {
    * Gets the validator confirmation services for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getValidatorConfirmationServices(options = {}) {
+  async getValidatorConfirmationServices(
+    options: Partial<PaginationOptions> = {}
+  ) {
     return await this.getPaginatedData(
       "/validator_confirmation_services",
       options
@@ -91,7 +94,7 @@ export class Bank extends ServerNode {
    * Gets all of the validators for the current bank.
    * @param options The optional object for the pagination options.
    */
-  async getValidators(options = {}) {
+  async getValidators(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/validators", options);
   }
 

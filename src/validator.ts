@@ -1,11 +1,12 @@
 import { ServerNode } from "./server-node";
+import type { ServerNodeOptions, PaginationOptions } from "./models";
 
 export class Validator extends ServerNode {
-  constructor(url: string, options = {}) {
+  constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
     super(url, options);
   }
 
-  async getAccounts(options = {}) {
+  async getAccounts(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/accounts", options);
   }
 
@@ -17,7 +18,7 @@ export class Validator extends ServerNode {
     return await this.getData(`/accounts/${id}/balance_lock`);
   }
 
-  async getBanks(options = {}) {
+  async getBanks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/banks", options);
   }
 
@@ -33,7 +34,7 @@ export class Validator extends ServerNode {
     return await this.getData(`/confirmation_blocks/${id}/valid`);
   }
 
-  async getValidators(options = {}) {
+  async getValidators(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData(`/validators`, options);
   }
 }

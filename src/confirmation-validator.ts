@@ -1,7 +1,8 @@
 import { Validator } from "./validator";
+import type { ServerNodeOptions } from "./models";
 
 export class ConfirmationValidator extends Validator {
-  constructor(url: string, options = {}) {
+  constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
     super(url, options);
   }
 
