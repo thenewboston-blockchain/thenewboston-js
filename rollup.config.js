@@ -1,4 +1,3 @@
-import babel from "@rollup/plugin-babel";
 import ts from "rollup-plugin-typescript2";
 import replace from "@rollup/plugin-replace";
 
@@ -9,8 +8,7 @@ const PLUGINS = [
     tsconfigOverride: {
       exclude: ["**/*.test.ts"],
       compilerOptions: {
-        // Let babel do it's thing
-        target: "esnext",
+        target: "es5",
         outDir: "./dist",
         rootDir: "./src",
         module: "esnext",
@@ -24,9 +22,6 @@ const PLUGINS = [
       },
       include: ["src"],
     },
-  }),
-  babel({
-    extensions: [".ts", ".js"],
   }),
   replace({
     _VERSION: JSON.stringify(pkg.version),
