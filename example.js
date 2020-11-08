@@ -1,8 +1,4 @@
-const {
-  Bank,
-  PrimaryValidator,
-  ConfirmationValidator,
-} = require("./dist/thenewboston");
+const { Bank, PrimaryValidator, ConfirmationValidator } = require("./");
 
 async function main() {
   {
