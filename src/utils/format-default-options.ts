@@ -1,4 +1,8 @@
-function formatDefaultOptions(options) {
+import { ServerNodeOptions } from "../models";
+
+export function formatDefaultOptions(options: {
+  [key: string]: any;
+}): ServerNodeOptions {
   /*
       Default Options should look like:
       {
@@ -18,5 +22,3 @@ function formatDefaultOptions(options) {
     },
   };
 }
-
-module.exports = formatDefaultOptions;

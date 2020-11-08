@@ -2,16 +2,33 @@
   "name": "thenewboston",
   "version": "1.0.0",
   "description": "JavaScript library for thenewboston.",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
   "author": "",
+  "scripts": {
+    "test": "jest",
+    "clean": "rimraf dist && rimraf types",
+    "build:types": "tsc --declaration --outDir types --emitDeclarationOnly",
+    "build:js": "rollup -c",
+    "build": "npm run clean && npm run build:js && npm run build:types"
+  },
+  "main": "dist/thenewboston.js",
+  "module": "dist/thenewboston.esm.js",
+  "jsnext:main": "dist/thenewboston.esm.js",
+  "types": "types/index.d.ts",
+  "typings": "types/index.d.ts",
   "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
-    "axios": "^0.21.0"
+    "axios": "^0.21.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "@rollup/plugin-replace": "^2.3.4",
+    "jest": "^26.6.3",
+    "rollup": "^2.33.1",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "typescript": "^4.0.5"
   }
 }

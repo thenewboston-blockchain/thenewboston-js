@@ -1,7 +1,8 @@
-const Validator = require("../validator");
+import { Validator } from "./validator";
+import type { ServerNodeOptions } from "./models";
 
-class ConfirmationValidator extends Validator {
-  constructor(url, options = {}) {
+export class ConfirmationValidator extends Validator {
+  constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
     super(url, options);
   }
 
@@ -17,5 +18,3 @@ class ConfirmationValidator extends Validator {
 
   // TODO: POST /upgrade_request
 }
-
-module.exports = ConfirmationValidator;
