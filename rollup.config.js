@@ -42,6 +42,6 @@ export default [
       },
     ],
     plugins: PLUGINS,
-    external: ["axios"],
+    external: ["axios", "tweetnacl"],
   },
 ];
