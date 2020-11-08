@@ -16,7 +16,10 @@ export class ServerNode {
    * @param {string} endpoint
    * @param {object} params
    */
-  async getData(endpoint: string, params = {}) {
+  async getData(
+    endpoint: string,
+    params: { [key: string]: any; [key: number]: any } = {}
+  ) {
     const res = await axios.get(`${this.url}${endpoint}`, {
       params,
     });
