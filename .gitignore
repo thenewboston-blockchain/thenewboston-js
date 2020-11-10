@@ -124,3 +124,6 @@ types
 
 # VS Code
 .vscode/
+
+# Development File
+dev.js
