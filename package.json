@@ -4,9 +4,10 @@
   "description": "JavaScript library for thenewboston.",
   "author": "",
   "scripts": {
-    "test": "jest",
     "clean": "rimraf dist",
-    "build": "npm run clean && rollup -c"
+    "build": "npm run clean && rollup -c",
+    "test:no-build": "jest",
+    "test": "npm run build && npm run test:no-build"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -19,7 +20,6 @@
     "src"
   ],
   "dependencies": {
-    "@types/lodash": "^4.14.165",
     "axios": "^0.21.0",
     "core-js": "^3.7.0",
     "lodash": "^4.17.20",
@@ -29,6 +29,8 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.165",
     "jest": "^26.6.3",
     "rollup": "^2.33.1",
     "rollup-plugin-typescript2": "^0.29.0",

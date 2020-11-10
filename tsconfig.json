@@ -5,6 +5,8 @@
     "lib": ["ESNext", "DOM"],
     "declaration": true,
     "strict": true,
-    "removeComments": false
-  }
+    "removeComments": false,
+    "rootDir": "src"
+  },
+  "include": ["src/"]
 }
