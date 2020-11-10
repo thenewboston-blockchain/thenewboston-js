@@ -1,11 +1,7 @@
 import { ServerNode } from "./server-node";
-import type { ServerNodeOptions, PaginationOptions } from "./models";
+import type { PaginationOptions } from "./models";
 
 export class Validator extends ServerNode {
-  constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
-    super(url, options);
-  }
-
   async getAccounts(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/accounts", options);
   }

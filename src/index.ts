@@ -4,3 +4,4 @@ export { PrimaryValidator } from "./primary-validator";
 export { ServerNode } from "./server-node";
 export { Validator } from "./validator";
 export { createAccount } from "./utils";
+export * from "./models";

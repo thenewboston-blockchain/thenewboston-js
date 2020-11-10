@@ -1,11 +1,7 @@
 import { ServerNode } from "./server-node";
-import type { ServerNodeOptions, PaginationOptions } from "./models";
+import type { PaginationOptions } from "./models";
 
 export class Bank extends ServerNode {
-  constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
-    super(url, options);
-  }
-
   /**
    * Gets the accounts for the given bank in a paginated format.
    * @param options The optional object for the pagination options.

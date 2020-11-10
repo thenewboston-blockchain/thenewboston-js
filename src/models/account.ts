@@ -1,5 +1,6 @@
 export interface Account {
-  accountNumber: string;
-  signingKey: string;
-  balanceLock?: string;
+  publicKey: Uint8Array;
+  signingKey: Uint8Array;
+  publicKeyHex: string;
+  signingKeyHex: string;
 }

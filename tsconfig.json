@@ -1,1 +1,10 @@
-{}
+{
+  "compilerOptions": {
+    // Babel will be used for transpilation for speed
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "declaration": true,
+    "strict": true,
+    "removeComments": false
+  }
+}
