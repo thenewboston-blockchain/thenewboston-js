@@ -9,8 +9,8 @@ export class Account {
   signingKey: Uint8Array;
 
   /**
-   * @param publicKey the account number
    * @param signingKey the account signing key
+   * @param publicKey the account number
    */
   constructor(signingKey?: Uint8Array, publicKey?: Uint8Array) {
     if (signingKey) {
