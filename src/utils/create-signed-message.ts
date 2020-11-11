@@ -1,10 +1,6 @@
 import { createSignature } from "./create-signature";
 
-export function createSignedMessage(
-  message: any,
-  publicKeyHex: string,
-  signingKey: Uint8Array
-) {
+export function createSignedMessage(message: any, publicKeyHex: string, signingKey: Uint8Array) {
   const strMessage = JSON.stringify(message);
   const signedMessage = {
     message,

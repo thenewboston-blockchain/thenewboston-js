@@ -71,13 +71,8 @@ export class Bank extends ServerNode {
    * Gets the validator confirmation services for the given bank.
    * @param options The optional object for the pagination options.
    */
-  async getValidatorConfirmationServices(
-    options: Partial<PaginationOptions> = {}
-  ) {
-    return await this.getPaginatedData(
-      "/validator_confirmation_services",
-      options
-    );
+  async getValidatorConfirmationServices(options: Partial<PaginationOptions> = {}) {
+    return await this.getPaginatedData("/validator_confirmation_services", options);
   }
 
   // TODO: POST /validator_confirmation_services
