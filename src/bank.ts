@@ -65,8 +65,6 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/invalid_blocks", options);
   }
 
-  // TODO: POST /confirmation_blocks
-
   // TODO: POST /connection_requests
 
   /**
