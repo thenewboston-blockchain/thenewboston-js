@@ -6,7 +6,8 @@
     "declaration": true,
     "strict": true,
     "removeComments": false,
-    "rootDir": "src"
+    "rootDir": "./src",
+    "moduleResolution": "Node"
   },
-  "include": ["src/"]
+  "include": ["src/**/*.ts"]
 }
