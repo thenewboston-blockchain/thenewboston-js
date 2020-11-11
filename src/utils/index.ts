@@ -1,6 +1,4 @@
-export { createAccount } from "./create-account";
-export { createBlock } from "./create-block";
-export { createSignature } from "./create-signature";
-export { createSignedMessage } from "./create-signed-message";
+export { createAccountData } from "./create-account-data";
 export { formatDefaultOptions } from "./format-default-options";
 export { formatUrl } from "./format-url";
+export { uint8arrayToHex } from "./uint8array-to-hex";
