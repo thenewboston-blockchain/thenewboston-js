@@ -32,5 +32,5 @@ export default {
       ],
     }),
   ],
-  external: ["axios", "lodash", "tweetnacl"],
+  external: ["axios", "tweetnacl"],
 };
