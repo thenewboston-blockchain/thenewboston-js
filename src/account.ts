@@ -16,7 +16,7 @@ export class Account {
     if (signingKey) {
       // we have the signing key, so we are either going to find out the public key or use it if it is given
       if (typeof signingKey === "string") {
-        // the signing key is a hex -> generate it from the seed
+        // the signing key is a hex -> generate the key pair from the seed
         const keyPair = sign.keyPair.fromSeed(Buffer.from(signingKey, "hex"));
         this.publicKey = keyPair.publicKey;
         this.signingKey = keyPair.secretKey;
@@ -27,8 +27,8 @@ export class Account {
       }
     } else {
       // they don't have anything (we need to make a random account)
-      const { publicKey, signingKey: _signingKey } = createAccountData();
-      this.publicKey = publicKey;
+      const { publicKey: _publicKey, signingKey: _signingKey } = createAccountData();
+      this.publicKey = _publicKey;
       this.signingKey = _signingKey;
     }
   }
