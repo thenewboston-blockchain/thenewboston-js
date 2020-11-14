@@ -3,5 +3,6 @@
  * @param url the url string that must include the protocol (https, http, ect.) of the requests
  */
 export function formatUrl(url: string) {
-  return new URL(url).origin;
+  const { protocol, host } = new URL(url);
+  return `${protocol ?? "http"}//${host}`;
 }
