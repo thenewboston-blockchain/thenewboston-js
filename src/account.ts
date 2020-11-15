@@ -12,17 +12,20 @@ export class Account {
    * @param signingKey the account signing key
    * @param publicKey the account number
    */
-  constructor(signingKey?: Uint8Array | string, publicKey?: Uint8Array) {
+  constructor(signingKey?: Uint8Array | string, publicKey?: Uint8Array | string) {
     if (signingKey) {
       // we have the signing key, so we are either going to find out the public key or use it if it is given
-      if (typeof signingKey === "string") {
+      if (typeof signingKey === "string" && typeof publicKey === "string") {
+        this.publicKey = new Uint8Array(Buffer.from(signingKey, "hex"));
+        this.signingKey = new Uint8Array(Buffer.from(publicKey, "hex"));
+      } else if (typeof signingKey === "string") {
         // the signing key is a hex -> generate the key pair from the seed
         const keyPair = sign.keyPair.fromSeed(new Uint8Array(Buffer.from(signingKey, "hex")));
         this.publicKey = keyPair.publicKey;
         this.signingKey = keyPair.secretKey;
       } else {
         // the signing key is a uint 8 array
-        this.publicKey = publicKey ?? sign.keyPair.fromSecretKey(signingKey).publicKey;
+        this.publicKey = sign.keyPair.fromSecretKey(signingKey).publicKey;
         this.signingKey = signingKey;
       }
     } else {
