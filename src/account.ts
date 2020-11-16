@@ -16,8 +16,8 @@ export class Account {
     if (signingKey) {
       // we have the signing key, so we are either going to find out the public key or use it if it is given
       if (typeof signingKey === "string" && typeof publicKey === "string") {
-        this.publicKey = new Uint8Array(Buffer.from(signingKey, "hex"));
-        this.signingKey = new Uint8Array(Buffer.from(publicKey, "hex"));
+        this.publicKey = new Uint8Array(Buffer.from(publicKey, "hex"));
+        this.signingKey = new Uint8Array(Buffer.from(signingKey, "hex"));
       } else if (typeof signingKey === "string") {
         // the signing key is a hex -> generate the key pair from the seed
         const keyPair = sign.keyPair.fromSeed(new Uint8Array(Buffer.from(signingKey, "hex")));
