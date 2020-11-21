@@ -1,6 +1,7 @@
 import { ServerNode } from "./server-node";
 import type { PaginationOptions } from "./models";
 
+/** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
   /**
    * Gets the accounts for the given bank in a paginated format.
