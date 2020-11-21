@@ -1,6 +1,11 @@
 import { ServerNode } from "./server-node";
 import type { PaginationOptions } from "./models";
 
+/**
+ * Used as a base for all types of validator nodes.
+ *
+ * Note: this class is meant to be extended.
+ */
 export class Validator extends ServerNode {
   /**
    * Gets the account numbers, balances, and balance locks of all connected accounts in a paginated response for the current validator.
