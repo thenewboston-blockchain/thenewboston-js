@@ -13,8 +13,8 @@ export class ServerNode {
 
   /**
    * Gets data for the given endpoint with the given query params.
-   * @param {string} endpoint
-   * @param {object} params
+   * @param endpoint
+   * @param params
    */
   async getData(endpoint: string, params: { [key: string]: any; [key: number]: any } = {}) {
     const res = await axios.get(`${this.url}${endpoint}`, {
@@ -25,8 +25,8 @@ export class ServerNode {
 
   /**
    * Used internally for handling paginated requests.
-   * @param {string} endpoint The endpoint to send the request to.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param endpoint The endpoint to send the request to.
+   * @param options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
    */
   async getPaginatedData(endpoint: string, options: Partial<PaginationOptions>) {
     const { limit, offset } = this.options.defaultPagination;
