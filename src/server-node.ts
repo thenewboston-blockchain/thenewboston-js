@@ -2,6 +2,11 @@ import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type { PaginationOptions, ServerNodeOptions } from "./models";
 
+/**
+ * Used internally for all server nodes.
+ *
+ * Note: this class is meant to be extended.
+ */
 export class ServerNode {
   url: string;
   options: ServerNodeOptions;
