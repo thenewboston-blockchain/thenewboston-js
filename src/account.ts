@@ -2,6 +2,7 @@ import { createAccountData, uint8arrayToHex } from "./utils";
 import type { BlockData, BlockMessage, SignedData, SignedMessage, Transaction } from "./models";
 import { sign } from "tweetnacl";
 
+/** Used for creating accounts to be sent with requests. */
 export class Account {
   /** The 32 byte array for the account number. */
   publicKey: Uint8Array;
