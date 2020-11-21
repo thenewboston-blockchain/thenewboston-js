@@ -1,6 +1,7 @@
 import { Validator } from "./validator";
 
 export class ConfirmationValidator extends Validator {
+  /** Gets the current confirmation confirmation validator's listed services. */
   async getBankConfirmationServices() {
     return await this.getData("/bank_confirmation_services");
   }
