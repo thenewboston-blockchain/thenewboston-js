@@ -2,10 +2,12 @@
 name: Task
 about: Contributors can complete this for coins
 title: "[Task] Task Title"
-labels: PR Reward - INSERT_REWARD_HERE
+labels: ''
 assignees: ''
 
 ---
+
+<!-- Make sure to include the amount of coins the contributors will earn for completing this task by adding a tag that follows the following format: `PR Reward - NUMBER_OF_COINS` -->
 
 <!-- Do not remove this part -->
 # Task
