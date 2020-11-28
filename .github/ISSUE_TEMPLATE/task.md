@@ -2,7 +2,7 @@
 name: Task
 about: Contributors can complete this for coins
 title: "[Task] Task Title"
-labels: ''
+labels: PR Reward - INSERT_REWARD_HERE
 assignees: ''
 
 ---
