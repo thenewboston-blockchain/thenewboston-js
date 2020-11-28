@@ -5,9 +5,9 @@ import { sign } from "tweetnacl";
 /** Used for creating accounts to be sent with requests. */
 export class Account {
   /** The 32 byte array for the account number. */
-  publicKey: Uint8Array;
+  public publicKey: Uint8Array;
   /** The 64 byte array for the account signing key. */
-  signingKey: Uint8Array;
+  public signingKey: Uint8Array;
 
   /**
    * @param signingKey the account signing key
