@@ -30,7 +30,7 @@ A description of how the contributor's work should behave.
 ## Account Number
 
 <!-- Don't forget to insert your account number here! -->
-d84543947090d300910f8d1b9604c0c0a56fafca6cfbe52511c1e31757188bca
+MY_ACCOUNT_NUMBER
 
 <!-- Do not remove this notice! -->
 #### Please ask for this task to be assigned to you and earn and its sweet reward 😉
