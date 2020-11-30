@@ -29,5 +29,4 @@ A description of how the contributor's work should behave.
 
 <!-- Do not remove these notices! -->
 #### Please ask for this task to be assigned to you and earn and its sweet reward 😉
-
-#### Remember to include your account number in your PR description for us to pay you!
+#### Remember to include your account number in your PR description for us to pay you 💰
