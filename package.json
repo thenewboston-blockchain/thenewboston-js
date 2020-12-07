@@ -9,7 +9,7 @@
     "build": "npm run clean && rollup -c",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
-    "webpack": "npm run webpack"
+    "webpack": "webpack --config webpack.config.js"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
