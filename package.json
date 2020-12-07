@@ -9,7 +9,7 @@
     "build": "npm run clean && rollup -c && npm run browserify",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
-    "browserify": "browserify dist/index.js -p tinyify > dist/tnb.min.js -p [ tinyify --no-flat ]"
+    "browserify": "browserify dist/index.js -p tinyify --no-flat > dist/tnb.min.js"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
