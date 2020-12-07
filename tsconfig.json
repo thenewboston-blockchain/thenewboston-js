@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    // Babel will be used for transpilation for speed
+    "outDir": "./dist/",
+    "noImplicitAny": true,
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
     "declaration": true,
     "strict": true,
     "removeComments": false,
     "rootDir": "./src",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "sourceMap": true
   },
   "include": ["src/**/*.ts"]
 }
