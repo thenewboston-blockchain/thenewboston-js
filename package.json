@@ -2,7 +2,10 @@
   "name": "thenewboston",
   "version": "1.0.0",
   "description": "JavaScript library for thenewboston.",
-  "author": "",
+  "author": {
+    "name": "thenewboston-developers",
+    "url": "https://github.com/thenewboston-developers"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "prettier": "prettier --write --loglevel silent \"{,!(node_modules)/**/}*.ts\"",
