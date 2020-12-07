@@ -6,10 +6,11 @@
   "scripts": {
     "clean": "rimraf dist",
     "prettier": "prettier --write --loglevel silent \"{,!(node_modules)/**/}*.ts\"",
-    "build": "npm run clean && rollup -c && npm run browserify",
+    "build": "npm run clean && npm run build:node && npm run build:web",
+    "build:node": "rollup -c",
+    "build:web": "browserify dist/index.js -p tinyify --no-flat > dist/tnb.min.js",
     "test:no-build": "jest",
-    "test": "npm run build && npm run test:no-build",
-    "browserify": "browserify dist/index.js -p tinyify --no-flat > dist/tnb.min.js"
+    "test": "npm run build && npm run test:no-build"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
