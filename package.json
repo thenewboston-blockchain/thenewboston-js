@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "prettier": "prettier --write --loglevel silent \"{,!(node_modules)/**/}*.ts\"",
-    "build": "npm run clean && rollup -c",
+    "build": "npm run clean && rollup -c && webpack --config webpack.config.js",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
     "webpack": "webpack --config webpack.config.js"
