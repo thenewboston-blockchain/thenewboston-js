@@ -6,9 +6,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "prettier": "prettier --write --loglevel silent \"{,!(node_modules)/**/}*.ts\"",
-    "build": "npm run clean && rollup -c",
+    "build": "npm run clean && rollup -c && npm run browserify",
     "test:no-build": "jest",
-    "test": "npm run build && npm run test:no-build"
+    "test": "npm run build && npm run test:no-build",
+    "browserify": "browserify dist/index.js -p tinyify > dist/tnb.min.js -p [ tinyify --no-flat ]"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -22,7 +23,9 @@
   ],
   "dependencies": {
     "axios": "^0.21.0",
+    "browserify": "^17.0.0",
     "core-js": "^3.7.0",
+    "tsify": "^5.0.2",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
@@ -34,6 +37,8 @@
     "prettier": "^2.1.2",
     "rollup": "^2.33.1",
     "rollup-plugin-typescript2": "^0.29.0",
+    "tinyify": "^3.0.0",
+    "ts-loader": "^8.0.11",
     "typescript": "^4.0.5"
   }
 }
