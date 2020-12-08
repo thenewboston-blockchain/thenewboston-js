@@ -1,3 +1,4 @@
+import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type { PaginationOptions, ServerNodeOptions } from "./models";
@@ -49,7 +50,7 @@ export class ServerNode {
    * @param endpoint the endpoint to send the request to
    * @param data what is sent along with the POST request
    */
-  async postData<T>(endpoint: string, data: T) {
+  async postData<T>(endpoint: string, data: any) {
     const res = await axios.post<T>(`${this.url}${endpoint}`, data);
     return res.data;
   }
@@ -59,7 +60,7 @@ export class ServerNode {
    * @param endpoint the endpoint to send the request to
    * @param data what is sent along with the PATCH request
    */
-  async patchData<T>(endpoint: string, data: T) {
+  async patchData<T>(endpoint: string, data: any) {
     const res = await axios.patch<T>(`${this.url}${endpoint}`, data);
     return res.data;
   }
