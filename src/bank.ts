@@ -1,5 +1,5 @@
 import { ServerNode } from "./server-node";
-import type { PaginationOptions } from "./models";
+import type { PaginationOptions, BankConfigResponse } from "./models";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
@@ -45,7 +45,7 @@ export class Bank extends ServerNode {
    * Gets the current bank's config data.
    */
   async getConfig() {
-    return await this.getData("/config");
+    return await this.getData<BankConfigResponse>("/config");
   }
 
   /**
