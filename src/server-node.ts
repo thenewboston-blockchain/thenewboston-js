@@ -51,4 +51,14 @@ export class ServerNode {
     const res = await axios.post(`${this.url}${endpoint}`, data);
     return res.data;
   }
+
+  /**
+   * Sends a PATCH request to the current server with the given `data`.
+   * @param endpoint the endpoint to send the request to
+   * @param data what is sent along with the PATCH request
+   */
+  async patchData<T>(endpoint: string, data: T) {
+    const res = await axios.patch(`${this.url}${endpoint}`, data);
+    return res.data;
+  }
 }
