@@ -23,8 +23,8 @@ export class ServerNode {
    * @param endpoint the endpoint to send the request to
    * @param params the optional object for the query params
    */
-  async getData(endpoint: string, params: { [key: string]: any; [key: number]: any } = {}) {
-    const res = await axios.get(`${this.url}${endpoint}`, {
+  async getData<T>(endpoint: string, params: { [key: string]: any; [key: number]: any } = {}) {
+    const res = await axios.get<T>(`${this.url}${endpoint}`, {
       params,
     });
     return res.data;
@@ -35,9 +35,9 @@ export class ServerNode {
    * @param endpoint the endpoint to send the request to
    * @param options the optional object for the pagination options
    */
-  async getPaginatedData(endpoint: string, options: Partial<PaginationOptions>) {
+  async getPaginatedData<T>(endpoint: string, options: Partial<PaginationOptions>) {
     const { limit, offset } = this.options.defaultPagination;
-    return await this.getData(endpoint, {
+    return await this.getData<T>(endpoint, {
       limit,
       offset,
       ...options,
@@ -49,8 +49,8 @@ export class ServerNode {
    * @param endpoint the endpoint to send the request to
    * @param data what is sent along with the POST request
    */
-  async postData<T>(endpoint: string, data: T) {
-    const res = await axios.post(`${this.url}${endpoint}`, data);
+  async postData<T>(endpoint: string, data: any) {
+    const res = await axios.post<T>(`${this.url}${endpoint}`, data);
     return res.data;
   }
 
@@ -59,8 +59,8 @@ export class ServerNode {
    * @param endpoint the endpoint to send the request to
    * @param data what is sent along with the PATCH request
    */
-  async patchData<T>(endpoint: string, data: T) {
-    const res = await axios.patch(`${this.url}${endpoint}`, data);
+  async patchData<T>(endpoint: string, data: any) {
+    const res = await axios.patch<T>(`${this.url}${endpoint}`, data);
     return res.data;
   }
 }
