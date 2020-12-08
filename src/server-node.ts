@@ -8,7 +8,9 @@ import type { PaginationOptions, ServerNodeOptions } from "./models";
  * Note: this class is meant to be extended.
  */
 export class ServerNode {
+  /** The url of the server. */
   public url: string;
+  /** The options for the server node. */
   public options: ServerNodeOptions;
 
   constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
