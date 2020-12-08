@@ -2,9 +2,16 @@ import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type { PaginationOptions, ServerNodeOptions } from "./models";
 
+/**
+ * Used internally for all server nodes.
+ *
+ * Note: this class is meant to be extended.
+ */
 export class ServerNode {
-  url: string;
-  options: ServerNodeOptions;
+  /** The url of the server. */
+  public url: string;
+  /** The options for the server node. */
+  public options: ServerNodeOptions;
 
   constructor(url: string, options: Partial<ServerNodeOptions> = {}) {
     this.url = formatUrl(url);
@@ -13,11 +20,11 @@ export class ServerNode {
 
   /**
    * Gets data for the given endpoint with the given query params.
-   * @param {string} endpoint
-   * @param {object} params
+   * @param endpoint the endpoint to send the request to
+   * @param params the optional object for the query params
    */
-  async getData(endpoint: string, params: { [key: string]: any; [key: number]: any } = {}) {
-    const res = await axios.get(`${this.url}${endpoint}`, {
+  async getData<T>(endpoint: string, params: { [key: string]: any; [key: number]: any } = {}) {
+    const res = await axios.get<T>(`${this.url}${endpoint}`, {
       params,
     });
     return res.data;
@@ -25,15 +32,35 @@ export class ServerNode {
 
   /**
    * Used internally for handling paginated requests.
-   * @param {string} endpoint The endpoint to send the request to.
-   * @param {{ limit: number; offset: number; }} options The optional object for the pagination options. It can have a `limit` or `offset` key/value pair.
+   * @param endpoint the endpoint to send the request to
+   * @param options the optional object for the pagination options
    */
-  async getPaginatedData(endpoint: string, options: Partial<PaginationOptions>) {
+  async getPaginatedData<T>(endpoint: string, options: Partial<PaginationOptions>) {
     const { limit, offset } = this.options.defaultPagination;
-    return await this.getData(endpoint, {
+    return await this.getData<T>(endpoint, {
       limit,
       offset,
       ...options,
     });
+  }
+
+  /**
+   * Sends a POST request to the current server with the given `data`.
+   * @param endpoint the endpoint to send the request to
+   * @param data what is sent along with the POST request
+   */
+  async postData<T>(endpoint: string, data: any) {
+    const res = await axios.post<T>(`${this.url}${endpoint}`, data);
+    return res.data;
+  }
+
+  /**
+   * Sends a PATCH request to the current server with the given `data`.
+   * @param endpoint the endpoint to send the request to
+   * @param data what is sent along with the PATCH request
+   */
+  async patchData<T>(endpoint: string, data: any) {
+    const res = await axios.patch<T>(`${this.url}${endpoint}`, data);
+    return res.data;
   }
 }

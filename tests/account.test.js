@@ -1,4 +1,4 @@
-const { Account } = require("../dist");
+const { Account } = require("../");
 
 describe("Account", () => {
   const testAccountData = {
@@ -16,6 +16,12 @@ describe("Account", () => {
 
   it("constructor(signingKey)", () => {
     const account = new Account(testAccountData.signingKey);
+    expect(account.publicKeyHex).toBe(testAccountData.accountNumber);
+    expect(account.signingKeyHex).toBe(testAccountData.signingKey);
+  });
+
+  it("constructor(signingKey, publicKey)", () => {
+    const account = new Account(testAccountData.signingKey, testAccountData.accountNumber);
     expect(account.publicKeyHex).toBe(testAccountData.accountNumber);
     expect(account.signingKeyHex).toBe(testAccountData.signingKey);
   });
