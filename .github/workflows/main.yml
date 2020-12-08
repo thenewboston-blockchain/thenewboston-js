@@ -43,6 +43,8 @@ jobs:
           #token: # optional, default is ${{ github.token }}
           # Deprecated. Use node-version instead. Will not be supported after October 1, 2019
           #version: # optional
+      - name: Install Packages
+        run: "npm install"
       - name:  "Jest Test"
         run: "npm test"
       - name: "Build"
