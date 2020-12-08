@@ -1,4 +1,3 @@
-import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type { PaginationOptions, ServerNodeOptions } from "./models";
