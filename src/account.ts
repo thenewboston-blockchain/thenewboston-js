@@ -33,7 +33,7 @@ export class Account {
     return [accountNumber, signingKey_];
   }
 
-  static fromBothKeys(accountNumber: string, signingKey: string): AccountKeys {
+  static fromBothKeys(signingKey: string, accountNumber: string): AccountKeys {
     return [hexToUint8Array(accountNumber), hexToUint8Array(signingKey)];
   }
 
