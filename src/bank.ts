@@ -19,7 +19,7 @@ export class Bank extends ServerNode {
    * @param serverAccount the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
    */
   async updateAccount(accountNumber: string, trust: number, serverAccount: Account) {
-    return await this.patchData(`/accounts${accountNumber}`, serverAccount.createSignedMessage({ trust: trust }));
+    return await this.patchData(`/accounts/${accountNumber}`, serverAccount.createSignedMessage({ trust }));
   }
 
   /**
