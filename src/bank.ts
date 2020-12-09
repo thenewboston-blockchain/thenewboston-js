@@ -1,5 +1,6 @@
 import { ServerNode } from "./server-node";
 import type { PaginationOptions, BankConfigResponse } from "./models";
+import { Account } from "./account";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
@@ -11,7 +12,15 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/accounts", options);
   }
 
-  // TODO: PATCH  /accounts/<account_number>
+  /**
+   * Updates the given server account's trust on the bank.
+   * @param accountNumber the account number of the server to update
+   * @param trust the trust of the the server
+   * @param serverAccount the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
+   */
+  async updateAccount(accountNumber: string, trust: number, serverAccount: Account) {
+    return await this.patchData(`/accounts${accountNumber}`, serverAccount.createSignedMessage({ trust: trust }));
+  }
 
   /**
    * Gets the transactions for the given bank.
