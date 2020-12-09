@@ -1,4 +1,4 @@
-const { Account } = require("../");
+import { Account } from "../";
 
 describe("Account", () => {
   const testAccountData = {
@@ -8,31 +8,31 @@ describe("Account", () => {
 
   it("constructor()", () => {
     const account = new Account();
-    expect(account.publicKey).toHaveLength(32);
+    expect(account.signingKey).toHaveLength(32);
     expect(account.signingKey).toHaveLength(64);
-    expect(account.publicKeyHex).toHaveLength(64);
+    expect(account.signingKeyHex).toHaveLength(64);
     expect(account.signingKeyHex).toHaveLength(64);
   });
 
   it("constructor(signingKey)", () => {
     const account = new Account(testAccountData.signingKey);
-    expect(account.publicKeyHex).toBe(testAccountData.accountNumber);
+    expect(account.signingKeyHex).toBe(testAccountData.accountNumber);
     expect(account.signingKeyHex).toBe(testAccountData.signingKey);
   });
 
-  it("constructor(signingKey, publicKey)", () => {
+  it("constructor(signingKey, signingKey)", () => {
     const account = new Account(testAccountData.signingKey, testAccountData.accountNumber);
-    expect(account.publicKeyHex).toBe(testAccountData.accountNumber);
+    expect(account.signingKeyHex).toBe(testAccountData.accountNumber);
     expect(account.signingKeyHex).toBe(testAccountData.signingKey);
   });
 
   // TODO: constructor(signingKeyUint8Array)
 
-  // TODO: constructor(signingKeyUint8Array, publicKeyUint8Array)
+  // TODO: constructor(signingKeyUint8Array, signingKeyUint8Array)
 
-  it("publicKeyHex", () => {
-    const { publicKeyHex } = new Account();
-    expect(publicKeyHex).toHaveLength(64);
+  it("signingKeyHex", () => {
+    const { signingKeyHex } = new Account();
+    expect(signingKeyHex).toHaveLength(64);
   });
 
   it("signingKeyHex", () => {
