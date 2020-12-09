@@ -34,7 +34,14 @@ export class Account {
   }
 
   static fromBothKeys(signingKey: string, accountNumber: string): AccountKeys {
-    return [hexToUint8Array(accountNumber), hexToUint8Array(signingKey)];
+    const accountNumberArray = hexToUint8Array(accountNumber);
+    const signingKeyArray = new Uint8Array(64);
+    signingKeyArray.set(hexToUint8Array(signingKey));
+    signingKeyArray.set(accountNumberArray, 32);
+    console.log(signingKeyArray);
+    console.log(signingKeyArray.length);
+
+    return [accountNumberArray, signingKeyArray];
   }
 
   static random(): AccountKeys {
