@@ -38,9 +38,6 @@ export class Account {
     const signingKeyArray = new Uint8Array(64);
     signingKeyArray.set(hexToUint8Array(signingKey));
     signingKeyArray.set(accountNumberArray, 32);
-    console.log(signingKeyArray);
-    console.log(signingKeyArray.length);
-
     return [accountNumberArray, signingKeyArray];
   }
 
