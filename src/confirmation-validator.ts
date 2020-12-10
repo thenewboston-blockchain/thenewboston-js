@@ -19,15 +19,10 @@ export class ConfirmationValidator extends Validator {
    * @param protocol the protocol of the primary validator
    * @param serverAccount the account that the current `ConfirmationValidator` is connected to
    */
-  async sendPrimaryValidatorUpdatedPing(
-    ipAddress: string,
-    port: string,
-    protocol: string,
-    serverAccount: Account
-  ): Promise<any> {
+  async sendPrimaryValidatorUpdatedPing(ipAddress: string, port: string, protocol: string, serverAccount: Account) {
     return await this.postData(
       "/primary_validator_updated",
-      serverAccount.createSignedMessage({ ip_address: ipAddress, port: port, protocol })
+      serverAccount.createSignedMessage({ ip_address: ipAddress, port, protocol })
     );
   }
 
