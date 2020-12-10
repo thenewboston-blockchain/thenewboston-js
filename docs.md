@@ -128,3 +128,46 @@ account.createSignedMessage({ name: "Carter" });
 ```
 
 If you were to log out `account`'s `accountNumberHex`, then you would realize that the `node_identifier` is just that account. The reason for that is because only servers have the account signing key to be able to authenticate their requests.
+
+### Using Block Data and Block Messages
+
+Block messages are used to add more transactions to the blockchain. Block data, however, should only be used when you are trying to use this library with a different cryptocurrency as it does not include the `signature` generation. Here is an example of us creating a signed block message using the `createBlockMessage` `Account` method with the first parameter being the `balance_lock` and the second being the `transactions`:
+
+```ts
+const account = new Account();
+
+account.createBlockMessage("asdf", [
+  {
+    amount: 23,
+    recipient: "foo",
+  },
+  {
+    amount: 2,
+    recipient: "foo2",
+  },
+]);
+```
+
+As you can tell after running the code and logging out the method, we get the following output in our console:
+
+```js
+{
+  account_number: '132953bbaa261b36d0c957751da5111ef788b9d4a0abcf4de6e41efc7e0f875f',
+  message: {
+    balance_key: 'asdf',
+    txs: [
+      {
+        amount: 23,
+        recipient: "foo",
+      },
+      {
+        amount: 2,
+        recipient: "foo2",
+      }
+    ]
+  },
+  signature: 'c143255946803dc4b0f86c7ad45f7276b2fc1be243fd0dd2f459140f2bd3a189e9588e6ce40cf1631e80e6c9269ebfac9ca5e7865fdd48a81de3566c0af97501'
+}
+```
+
+Alright, so that's the `Account` class in a nutshell! If you have any things you would like to add please send a pull request or an issue so we can fix it!
