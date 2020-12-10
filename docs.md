@@ -84,3 +84,20 @@ account.signingKeyHex; // the account signing key hex string
 ```
 
 > An important thing to note is that a hex is _just a number_ with a different base. However, when you get these account numbers and signing keys as a hex, we actually just convert the hex value to a hex string instead of an array of numbers ([Uint8Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)). Check out [this article by sparkfun](https://learn.sparkfun.com/tutorials/hexadecimal/all) for more information.
+
+#### Creating Signatures
+
+In this section, we will learn how to create signatures for a given `Account` using the `createSignature` method for a `message`.
+
+> If you don't understand what these signatures and private/public keys _really_ are, then check out [this article by Prevail on the topic](https://www.preveil.com/blog/public-and-private-key/).
+
+The `createSignature` method just takes in one parameter: a `string` that is the message to generate a signature for. Here is an example of us signing `"Hello, world"`:
+
+```ts
+const account = new Account();
+account.createSignature("Hello, world!"); // the generated signature generated using the account's `signingKey` and `message`
+```
+
+From running that code, you can see that the `createSignature` method returned a long hex string signature.
+
+> If you re-run that code multiple times, you will then notice that the generated signature is different. That is because the signature depends on two variables: the account signing key and the message. The account signing key also is changing on every run because we are generating a random `Account` to use, thus resulting in different outcomes.
