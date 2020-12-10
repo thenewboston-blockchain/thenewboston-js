@@ -12,6 +12,16 @@ Currently, the only way to use the library is to clone the repository and downlo
 
 - [Account](#account)
 
+  - [Creating Accounts](#creating-accounts)
+
+  - [Getting Account Numbers and Signing Keys](#getting-account-numbers-and-signing-keys)
+
+  - [Creating Signatures](#creating-signatures)
+
+  - [Using Signed Data and Signed Messages](#using-signed-data-and-signed-messages)
+
+  - [Using Block Data and Block Messages](#using-block-data-and-block-messages)
+
 - [Bank](#bank)
 
 - [Validator](#validator)
