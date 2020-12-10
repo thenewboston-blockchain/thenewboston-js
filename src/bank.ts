@@ -93,7 +93,7 @@ export class Bank extends ServerNode {
    * @param bankAccount the current bank server's account
    */
   async sendUpgradeNotice(nodeIdentifier: string, bankAccount: Account) {
-    await this.postData(
+    return await this.postData(
       "/upgrade_notice",
       bankAccount.createSignedMessage({ bank_node_identifier: nodeIdentifier })
     );
