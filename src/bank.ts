@@ -1,5 +1,6 @@
 import { ServerNode } from "./server-node";
-import type { PaginationOptions } from "./models";
+import type { PaginationOptions, BankConfigResponse } from "./models";
+import { Account } from "./account";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
@@ -11,7 +12,15 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/accounts", options);
   }
 
-  // TODO: PATCH  /accounts/<account_number>
+  /**
+   * Updates the given server account's trust on the bank.
+   * @param accountNumber the account number of the server to update
+   * @param trust the trust of the the server
+   * @param serverAccount the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
+   */
+  async updateAccount(accountNumber: string, trust: number, serverAccount: Account) {
+    return await this.patchData(`/accounts/${accountNumber}`, serverAccount.createSignedMessage({ trust }));
+  }
 
   /**
    * Gets the transactions for the given bank.
@@ -45,7 +54,7 @@ export class Bank extends ServerNode {
    * Gets the current bank's config data.
    */
   async getConfig() {
-    return await this.getData("/config");
+    return await this.getData<BankConfigResponse>("/config");
   }
 
   /**
@@ -79,6 +88,18 @@ export class Bank extends ServerNode {
   // TODO: POST /validator_confirmation_services
 
   // TODO: POST /upgrade_notice
+
+  /**
+   * Sends a signed POST request to the confirmation validator for an upgrade request.
+   * @param nodeIdentifier the node identifier of the confirmation validator that is receiving the upgrade notice
+   * @param validatorAccount the current confirmation validator server's account
+   */
+  async sendUpgradeRequest(nodeIdentifier: string, validatorAccount: Account): Promise<any> {
+    return await this.postData(
+      "/upgrade_request",
+      validatorAccount.createSignedMessage({ node_identifier: nodeIdentifier })
+    );
+  }
 
   /**
    * Gets all of the validators for the current bank.
