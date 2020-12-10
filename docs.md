@@ -71,3 +71,16 @@ const account = new Account(accountData.signingKey, accountData.accountNumber);
 account.accountNumberHex; // the account number
 account.signingKeyHex; // the account signing key
 ```
+
+#### Getting Account Numbers and Signing Keys
+
+Obviously, this was used in the earlier examples when we were getting the account number and signing key as a hex string. Here is an example of us getting the `accountNumberHex` and `signingKeyHex` of a random `Account`:
+
+```ts
+const account = new Account();
+
+account.accountNumberHex; // the account number hex string
+account.signingKeyHex; // the account signing key hex string
+```
+
+> An important thing to note is that a hex is _just a number_ with a different base. However, when you get these account numbers and signing keys as a hex, we actually just convert the hex value to a hex string instead of an array of numbers ([Uint8Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)). Check out [this article by sparkfun](https://learn.sparkfun.com/tutorials/hexadecimal/all) for more information.
