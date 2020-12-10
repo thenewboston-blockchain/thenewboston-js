@@ -111,17 +111,17 @@ We have already talked about creating signatures, so let's learn how we can appl
 ```ts
 const account = new Account();
 
-account.createSignedData({ name: "Carter" });
+account.createSignedData({ name: "Bacon" });
 
 // {
-//   data: { name: 'Carter' },
+//   data: { name: 'Bacon' },
 //   signature: '68202fd5336c57dd42ba116fbf4154b7ef797473c7bc04949fef943c37b7b448ababf22c94711cd5f0fc603f5bd7d10d4e96dff9c876599de9fe887dfffe6d01'
 // }
 
-account.createSignedMessage({ name: "Carter" });
+account.createSignedMessage({ name: "Tuna" });
 
 // {
-//   data: { name: 'Carter' },
+//   data: { name: 'Tuna' },
 //   node_identifier: '660030bd47e777683f5376b0ce672a8427b1b1201ac9af4726766738edeb3c2e',
 //   signature: '68202fd5336c57dd42ba116fbf4154b7ef797473c7bc04949fef943c37b7b448ababf22c94711cd5f0fc603f5bd7d10d4e96dff9c876599de9fe887dfffe6d01'
 // }
@@ -136,14 +136,14 @@ Block messages are used to add more transactions to the blockchain. Block data, 
 ```ts
 const account = new Account();
 
-account.createBlockMessage("asdf", [
+account.createBlockMessage("bacon", [
   {
     amount: 23,
-    recipient: "foo",
+    recipient: "tuna",
   },
   {
     amount: 2,
-    recipient: "foo2",
+    recipient: "baconandtuna",
   },
 ]);
 ```
