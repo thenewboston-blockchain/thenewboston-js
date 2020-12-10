@@ -29,3 +29,7 @@ Currently, the only way to use the library is to clone the repository and downlo
 - [Primary Validator](#primary-validator)
 
 - [Confirmation Validator](#confirmation-validator)
+
+### Account
+
+In this section, we will discuss how to create accounts and use them within other parts of your code with ease.
