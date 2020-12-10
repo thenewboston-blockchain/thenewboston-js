@@ -90,6 +90,18 @@ export class Bank extends ServerNode {
   // TODO: POST /upgrade_notice
 
   /**
+   * Sends a signed POST request to the confirmation validator for an upgrade request.
+   * @param nodeIdentifier the node identifier of the confirmation validator that is receiving the upgrade notice
+   * @param validatorAccount the current confirmation validator server's account
+   */
+  async sendUpgradeRequest(nodeIdentifier: string, validatorAccount: Account): Promise<any> {
+    return await this.postData(
+      "/upgrade_request",
+      validatorAccount.createSignedMessage({ node_identifier: nodeIdentifier })
+    );
+  }
+
+  /**
    * Gets all of the validators for the current bank.
    * @param options The optional object for the pagination options.
    */
