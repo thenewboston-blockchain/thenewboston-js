@@ -1,5 +1,5 @@
 import { ServerNode } from "./server-node";
-import type { PaginationOptions, BankConfigResponse } from "./models";
+import type { PaginationOptions, BankConfigResponse, Transaction } from "./models";
 import { Account } from "./account";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
@@ -48,7 +48,18 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/blocks", options);
   }
 
-  // TODO: POST /blocks
+  /**
+   * Adds new transaction blocks to the blockchain.
+   * @param balanceLock the current balance lock
+   * @param transactions the transactions to push to the block chain
+   * @param account the account that is sending the transactions
+   */
+  async addBlocks(balanceLock: string, transactions: Transaction[], account: Account) {
+    return await this.postData(
+      "/blocks",
+      account.createBlockMessage(balanceLock,transactions)
+    )
+  }
 
   /**
    * Gets the current bank's config data.
