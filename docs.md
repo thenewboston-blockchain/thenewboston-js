@@ -34,6 +34,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Getting Transactions](#getting-transactions)
 
+  - [Getting Banks](#getting-banks)
+
 - [Validator](#validator)
 
 - [Primary Validator](#primary-validator)
@@ -332,9 +334,9 @@ const bank = new Bank("http://143.110.137.54");
 const transactions = await bank.getTransactions();
 console.log(transactions);
 // {
-//   "count": 2116,
-//   "next": "http://143.110.137.54/bank_transactions?limit=2&offset=52",
-//   "previous": "http://143.110.137.54/bank_transactions?limit=2&offset=48",
+//   "count": 20,
+//   "next": "http://143.110.137.54/bank_transactions?limit=2&offset=20",
+//   "previous": null,
 //   "results": [
 //     {
 //       "id": "a7fb060d-e442-4dd4-8604-3b0e67f691aa",
@@ -361,9 +363,52 @@ console.log(transactions);
 //       },
 //       "amount": 1,
 //       "recipient": "2e86f48216567302527b69eae6c6a188097ed3a9741f43cc3723e570cf47644c"
-//     }
+//     },
+//    ....18 more transactions
 //   ]
 // }
 ```
 
 > Just like with `Bank.getAccounts`, you can also pass in an options object here.
+
+#### Getting Banks
+
+This is similar to the previous section, we are just making an api call.
+
+We use `Bank.getBanks` to get all the connected banks.
+
+```js
+const bank = new Bank("http://143.110.137.54");
+const banks = await bank.getBanks();
+console.log(banks);
+// {
+//   "count": 20,
+//   "next": "http://143.110.137.54/banks?limit=2&offset=20",
+//   "previous": null",
+//   "results": [
+//     {
+//       "account_number": "da8500cb8e2ffd728f919cfae82b1c4e97ca2558f2545ab1b020a4172642dce3",
+//       "ip_address": "34.202.233.224",
+//       "node_identifier": "3d6de056dc9ecbca2b4c832017dcb5dbdc2c95dd3175244acf7dfbc21add76de",
+//       "port": 80,
+//       "protocol": "http",
+//       "version": "v1.0",
+//       "default_transaction_fee": 1,
+//       "trust": "0.00"
+//     },
+//     {
+//       "account_number": "c4caa42b2a01b31ee187468ac63bd64745f67ec3b20191a54eb55ba20d5adbb0",
+//       "ip_address": "18.191.29.186",
+//       "node_identifier": "8990b681d8d14b3bf2cd38782c6053bb365cc54616f06ec8d88d9dadb8aa0780",
+//       "port": 80,
+//       "protocol": "http",
+//       "version": "v1.0",
+//       "default_transaction_fee": 1,
+//       "trust": "0.00"
+//     },
+//     ...18 more banks
+//   ]
+// }
+```
+
+> As expected, the options object can also be used with this.
