@@ -194,14 +194,14 @@ console.log(bank.url);
 // `https://localhost:3000`
 ```
 
-You probably know that there is another option that can be passed when creating a bank. This is an optional parameter.
+You probably know that there is another parameter that can be passed when creating a bank. This is optional.
+
+Even if you don't pass in an options object, there will be a default one.
 
 ```js
 console.log(bank.options);
 // { defaultPagination: { limit: 20, offset: 0 } }
 ```
-
-Even if you don't pass in an options object, there will be a default one.
 
 With the following, you can pass in your own object.
 
@@ -212,4 +212,79 @@ console.log(bank.options);
 // { defaultPagination: { limit: 10, offset: 0 } }
 ```
 
-The options object which is passed in, is used as default options, when we make api calls later.
+> The defaultPagination object is used as default options, when we make api calls later.
+
+#### Getting Accounts
+
+We can get the accounts which are linked to the bank with the `Bank.getAccounts` method.
+
+```js
+const bank = new Bank("http://143.110.137.54");
+const accounts = await bank.getAccounts();
+console.log(accounts);
+// {
+//   count: 98,
+//   next: 'http://143.110.137.54/accounts?limit=20&offset=20',
+//   previous: null,
+//   results: [
+//     {
+//       id: '5a8c7990-393a-4299-ae92-2f096a2c7f43',
+//       created_date: '2020-10-08T02:18:07.346849Z',
+//       modified_date: '2020-10-08T02:18:07.346914Z',
+//       account_number: 'a37e2836805975f334108b55523634c995bd2a4db610062f404510617e83126f',
+//       trust: '0.00'
+//     },
+//     {
+//       id: '2682963f-06b1-47d7-a2e1-1f8ec6ae98dc',
+//       created_date: '2020-10-08T02:39:44.071810Z',
+//       modified_date: '2020-10-08T02:39:44.071853Z',
+//       account_number: 'cc8fb4ebbd2b9a98a767e801ac2b0d296ced88b5d3b7d6d6e12e1d2d7635d724',
+//       trust: '0.00'
+//     },
+//    ....18 more accounts
+//   ]
+// }
+```
+
+As you can see, this returns a bunch of accounts with some extra data like count, next, and previous.This is where the options object plays in.
+
+Since we didn't specify the options object at all in this code, the default one - `{ defaultPagination: { limit: 20, offset: 0 } }` is used.
+
+However, if we do pass in our own options object, we can customize the `offset` and `limit` for each api call.
+
+```js
+const bank = new Bank("http://143.110.137.54", { defaultPagination: { limit: 2, offset: 0 } });
+bank.getAccounts();
+// {
+//   count: 98,
+//   next: 'http://143.110.137.54/accounts?limit=20&offset=2',
+//   previous: null,
+//   results: [
+//     {
+//       id: '5a8c7990-393a-4299-ae92-2f096a2c7f43',
+//       created_date: '2020-10-08T02:18:07.346849Z',
+//       modified_date: '2020-10-08T02:18:07.346914Z',
+//       account_number: 'a37e2836805975f334108b55523634c995bd2a4db610062f404510617e83126f',
+//       trust: '0.00'
+//     },
+//     {
+//       id: '2682963f-06b1-47d7-a2e1-1f8ec6ae98dc',
+//       created_date: '2020-10-08T02:39:44.071810Z',
+//       modified_date: '2020-10-08T02:39:44.071853Z',
+//       account_number: 'cc8fb4ebbd2b9a98a767e801ac2b0d296ced88b5d3b7d6d6e12e1d2d7635d724',
+//       trust: '0.00'
+//     },
+//    ....only 2 accounts
+//   ]
+// }
+```
+
+As expected, we can also pass in the options object in the api call itself.
+
+```js
+bank.getAccounts({ limit: 10, offset: 30 });
+```
+
+> The options object passed into theapi call has higher precedence than the one passed into the bank constructor.
+
+> The behaviour of the options object is similar with all the api calls.
