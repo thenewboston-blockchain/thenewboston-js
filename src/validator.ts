@@ -6,7 +6,7 @@ import type { PaginationOptions } from "./models";
  *
  * Note: this class is meant to be extended.
  */
-export class Validator extends ServerNode {
+export abstract class Validator extends ServerNode {
   /**
    * Gets the account numbers, balances, and balance locks of all connected accounts in a paginated response for the current validator.
    * @param options the pagination options
