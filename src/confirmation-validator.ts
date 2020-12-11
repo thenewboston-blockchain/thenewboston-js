@@ -33,6 +33,6 @@ export class ConfirmationValidator extends Validator {
    * Gets the current confirmation validator's config data.
    */
   async getConfig() {
-    return await this.getData<ConfirmationValidatorConfigResponse>("config")
+    return await this.getData<ConfirmationValidatorConfigResponse>("/config")
   }
 }
