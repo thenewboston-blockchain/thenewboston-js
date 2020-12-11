@@ -162,7 +162,7 @@ account.createBlockMessage("bacon", [
 
 As you can tell after running the code and logging out the method, we get the following output in our console:
 
-```js
+```ts
 {
   account_number: '132953bbaa261b36d0c957751da5111ef788b9d4a0abcf4de6e41efc7e0f875f',
   message: {
@@ -192,7 +192,7 @@ In this section, we will discuss how to create banks and work with them.
 
 Creating banks is pretty straightforward, all we need to do is create an instance of the `Bank` class like this.
 
-```js
+```ts
 // Instantiates a new bank
 const bank = new Bank("https://localhost:3000");
 ```
@@ -201,7 +201,7 @@ The string which was passed in is the _url_ parameter. This is the url where you
 
 Now, we can see that we get the same url that we passed in.
 
-```js
+```ts
 console.log(bank.url);
 // `https://localhost:3000`
 ```
@@ -210,27 +210,27 @@ You probably know that there is another parameter that can be passed when creati
 
 Even if you don't pass in an options object, there will be a default one.
 
-```js
+```ts
 console.log(bank.options);
 // { defaultPagination: { limit: 20, offset: 0 } }
 ```
 
 With the following, you can pass in your own object.
 
-```js
+```ts
 const bank = new Bank("https://localhost:3000", { defaultPagination: { limit: 10, offset: 0 } });
 
 console.log(bank.options);
 // { defaultPagination: { limit: 10, offset: 0 } }
 ```
 
-> The defaultPagination object is used as default options, when we make api calls later.
+> The defaultPagination object is used as default options, when we make API calls later.
 
 #### Getting Accounts
 
 We can get the accounts which are linked to the bank with the `Bank.getAccounts` method.
 
-```js
+```ts
 const bank = new Bank("http://143.110.137.54");
 const accounts = await bank.getAccounts();
 console.log(accounts);
@@ -264,11 +264,12 @@ As you can see in the previous section, `bank.getAccount` returns a bunch of acc
 
 Since we didn't specify the options object at all in this code, the default one - `{ defaultPagination: { limit: 20, offset: 0 } }` is used.
 
-However, if we do pass in our own options object, we can customize the `offset` and `limit` for each api call.
+However, if we do pass in our own options object, we can customize the `offset` and `limit` for each API call.
 
-```js
+```ts
 const bank = new Bank("http://143.110.137.54", { defaultPagination: { limit: 2, offset: 0 } });
-bank.getAccounts();
+const accounts = await bank.getAccounts();
+console.log(accounts);
 // {
 //   count: 98,
 //   next: 'http://143.110.137.54/accounts?limit=20&offset=2',
@@ -293,25 +294,26 @@ bank.getAccounts();
 // }
 ```
 
-As expected, we can also pass in the options object in the api call itself.
+As expected, we can also pass in the options object in the API call itself.
 
-```js
-bank.getAccounts({ limit: 10, offset: 30 });
+```ts
+await bank.getAccounts({ limit: 10, offset: 30 });
 ```
 
-> The options object passed into the api call has higher precedence than the one passed into the bank constructor.
+> The options object passed into the API call has higher precedence than the one passed into the bank constructor.
 
-> The behaviour of the options object is similar with all api calls.
+> The behavior of the options object is similar with all API calls.
 
 #### Updating Accounts
 
-This is an api call to update the level of trust of a specific account.
+This is an API call to update the level of trust of a specific account.
 
 We use `Bank.updateAccount` for this.
 
-```js
+```ts
 const account = new Account("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", "fakeSigningKeyHex");
-bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account); // 32 is the amount of trust
+const res = await bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account);
+console.log(res);
 // {
 //   "id": "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",
 //   "created_date": "2020-07-14T02:59:22.204580Z",
@@ -325,11 +327,11 @@ Now the trust of the account supplied would be 32 instead of whatever it was bef
 
 #### Getting Transactions
 
-Pretty similar to [Getting Accounts](#getting-accounts).
+Getting a list of transactions is fairly similar to [Getting Accounts](#getting-accounts).
 
 We can get the banks transactions with the `Bank.getTransactions` method.
 
-```js
+```ts
 const bank = new Bank("http://143.110.137.54");
 const transactions = await bank.getTransactions();
 console.log(transactions);
@@ -373,11 +375,11 @@ console.log(transactions);
 
 #### Getting Banks
 
-This is similar to the previous section, we are just making an api call.
+This is similar to the [previous section](#getting-transactions), we are just making an API call.
 
 We use `Bank.getBanks` to get all the connected banks.
 
-```js
+```ts
 const bank = new Bank("http://143.110.137.54");
 const banks = await bank.getBanks();
 console.log(banks);
