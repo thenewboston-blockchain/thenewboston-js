@@ -26,6 +26,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
 - [Validator](#validator)
 
+  - [Creating Validators](#creating-validators)
+
 - [Primary Validator](#primary-validator)
 
 - [Confirmation Validator](#confirmation-validator)
@@ -46,7 +48,7 @@ account.accountNumberHex; // random account number hex string
 account.signingKeyHex; // random account signing key hex string
 ```
 
-As you can tell, if you don't pass in anything into the `Accocunt` class, then it just generates a random account for you. Now, let's get a little more complex, you can passs in the `signingKey` as the first parameter within `Account` and it will set the `signingKeyHex` of the `Account` as it. Also, due to the fact that we are using the signing-based cryptographic algorithms, the `accountNumberHex` is able to be generated automatically. Here is an example of this behavior in action:
+As you can tell, if you don't pass in anything into the `Accocunt` class, then it just generates a random account for you. Now, let's get a little more complex, you can pass in the `signingKey` as the first parameter within `Account` and it will set the `signingKeyHex` of the `Account` as it. Also, due to the fact that we are using the signing-based cryptographic algorithms, the `accountNumberHex` is able to be generated automatically. Here is an example of this behavior in action:
 
 ```ts
 const accountSigningKey = "61647c0dd309646ea5b3868c8c237158483a10484b0485663e4f82a68a10535e";
@@ -171,3 +173,75 @@ As you can tell after running the code and logging out the method, we get the fo
 ```
 
 Alright, so that's the `Account` class in a nutshell! If you have any things you would like to add please send a pull request or an issue so we can fix it!
+
+### Validator
+
+In this section we are going to talk about the base Validator node that both the Primary Validator and the Confirmation Validator inherit from. We will be going over the basic usage of any Validator, which is to validate transactions, but to learn more about where they deviate you can refer to their respective sections.  For now in this section, and for the sake of shorthand we will refer to both types as just "Validators", but with code examples for each.
+
+### Creating Validators
+
+To create a Validator we must pass in the url of the Validator you wish to interact with, into a constructor.
+
+```ts
+// create object with access to the API and basic functions of a Validator.
+const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
+const primaryValidator = new PrimaryValidator("http://157.230.75.212");
+
+// Get the current config data for validators, must be in asynchronous function.
+async function getValidatorConfigs() {
+  let configs = {
+    primary: await primaryValidator.getConfig(),
+    confirmation: await confirmationValidator.getConfig(),
+  } 
+  return configs
+}
+```
+If you log that asynchronous function to the console, you should see something like this.
+
+```js
+{
+  primary: {
+    primary_validator: null,
+    account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
+    ip_address: '157.230.75.212',
+    node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
+    port: null,
+    protocol: 'http',
+    version: 'v1.0',
+    default_transaction_fee: 1,
+    root_account_file: 'http://157.230.75.212/media/root_account_file.json',
+    root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
+    seed_block_identifier: '',
+    daily_confirmation_rate: null,
+    node_type: 'PRIMARY_VALIDATOR'
+  },
+  confirmation: {
+    primary_validator: {
+      account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
+      ip_address: '157.230.75.212',
+      node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
+      port: null,
+      protocol: 'http',
+      version: 'v1.0',
+      default_transaction_fee: 1,
+      root_account_file: 'http://157.230.75.212/media/root_account_file.json',
+      root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
+      seed_block_identifier: '',
+      daily_confirmation_rate: null,
+      trust: '100.00'
+    },
+    account_number: '4141206a94c0c6115e47c72a35bf5f187c53510b49f47ce04ce68722598d5a73',
+    ip_address: '157.230.10.237',
+    node_identifier: '5cb75a0415d5b48bf97006fa6d20f4faac67b8ba73de0df0a5253eb9c846a73d',
+    port: null,
+    protocol: 'http',
+    version: 'v1.0',
+    default_transaction_fee: 1,
+    root_account_file: 'http://157.230.10.237/media/root_account_file.json',
+    root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
+    seed_block_identifier: '',
+    daily_confirmation_rate: 1,
+    node_type: 'CONFIRMATION_VALIDATOR'
+  }
+}
+```
