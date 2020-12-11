@@ -57,7 +57,7 @@ export class Bank extends ServerNode {
   async addBlocks(balanceLock: string, transactions: Transaction[], account: Account) {
     return await this.postData(
       "/blocks",
-      { account, balanceLock, transactions }
+      account.createSignedData({ balanceLock, transactions })
     )
   }
 
