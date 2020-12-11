@@ -1,2 +1,3 @@
 export * from "./bank";
-export * from "./confirmationvalidator";
+
+export * from "./confirmation-validator";
