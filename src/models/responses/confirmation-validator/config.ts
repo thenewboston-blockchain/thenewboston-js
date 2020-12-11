@@ -1,4 +1,4 @@
-import type { Hex, Origin, Port, Protocol, Url, Trust, Version, NodeType} from "../constants";
+import type { Hex, Origin, Port, Protocol, Url, Trust, Version, NodeType } from "../constants";
 
 export interface ConfirmationValidatorConfigResponse {
   primary_validator: {

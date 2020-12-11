@@ -55,10 +55,7 @@ export class Bank extends ServerNode {
    * @param account the account that is sending the transactions
    */
   async addBlocks(balanceLock: string, transactions: Transaction[], account: Account) {
-    return await this.postData(
-      "/blocks",
-      account.createBlockMessage(balanceLock,transactions)
-    )
+    return await this.postData("/blocks", account.createBlockMessage(balanceLock, transactions));
   }
 
   /**
