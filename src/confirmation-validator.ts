@@ -1,5 +1,6 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
+import type {  ConfirmationValidatorConfigResponse } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
@@ -27,4 +28,11 @@ export class ConfirmationValidator extends Validator {
   }
 
   // TODO: POST /upgrade_request
+
+  /**
+   * Gets the current confirmation validator's config data.
+   */
+  async getConfig() {
+    return await this.getData<ConfirmationValidatorConfigResponse>("config")
+  }
 }
