@@ -24,6 +24,14 @@ Currently, the only way to use the library is to clone the repository and downlo
 
 - [Bank](#bank)
 
+  - [Creating Banks](#creating-banks)
+
+  - [Getting Accounts](#getting-accounts)
+
+  - [Options Object](#options-object)
+
+  - [Updating Accounts](#updating-accounts)
+
 - [Validator](#validator)
 
 - [Primary Validator](#primary-validator)
@@ -46,7 +54,7 @@ account.accountNumberHex; // random account number hex string
 account.signingKeyHex; // random account signing key hex string
 ```
 
-As you can tell, if you don't pass in anything into the `Accocunt` class, then it just generates a random account for you. Now, let's get a little more complex, you can passs in the `signingKey` as the first parameter within `Account` and it will set the `signingKeyHex` of the `Account` as it. Also, due to the fact that we are using the signing-based cryptographic algorithms, the `accountNumberHex` is able to be generated automatically. Here is an example of this behavior in action:
+As you can tell, if you don't pass in anything into the `Account` class, then it just generates a random account for you. Now, let's get a little more complex, you can passs in the `signingKey` as the first parameter within `Account` and it will set the `signingKeyHex` of the `Account` as it. Also, due to the fact that we are using the signing-based cryptographic algorithms, the `accountNumberHex` is able to be generated automatically. Here is an example of this behavior in action:
 
 ```ts
 const accountSigningKey = "61647c0dd309646ea5b3868c8c237158483a10484b0485663e4f82a68a10535e";
@@ -246,7 +254,9 @@ console.log(accounts);
 // }
 ```
 
-As you can see, this returns a bunch of accounts with some extra data like count, next, and previous.This is where the options object plays in.
+#### Options Object
+
+As you can see in the previous section, `bank.getAccount` returns a bunch of accounts with some extra data like count, next, and previous. This is where the options object plays in.
 
 Since we didn't specify the options object at all in this code, the default one - `{ defaultPagination: { limit: 20, offset: 0 } }` is used.
 
@@ -285,6 +295,26 @@ As expected, we can also pass in the options object in the api call itself.
 bank.getAccounts({ limit: 10, offset: 30 });
 ```
 
-> The options object passed into theapi call has higher precedence than the one passed into the bank constructor.
+> The options object passed into the api call has higher precedence than the one passed into the bank constructor.
 
-> The behaviour of the options object is similar with all the api calls.
+> The behaviour of the options object is similar with all api calls.
+
+#### Updating Accounts
+
+This is an api call to update the level of trust of a specific account.
+
+We use `Bank.updateAccount` for this.
+
+```js
+const account = new Account("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", "fakeSigningKeyHex");
+bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account); // 32 is the amount of trust
+// {
+//   "id": "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",
+//   "created_date": "2020-07-14T02:59:22.204580Z",
+//   "modified_date": "2020-07-21T00:58:01.013685Z",
+//   "account_number": "0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb",
+//   "trust": "32"
+// }
+```
+
+Now the trust of the account supplied would be 32 instead of whatever it was before.
