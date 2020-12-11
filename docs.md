@@ -4,7 +4,7 @@ Here, you will learn about how to use all of what thenewboston-js has to offer. 
 
 ## Getting Started
 
-Currently, the only way to use the library is to clone the repository and download the files while loading them into your project. We will upload this the library is uploaded to [npm](https://npmjs.com).
+Currently, the only way to use the library is to clone the repository and download the files while loading them into your project. We will upload this the library to [npm](https://npmjs.com).
 
 > For simplicity, we will not be including `import` or `require` statements in our examples.
 
@@ -171,3 +171,45 @@ As you can tell after running the code and logging out the method, we get the fo
 ```
 
 Alright, so that's the `Account` class in a nutshell! If you have any things you would like to add please send a pull request or an issue so we can fix it!
+
+### Bank
+
+In this section, we will discuss how to create banks and work with them.
+
+#### Creating Banks
+
+Creating banks is pretty straightforward, all we need to do is create an instance of the `Bank` class like this.
+
+```js
+// Instantiates a new bank
+const bank = new Bank("https://localhost:3000");
+```
+
+The string which was passed in is the _url_ parameter. This is the url where your bank is located, it could be your ec2 instance address, the digital ocean droplet address, or wherever your bank is.
+
+Now, we can see that we get the same url that we passed in.
+
+```js
+console.log(bank.url);
+// `https://localhost:3000`
+```
+
+You probably know that there is another option that can be passed when creating a bank. This is an optional parameter.
+
+```js
+console.log(bank.options);
+// { defaultPagination: { limit: 20, offset: 0 } }
+```
+
+Even if you don't pass in an options object, there will be a default one.
+
+With the following, you can pass in your own object.
+
+```js
+const bank = new Bank("https://localhost:3000", { defaultPagination: { limit: 10, offset: 0 } });
+
+console.log(bank.options);
+// { defaultPagination: { limit: 10, offset: 0 } }
+```
+
+The options object which is passed in, is used as default options, when we make api calls later.
