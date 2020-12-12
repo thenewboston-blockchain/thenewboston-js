@@ -28,6 +28,12 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Creating Validators](#creating-validators)
 
+  - [Working With Accounts](#working-with-accounts)
+
+  - [Working With Other Nodes](#working-with-other-nodes)
+
+  - [Working With Blocks](#working-with-blocks)
+
 - [Primary Validator](#primary-validator)
 
 - [Confirmation Validator](#confirmation-validator)
@@ -176,7 +182,7 @@ Alright, so that's the `Account` class in a nutshell! If you have any things you
 
 ### Validator
 
-In this section we are going to talk about the base Validator node that both the Primary Validator and the Confirmation Validator inherit from. We will be going over the basic usage of any Validator, which is to validate transactions, but to learn more about where they deviate you can refer to their respective sections.  For now in this section, and for the sake of shorthand we will refer to both types as just "Validators", but with code examples for each.
+In this section we are going to talk about the base Validator node that both the Primary Validator and the Confirmation Validator inherit from. We will be going over the basic usage of any Validator, but to learn more about where they deviate you can refer to their respective sections.  
 
 ### Creating Validators
 
@@ -184,24 +190,35 @@ To create a Validator we must pass in the url of the Validator you wish to inter
 
 ```ts
 // create object with access to the API and basic functions of a Validator.
-const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 const primaryValidator = new PrimaryValidator("http://157.230.75.212");
-
-// Get the current config data for validators, must be in asynchronous function.
-async function getValidatorConfigs() {
-  let configs = {
-    primary: await primaryValidator.getConfig(),
-    confirmation: await confirmationValidator.getConfig(),
-  } 
-  return configs
-}
+const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 ```
-If you log that asynchronous function to the console, you should see something like this.
+We can check the basic configuration of the Validator with a call to `getConfig`.
 
-```js
+```ts
+// Get the current config data for each validator.
+await primaryValidator.getConfig():
+// Expected output from a Primary Validator
 {
-  primary: {
-    primary_validator: null,
+  primary_validator: null,
+  account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
+  ip_address: '157.230.75.212',
+  node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
+  port: null,
+  protocol: 'http',
+  version: 'v1.0',
+  default_transaction_fee: 1,
+  root_account_file: 'http://157.230.75.212/media/root_account_file.json',
+  root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
+  seed_block_identifier: '',
+  daily_confirmation_rate: null,
+  node_type: 'PRIMARY_VALIDATOR'
+}
+
+await confirmationValidator.getConfig();
+// Expected output from a Confirmation Validator
+{
+  primary_validator: {
     account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
     ip_address: '157.230.75.212',
     node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
@@ -213,35 +230,148 @@ If you log that asynchronous function to the console, you should see something l
     root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
     seed_block_identifier: '',
     daily_confirmation_rate: null,
-    node_type: 'PRIMARY_VALIDATOR'
+    trust: '100.00'
   },
-  confirmation: {
-    primary_validator: {
-      account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
-      ip_address: '157.230.75.212',
-      node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
+  account_number: '4141206a94c0c6115e47c72a35bf5f187c53510b49f47ce04ce68722598d5a73',
+  ip_address: '157.230.10.237',
+  node_identifier: '5cb75a0415d5b48bf97006fa6d20f4faac67b8ba73de0df0a5253eb9c846a73d',
+  port: null,
+  protocol: 'http',
+  version: 'v1.0',
+  default_transaction_fee: 1,
+  root_account_file: 'http://157.230.10.237/media/root_account_file.json',
+  root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
+  seed_block_identifier: '',
+  daily_confirmation_rate: 1,
+  node_type: 'CONFIRMATION_VALIDATOR'
+}
+```
+Now we know how to create a Validator and access it's configurations in our code, we can move on to the methods that work with the accounts that use it's services and the other nodes which are on it's network.
+
+### Working With Accounts
+
+To see all the acounts on the network your Validator is connected to, there is a `getAccounts` method. This API call will return the total amount of accounts in a `count` property, and you can access more or past `results` with the URL links that the `next` and `previous` properties provide.  
+
+```ts
+const primaryValidator = new PrimaryValidator("http://157.230.75.212");
+const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
+// Make a default call to getAccounts
+await primaryValidator.getAccounts():
+// Some expected output
+{
+  "count": 411,
+  "next": "http://157.230.75.212/accounts?limit=50&offset=50",
+  "previous": null,
+  "results": [
+    {
+      "id": "9c6dd61a-438c-4a95-b1d2-33f90bd7f6ad",
+      "account_number": "2e86f48216567302527b69eae6c6a188097ed3a9741f43cc3723e570cf47644c",
+      "balance": 460,
+      "balance_lock": "aca94f4d2f472c6b9b662f60aab247b9c6aef2079d63b870e2cc02308a7c822b"
+    }, // for brevity we will show one result but running this code will show 50 accounts before the offset of the 50th account (0-49)
+    ...,
+    ...
+  ]
+}
+// Pass in optional argument to get the first account listed
+await confirmationValidator.getAccounts({limit:1, offset:0}):
+// Some expected output for 1 result at the 0 offset
+{
+  "count": 411,
+  "next": "http://157.230.10.237/accounts?limit=1&offset=1",
+  "previous": null,
+  "results": [
+    {
+      "id": "9c6dd61a-438c-4a95-b1d2-33f90bd7f6ad",
+      "account_number": "2e86f48216567302527b69eae6c6a188097ed3a9741f43cc3723e570cf47644c",
+      "balance": 460,
+      "balance_lock": "aca94f4d2f472c6b9b662f60aab247b9c6aef2079d63b870e2cc02308a7c822b"
+    },
+  ]
+}
+```
+You can also get the balance and balance lock of a single account with the following API calls, given the account number.
+
+```ts
+const primaryValidator = new PrimaryValidator("http://157.230.75.212");
+const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
+
+// call to getAccountBalance
+await primaryValidator.getAccountBalance("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+await confirmationValidator.getAccountBalance("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+// Some expected output
+{
+  balance: 2000
+}
+
+// call to getAccountBalanceLock
+await primaryValidator.getAccountBalanceLock("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+await confirmationValidator.getAccountBalanceLock("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+// Some expected output
+{
+  balance_lock: '57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce'
+}
+```
+
+### Working With Other Nodes
+
+We can use the `getValidators` and `getBanks` methods to see what Confimation Validators and Banks are connected to our Validator.
+
+```ts
+const primaryValidator = new PrimaryValidator("http://157.230.75.212");
+const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
+
+// See all Confirmation Validators connected to the Primary Validator
+await primaryValidator.getValidators();
+// Some expected output
+{
+  count: 18,
+  next: null,
+  previous: null,
+  results: [
+    { // an example of one of the results, this size array will be determined by the count and optional options parameter
+      account_number: '30f9ee860f0f9b38e06d1ba25989a527b27220962536b9fe35cf8471f530d52c',
+      ip_address: '185.22.172.130',
+      node_identifier: 'f48468d2e09db51409ee4f4941e0dd21949c0583c94f364a20a170f4e410be61',
       port: null,
       protocol: 'http',
       version: 'v1.0',
       default_transaction_fee: 1,
-      root_account_file: 'http://157.230.75.212/media/root_account_file.json',
+      root_account_file: 'http://185.22.172.130/media/root_account_file.json',
       root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
       seed_block_identifier: '',
-      daily_confirmation_rate: null,
-      trust: '100.00'
+      daily_confirmation_rate: 1,
+      trust: '0.00'
     },
-    account_number: '4141206a94c0c6115e47c72a35bf5f187c53510b49f47ce04ce68722598d5a73',
-    ip_address: '157.230.10.237',
-    node_identifier: '5cb75a0415d5b48bf97006fa6d20f4faac67b8ba73de0df0a5253eb9c846a73d',
-    port: null,
-    protocol: 'http',
-    version: 'v1.0',
-    default_transaction_fee: 1,
-    root_account_file: 'http://157.230.10.237/media/root_account_file.json',
-    root_account_file_hash: 'cc9390cc579dc8a99a1f34c1bea5d54a0f45b27ecee7e38662f0cd853f76744d',
-    seed_block_identifier: '',
-    daily_confirmation_rate: 1,
-    node_type: 'CONFIRMATION_VALIDATOR'
-  }
+    ...,
+    ...
+  ]
 }
+
+// See all the Banks connected to this Confirmation Validator 
+await confirmationValidator.getBanks(),
+// some expected output
+{
+  count: 4,
+  next: null,
+  previous: null,
+  results: [
+    { // an example of one of the results, this array size will be determined by the count and optional options parameter
+      account_number: '7b2a3a94bdbb8911f7da685e3c545e24c862b4440b5fa0768cfbdfbdfb8a9ea4',
+      ip_address: '157.230.75.108',
+      node_identifier: '477afa979ebeec845a102a50f38ae399b072d56fa7ff229b862210a17d442771',
+      port: 80,
+      protocol: 'http',
+      version: 'v1.0',
+      default_transaction_fee: 1,
+      confirmation_expiration: null,
+      trust: '0.00'
+    },
+    ...,
+    ...
+  ]
+}
+
 ```
+
+### Working With Blocks
