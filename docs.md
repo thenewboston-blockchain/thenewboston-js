@@ -36,6 +36,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Getting and Adding Blocks](#getting-and-adding-blocks)
 
+  - [Getting Confirmation and Invalid Blocks](#getting-confirmation-and-invalid-blocks)
+
 - [Validator](#validator)
 
 - [Primary Validator](#primary-validator)
@@ -489,3 +491,70 @@ And in the last line, we are passing in fake values, with the transactions we go
 > If you don't understand why and what we are doing here, I suggest watching a [tutorial](https://youtu.be/Dgj_OStjD1Q) on Youtube.
 
 > This method doesn't support the options object, since it only returns one block and has no need of pagination.
+
+#### Getting Confirmation and Invalid Blocks
+
+This section is quite similar to the [Getting Blocks](#getting-and-adding-blocks) section.
+
+```js
+const confirmationBlocks = await bank.getConfirmationBlocks();
+const invalidBlocks = await bank.getInvalidBlocks();
+console.log(confirmationBlocks);
+// {
+//   "count": 20,
+//   "next": "http://143.110.137.54/confirmation_blocks?limit=20&offset=20",
+//   "previous": null,
+//   "results": [
+//     {
+//       "id": "e7c5c2e0-8ed1-4eb3-abd8-97fa2e5ca8db",
+//       "created_date": "2020-10-08T02:18:07.908635Z",
+//       "modified_date": "2020-10-08T02:18:07.908702Z",
+//       "block_identifier": "824614aa97edb391784b17ce6956b70aed31edf741c1858d43ae4d566b2a13ed",
+//       "block": "c6fc11cf-8948-4d32-96c9-d56caa6d5b24",
+//       "validator": "e2a138b0-ebe9-47d2-a146-fb4d9d9ca378"
+//     },
+//     {
+//       "id": "78babf4b-74ed-442e-b5ab-7b23345c18f8",
+//       "created_date": "2020-10-08T02:18:07.998146Z",
+//       "modified_date": "2020-10-08T02:18:07.998206Z",
+//       "block_identifier": "824614aa97edb391784b17ce6956b70aed31edf741c1858d43ae4d566b2a13ed",
+//       "block": "c6fc11cf-8948-4d32-96c9-d56caa6d5b24",
+//       "validator": "97a878ac-328a-47b6-ac93-be6deee75d94"
+//     },
+//     ...18 more confirmationBlocks
+//   ]
+// }
+
+console.log(invalidBlocks);
+// {
+//   "count": 20,
+//   "next": "http://143.110.137.54/invalid_blocks?limit=20&offset=20",
+//   "previous": null,
+//   "results":
+//   [
+//     {
+//       "id": "2bcd53c5-19f9-4226-ab04-3dfb17c3a1fe",
+//       "created_date": "2020-07-11T18:44:16.518695Z",
+//       "modified_date": "2020-07-11T18:44:16.518719Z",
+//       "block_identifier": "65ae26192dfb9ec41f88c6d582b374a9b42ab58833e1612452d7a8f685dcd4d5",
+//       "block": "3ff4ebb0-2b3d-429b-ba90-08133fcdee4e",
+//       "confirmation_validator": "fcd2dce8-9e4f-4bf1-8dac-cdbaf64e5ce8",
+//       "primary_validator": "51461a75-dd8d-4133-81f4-543a3b054149"
+//     },
+//     {
+//       "id": "c6fc11cf-8948-4d32-96c9-d56caa6d5b24",
+//       "created_date": "2020-07-11T19:44:16.518695Z",
+//       "modified_date": "2020-07-11T19:44:16.518719Z",
+//       "block_identifier": "5da3758cdd6b2c9d5ed60471f15654622bc5eae047d71d995c0df3180e6097c0",
+//       "block": "402d5976-cbaa-4d89-b5d7-bddfe0aa5a3d",
+//       "confirmation_validator": "fcd2dce8-9e4f-4bf1-8dac-cdbaf64e5ce8",
+//       "primary_validator": "51461a75-dd8d-4133-81f4-543a3b054149"
+//     },
+//    ...18 more invalidBlocks
+//   ]
+// }
+```
+
+We use `Bank.getConfirmationBlocks` to get the confirmation blocks and `Bank.getInvalidBlocks`
+
+> Both of these methods support the options object
