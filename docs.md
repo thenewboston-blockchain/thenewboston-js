@@ -12,7 +12,7 @@ Currently, the only way to use the library is to clone the repository and downlo
 
 - [Account](#account)
 
-  - [Creating Accounts](#creating-accounts)
+  - [Creating Accounts](#creating-and-updating-accounts)
 
   - [Getting Account Numbers and Signing Keys](#getting-account-numbers-and-signing-keys)
 
@@ -26,19 +26,15 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Creating Banks](#creating-banks)
 
-  - [Getting Accounts](#getting-accounts)
+  - [Getting and Updating Accounts](#getting-and-updating-accounts)
 
   - [Options Object](#options-object)
-
-  - [Updating Accounts](#updating-accounts)
 
   - [Getting Transactions](#getting-transactions)
 
   - [Getting Banks](#getting-banks)
 
-  - [Getting Blocks](#getting-blocks)
-
-  - [Adding Blocks](#adding-blocks)
+  - [Getting and Adding Blocks](#getting-and-adding-blocks)
 
 - [Validator](#validator)
 
@@ -230,7 +226,7 @@ console.log(bank.options);
 
 > The defaultPagination object is used as default options, when we make API calls later.
 
-#### Getting Accounts
+#### Getting and Updating Accounts
 
 We can get the accounts which are linked to the bank with the `Bank.getAccounts` method.
 
@@ -261,6 +257,25 @@ console.log(accounts);
 //   ]
 // }
 ```
+
+We can also update the trust of a specific account.
+
+This is an API call to update the level of trust of a specific account. We use `Bank.updateAccount` for this.
+
+```ts
+const account = new Account("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", "fakeSigningKeyHex");
+const res = await bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account);
+console.log(res);
+// {
+//   "id": "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",
+//   "created_date": "2020-07-14T02:59:22.204580Z",
+//   "modified_date": "2020-07-21T00:58:01.013685Z",
+//   "account_number": "0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb",
+//   "trust": "32"
+// }
+```
+
+Now the trust of the account supplied would be 32 instead of whatever it was before.
 
 #### Options Object
 
@@ -308,30 +323,9 @@ await bank.getAccounts({ limit: 10, offset: 30 });
 
 > The behavior of the options object is similar with all API calls.
 
-#### Updating Accounts
-
-This is an API call to update the level of trust of a specific account.
-
-We use `Bank.updateAccount` for this.
-
-```ts
-const account = new Account("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", "fakeSigningKeyHex");
-const res = await bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account);
-console.log(res);
-// {
-//   "id": "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",
-//   "created_date": "2020-07-14T02:59:22.204580Z",
-//   "modified_date": "2020-07-21T00:58:01.013685Z",
-//   "account_number": "0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb",
-//   "trust": "32"
-// }
-```
-
-Now the trust of the account supplied would be 32 instead of whatever it was before.
-
 #### Getting Transactions
 
-Getting a list of transactions is fairly similar to [Getting Accounts](#getting-accounts).
+Getting a list of transactions is fairly similar to [Getting Accounts](#getting-and-updating-accounts).
 
 We can get the banks transactions with the `Bank.getTransactions` method.
 
@@ -419,7 +413,7 @@ console.log(banks);
 
 > As expected, the options object can also be used with this.
 
-#### Getting Blocks
+#### Getting and Adding Blocks
 
 Getting a list of blocks is quite similar to all the previous API calls. For this, we use `Bank.getBlocks`.
 
@@ -454,7 +448,7 @@ console.log(res);
 
 > The options object can also be passed into this method.
 
-#### Adding Blocks
+We can also add blocks.
 
 Adding Blocks is also basically an API call, but we have more options this time.
 
