@@ -26,6 +26,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Creating Banks](#creating-banks)
 
+  - [Getting Config](#getting-config)
+
   - [Getting and Updating Accounts](#getting-and-updating-accounts)
 
   - [Options Object](#options-object)
@@ -225,12 +227,45 @@ With the following, you can pass in your own object.
 
 ```ts
 const bank = new Bank("https://localhost:3000", { defaultPagination: { limit: 10, offset: 0 } });
-
 console.log(bank.options);
 // { defaultPagination: { limit: 10, offset: 0 } }
 ```
 
 > The defaultPagination object is used as default options, when we make API calls later.
+
+#### Getting Config
+
+We use `Bank.getConfig` to get the config of the bank. It does not take any parameters.
+
+```ts
+const config = await bank.getConfig();
+console.log(config);
+// {
+//   "primary_validator": {
+//     "account_number": "2e86f48216567302527b69eae6c6a188097ed3a9741f43cc3723e570cf47644c",
+//     "ip_address": "54.183.17.224",
+//     "node_identifier": "2262026a562b0274163158e92e8fbc4d28e519bc5ba8c1cf403703292be84a51",
+//     "port": null,
+//     "protocol": "http",
+//     "version": "v1.0",
+//     "default_transaction_fee": 1,
+//     "root_account_file": "https://gist.githubusercontent.com/buckyroberts/0688f136b6c1332be472a8baf10f78c5/raw/323fcd29672e392be2b934b82ab9eac8d15e840f/alpha-00.json",
+//     "root_account_file_hash": "0f775023bee79884fbd9a90a76c5eacfee38a8ca52735f7ab59dab63a75cbee1",
+//     "seed_block_identifier": "",
+//     "daily_confirmation_rate": null,
+//     "trust": "100.00"
+//   },
+//   "account_number": "dfddf07ec15cbf363ecb52eedd7133b70b3ec896b488460bcecaba63e8e36be5",
+//   "ip_address": "143.110.137.54",
+//   "node_identifier": "6dbaff44058e630cb375955c82b0d3bd7bc7e20cad93e74909a8951f747fb8a4",
+//   "port": null,
+//   "protocol": "http",
+//   "version": "v1.0",
+//   "default_transaction_fee": 1,
+//   "node_type": "BANK"
+// }
+```
+The config includes data like selected primary validator, IP address, port, node identifier and so on.
 
 #### Getting and Updating Accounts
 
