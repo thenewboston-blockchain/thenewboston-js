@@ -38,6 +38,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Getting Confirmation and Invalid Blocks](#getting-confirmation-and-invalid-blocks)
 
+  - [Getting Validator Confirmation Services](#getting-validator-confirmation-services)
+
 - [Validator](#validator)
 
 - [Primary Validator](#primary-validator)
@@ -558,3 +560,32 @@ console.log(invalidBlocks);
 We use `Bank.getConfirmationBlocks` to get the confirmation blocks and `Bank.getInvalidBlocks`
 
 > Both of these methods support the options object
+
+#### Getting Validator Confirmation Services
+
+We use `Bank.getValidatorConfirmationServices` to get all the Validator Confirmation Services of the bank.
+
+```ts
+const validatorConfirmationServices = await bank.getValidatorConfirmationServices();
+console.log(validatorConfirmationServices);
+// [
+//   {
+//     "id": "be9fbc3b-d4df-43d5-9bea-9882a6dd27f6",
+//     "created_date": "2020-07-09T22:10:35.312956Z",
+//     "modified_date": "2020-07-09T22:10:37.393578Z",
+//     "end": "2020-08-09T22:10:24Z",
+//     "start": "2020-07-09T22:10:25Z",
+//     "validator": "51461a75-dd8d-4133-81f4-543a3b054149"
+//   },
+//   {
+//     "id": "e2055637-67ff-4479-aec6-a8095d513862",
+//     "created_date": "2020-07-09T22:10:35.312956Z",
+//     "modified_date": "2020-07-09T22:10:37.393578Z",
+//     "end": "2020-08-09T22:10:24Z",
+//     "start": "2020-07-09T22:10:25Z",
+//     "validator": "10308b02-d577-484e-953c-0a2bdb5e3d83"
+//   }
+// ]
+```
+
+> This method also supports an options object
