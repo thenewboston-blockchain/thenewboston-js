@@ -40,6 +40,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
   - [Getting Validator Confirmation Services](#getting-validator-confirmation-services)
 
+  - [Sending Upgrade Notice and Upgrade Request](#sending-upgrade-notice-and-upgrade-request)
+
 - [Validator](#validator)
 
 - [Primary Validator](#primary-validator)
@@ -589,3 +591,34 @@ console.log(validatorConfirmationServices);
 ```
 
 > This method also supports an options object
+
+> Check [this](https://thenewboston.com/guide/confirmation-services) out to get a better overview of Confirmation Services
+
+#### Sending Upgrade Notice and Upgrade Request
+
+An upgrade request is basically the bank asking one of its confirmation validators to become the primary validator after changing the trust values.
+
+We can send an upgrade request using the `Bank.sendUpgradeRequest` method.
+
+```ts
+const bank = new tnb.Bank("http://143.110.137.54");
+const res = await bank.sendUpgradeRequest("fdasfsafdsa", new Account()); // Fake data, causes a 404 error
+console.log(res);
+// No response
+```
+
+We send an upgrade request with the `node_identifier` string and the connected `account` of the validator.
+
+An upgrade notice is when a bank is asking another bank whether they have switched to the new primary validator or not.
+
+We send an upgrade notice with the `Bank.sendUpgradeNotice` method.
+
+```ts
+const res = await bank.sendUpgradeNotice("fewafdsa3243ewdsvgsf", new tnb.Account()); // Fake data will result in status code 401
+console.log(res);
+// No response
+// Status Code 200 if the bank has set the new Primary Validator
+// Status Code 400 is the bank has not set the new Primary Validator
+```
+
+> If you don't understand upgradeRequest and upgradeNotice, check out the [documentation](https://thenewboston.com/guide/resync-process) at thenewboston.com
