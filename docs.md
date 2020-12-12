@@ -215,8 +215,9 @@ await primaryValidator.getConfig():
   node_type: 'PRIMARY_VALIDATOR'
 }
 
-await confirmationValidator.getConfig();
-// Expected output from a Confirmation Validator
+const confirmationValidatorConfig = await confirmationValidator.getConfig();
+console.log(confirmationValidatorConfig);
+/*
 {
   primary_validator: {
     account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
@@ -245,6 +246,7 @@ await confirmationValidator.getConfig();
   daily_confirmation_rate: 1,
   node_type: 'CONFIRMATION_VALIDATOR'
 }
+*/
 ```
 Now we know how to create a Validator and access it's configurations in our code, we can move on to the methods that work with the accounts that use it's services and the other nodes which are on it's network.
 
@@ -256,8 +258,9 @@ To see all the acounts on the network your Validator is connected to, there is a
 const primaryValidator = new PrimaryValidator("http://157.230.75.212");
 const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 // Make a default call to getAccounts
-await primaryValidator.getAccounts():
-// Some expected output
+const allAccounts = await primaryValidator.getAccounts():
+console.log(allAccounts);
+/*
 {
   "count": 411,
   "next": "http://157.230.75.212/accounts?limit=50&offset=50",
@@ -269,13 +272,14 @@ await primaryValidator.getAccounts():
       "balance": 460,
       "balance_lock": "aca94f4d2f472c6b9b662f60aab247b9c6aef2079d63b870e2cc02308a7c822b"
     }, // for brevity we will show one result but running this code will show 50 accounts before the offset of the 50th account (0-49)
-    ...,
-    ...
+    ... 49 more results
   ]
 }
+*/
 // Pass in optional argument to get the first account listed
-await confirmationValidator.getAccounts({limit:1, offset:0}):
-// Some expected output for 1 result at the 0 offset
+const firstAccount = await confirmationValidator.getAccounts({limit:1, offset:0}):
+console.log(firstAccount);
+/*
 {
   "count": 411,
   "next": "http://157.230.10.237/accounts?limit=1&offset=1",
@@ -289,6 +293,7 @@ await confirmationValidator.getAccounts({limit:1, offset:0}):
     },
   ]
 }
+*/
 ```
 You can also get the balance and balance lock of a single account with the following API calls, given the account number.
 
@@ -297,20 +302,14 @@ const primaryValidator = new PrimaryValidator("http://157.230.75.212");
 const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 
 // call to getAccountBalance
-await primaryValidator.getAccountBalance("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
-await confirmationValidator.getAccountBalance("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
-// Some expected output
-{
-  balance: 2000
-}
+const balance = await primaryValidator.getAccountBalance("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+console.log(balance);
+// { balance: 2000 }
 
 // call to getAccountBalanceLock
-await primaryValidator.getAccountBalanceLock("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
-await confirmationValidator.getAccountBalanceLock("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
-// Some expected output
-{
-  balance_lock: '57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce'
-}
+const balLock = await confirmationValidator.getAccountBalanceLock("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+console.log(balLock);
+// { balance_lock: '57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce' }
 ```
 
 ### Working With Other Nodes
@@ -322,8 +321,9 @@ const primaryValidator = new PrimaryValidator("http://157.230.75.212");
 const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 
 // See all Confirmation Validators connected to the Primary Validator
-await primaryValidator.getValidators();
-// Some expected output
+const allConfirmationValidators = await primaryValidator.getValidators();
+console.log(allConfirmationValidators);
+/*
 {
   count: 18,
   next: null,
@@ -343,14 +343,15 @@ await primaryValidator.getValidators();
       daily_confirmation_rate: 1,
       trust: '0.00'
     },
-    ...,
-    ...
+    .... 17 more results
   ]
 }
+*/
 
 // See all the Banks connected to this Confirmation Validator 
-await confirmationValidator.getBanks(),
-// some expected output
+const banks = await confirmationValidator.getBanks();
+console.log(banks);
+/*
 {
   count: 4,
   next: null,
@@ -367,10 +368,10 @@ await confirmationValidator.getBanks(),
       confirmation_expiration: null,
       trust: '0.00'
     },
-    ...,
-    ...
+    .... 3 more results 
   ]
 }
+*/
 
 ```
 
