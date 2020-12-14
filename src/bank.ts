@@ -38,7 +38,20 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/banks", options);
   }
 
-  // TODO: PATCH /banks/<node_identifier>
+  /**
+   * Updates a given bank's trust.
+   * @param nodeIdentifier the bank to update's node identifier
+   * @param trust the new bank's trust
+   * @param serverAccount the account to sign the request
+   */
+  async updateBankTrust(nodeIdentifier: string, trust: number, serverAccount: Account) {
+    return await this.patchData(
+      `/banks/${nodeIdentifier}`,
+      serverAccount.createSignedMessage({
+        trust,
+      })
+    );
+  }
 
   /**
    * Gets the blocks for the given bank.
