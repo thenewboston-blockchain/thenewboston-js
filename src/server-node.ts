@@ -36,10 +36,8 @@ export abstract class ServerNode {
    * @param options the optional object for the pagination options
    */
   async getPaginatedData<T>(endpoint: string, options: Partial<PaginationOptions>) {
-    const { limit, offset } = this.options.defaultPagination;
     return await this.getData<T>(endpoint, {
-      limit,
-      offset,
+      ...this.options.defaultPagination,
       ...options,
     });
   }
