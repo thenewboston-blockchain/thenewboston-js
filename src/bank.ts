@@ -1,5 +1,6 @@
 import { ServerNode } from "./server-node";
 import type { PaginationOptions, BankConfigResponse, Transaction } from "./models";
+import type { Protocol } from "./models/responses/constants";
 import { Account } from "./account";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
@@ -96,7 +97,23 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/invalid_blocks", options);
   }
 
-  // TODO: POST /connection_requests
+  /**
+   * Sends a connection request to this current bank with the data about the new server.
+   * @param ipAddress the new bank's ip address
+   * @param port the new bank's port
+   * @param protocol the new bank's protocol
+   * @param serverAccount the server account to validate the request
+   */
+  async sendConnectionRequest(ipAddress: string, port: string, protocol: Protocol, serverAccount: Account) {
+    return await this.postData(
+      "/connection_requests",
+      serverAccount.createSignedMessage({
+        ip_address: ipAddress,
+        port,
+        protocol,
+      })
+    );
+  }
 
   /**
    * Gets the validator confirmation services for the given bank.
