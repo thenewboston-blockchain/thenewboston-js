@@ -123,7 +123,21 @@ export class Bank extends ServerNode {
     return await this.getPaginatedData("/validator_confirmation_services", options);
   }
 
-  // TODO: POST /validator_confirmation_services
+  /**
+   * Updates the validator's confirmation services data.
+   * @param start the validator's services start date
+   * @param end the validator's services end date
+   * @param serverAccount the server's account to validate the requests
+   */
+  async updateValidatorConfirmationServices(start: string, end: string, serverAccount: Account) {
+    return await this.postData(
+      "/validator_confirmation_services",
+      serverAccount.createSignedMessage({
+        start,
+        end,
+      })
+    );
+  }
 
   /**
    * Sends a signed POST request to the bank for an upgrade notice.
