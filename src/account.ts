@@ -19,6 +19,9 @@ export class Account {
     let accountKeys: AccountKeys;
     if (accountNumber && signingKey) {
       accountKeys = Account.fromBothKeys(signingKey, accountNumber);
+      if (accountKeys[0].toString() !== Account.fromSigningKey(signingKey)[0].toString()) {
+        console.log("invalid Account Number!"); // Did a console.log here not to break anything. Maybe throw an error.
+      }
     } else if (signingKey) {
       accountKeys = Account.fromSigningKey(signingKey);
     } else {
