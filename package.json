@@ -11,7 +11,7 @@
     "prettier": "prettier --write --loglevel silent \"{,!(node_modules)/**/}*.ts\"",
     "build": "npm run clean && npm run build:node && npm run build:web",
     "build:node": "rollup -c",
-    "build:web": "browserify dist/index.js -p tinyify --no-flat > dist/tnb.min.js",
+    "build:web": "browserify dist/index.js -p tinyify --no-flat -o dist/tnb.min.js -s tnb",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build"
   },
