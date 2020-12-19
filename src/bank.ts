@@ -8,10 +8,10 @@ export class Bank extends ServerNode {
    * Updates the given server account's trust on the bank.
    * @param accountNumber the account number of the server to update
    * @param trust the trust of the the server
-   * @param serverAccount the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
+   * @param account the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
    */
-  async updateAccount(accountNumber: string, trust: number, serverAccount: Account) {
-    return await this.patchData(`/accounts/${accountNumber}`, serverAccount.createSignedMessage({ trust }));
+  async updateAccount(accountNumber: string, trust: number, account: Account) {
+    return await this.patchData(`/accounts/${accountNumber}`, account.createSignedMessage({ trust }));
   }
 
   /**
@@ -34,12 +34,12 @@ export class Bank extends ServerNode {
    * Updates a given bank's trust.
    * @param nodeIdentifier the bank to update's node identifier
    * @param trust the new bank's trust
-   * @param serverAccount the account to sign the request
+   * @param account the account to sign the request
    */
-  async updateBankTrust(nodeIdentifier: string, trust: number, serverAccount: Account) {
+  async updateBankTrust(nodeIdentifier: string, trust: number, account: Account) {
     return await this.patchData(
       `/banks/${nodeIdentifier}`,
-      serverAccount.createSignedMessage({
+      account.createSignedMessage({
         trust,
       })
     );
@@ -100,12 +100,12 @@ export class Bank extends ServerNode {
    * Updates the validator's confirmation services data.
    * @param start the validator's services start date
    * @param end the validator's services end date
-   * @param serverAccount the server's account to validate the requests
+   * @param account the server's account to validate the requests
    */
-  async updateValidatorConfirmationServices(start: string, end: string, serverAccount: Account) {
+  async updateValidatorConfirmationServices(start: string, end: string, account: Account) {
     return await this.postData(
       "/validator_confirmation_services",
-      serverAccount.createSignedMessage({
+      account.createSignedMessage({
         start,
         end,
       })
@@ -115,25 +115,22 @@ export class Bank extends ServerNode {
   /**
    * Sends a signed POST request to the bank for an upgrade notice.
    * @param nodeIdentifier the node identifier of the bank that is receiving the upgrade notice
-   * @param bankAccount the current bank server's account
+   * @param account the current bank server's account
    */
-  async sendUpgradeNotice(nodeIdentifier: string, bankAccount: Account) {
+  async sendUpgradeNotice(nodeIdentifier: string, account: Account) {
     return await this.postData(
       "/upgrade_notice",
-      bankAccount.createSignedMessage({ bank_node_identifier: nodeIdentifier })
+      account.createSignedMessage({ bank_node_identifier: nodeIdentifier })
     );
   }
 
   /**
    * Sends a signed POST request to the confirmation validator for an upgrade request.
    * @param nodeIdentifier the node identifier of the confirmation validator that is receiving the upgrade notice
-   * @param validatorAccount the current confirmation validator server's account
+   * @param account the current confirmation validator server's account
    */
-  async sendUpgradeRequest(nodeIdentifier: string, validatorAccount: Account): Promise<any> {
-    return await this.postData(
-      "/upgrade_request",
-      validatorAccount.createSignedMessage({ node_identifier: nodeIdentifier })
-    );
+  async sendUpgradeRequest(nodeIdentifier: string, account: Account): Promise<any> {
+    return await this.postData("/upgrade_request", account.createSignedMessage({ node_identifier: nodeIdentifier }));
   }
 
   /**
