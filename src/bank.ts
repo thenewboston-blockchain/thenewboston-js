@@ -170,6 +170,4 @@ export class Bank extends ServerNode {
   async getValidators(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/validators", options);
   }
-
-  // TODO: PATCH /validators/<node_identifier>
 }
