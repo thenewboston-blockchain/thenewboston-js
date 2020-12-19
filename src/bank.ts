@@ -129,7 +129,7 @@ export class Bank extends ServerNode {
    * @param nodeIdentifier the node identifier of the confirmation validator that is receiving the upgrade notice
    * @param account the current confirmation validator server's account
    */
-  async sendUpgradeRequest(nodeIdentifier: string, account: Account): Promise<any> {
+  async sendUpgradeRequest(nodeIdentifier: string, account: Account) {
     return await this.postData("/upgrade_request", account.createSignedMessage({ node_identifier: nodeIdentifier }));
   }
 
