@@ -1,6 +1,8 @@
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type { PaginationOptions, ServerNodeOptions } from "./models";
+import type { Account } from "./account";
+import type { Protocol } from "./models/responses/constants";
 
 /**
  * Used internally for all server nodes.
@@ -60,5 +62,47 @@ export abstract class ServerNode {
   async patchData<T>(endpoint: string, data: any) {
     const res = await axios.patch<T>(`${this.url}${endpoint}`, data);
     return res.data;
+  }
+
+  /**
+   * Gets the accounts for the given server node in a paginated format.
+   * @param options The optional object for the pagination options.
+   */
+  async getAccounts(options: Partial<PaginationOptions> = {}) {
+    return await this.getPaginatedData("/accounts", options);
+  }
+
+  /**
+   * Gets the account balance with the given account number (id).
+   * @param id the account number
+   */
+  async getAccountBalance(id: string) {
+    return await this.getData(`/accounts/${id}/balance`);
+  }
+
+  /**
+   * Gets the balance lock of the given account.
+   * @param id the id of the account
+   */
+  async getAccountBalanceLock(id: string) {
+    return await this.getData(`/accounts/${id}/balance_lock`);
+  }
+
+  /**
+   * Sends a connection request to this current network with the data about the new server.
+   * @param ipAddress the new server node's ip address
+   * @param port the new node's port
+   * @param protocol the new node's protocol
+   * @param account the server account to validate the request
+   */
+  async sendConnectionRequest(ipAddress: string, port: string, protocol: Protocol, account: Account) {
+    return await this.postData(
+      "/connection_requests",
+      account.createSignedMessage({
+        ip_address: ipAddress,
+        port,
+        protocol,
+      })
+    );
   }
 }

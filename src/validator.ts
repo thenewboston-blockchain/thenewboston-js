@@ -1,36 +1,13 @@
 import { ServerNode } from "./server-node";
 import type { PaginationOptions } from "./models";
-
+import type { Account } from "./account";
+import type { Protocol } from "./models/responses/constants";
 /**
  * Used as a base for all types of validator nodes.
  *
  * Note: this class is meant to be extended.
  */
 export abstract class Validator extends ServerNode {
-  /**
-   * Gets the account numbers, balances, and balance locks of all connected accounts in a paginated response for the current validator.
-   * @param options the pagination options
-   */
-  async getAccounts(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/accounts", options);
-  }
-
-  /**
-   * Gets the account balance with the given account number (id).
-   * @param id the account number
-   */
-  async getAccountBalance(id: string) {
-    return await this.getData(`/accounts/${id}/balance`);
-  }
-
-  /**
-   * Gets the balance lock of the given account.
-   * @param id the id of the account
-   */
-  async getAccountBalanceLock(id: string) {
-    return await this.getData(`/accounts/${id}/balance_lock`);
-  }
-
   /** Gets all of the banks connected to the current validator. */
   async getBanks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/banks", options);

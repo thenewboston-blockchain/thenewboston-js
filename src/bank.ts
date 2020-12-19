@@ -1,18 +1,9 @@
 import { ServerNode } from "./server-node";
 import type { PaginationOptions, BankConfigResponse, Transaction } from "./models";
-import type { Protocol } from "./models/responses/constants";
-import { Account } from "./account";
+import type { Account } from "./account";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
-  /**
-   * Gets the accounts for the given bank in a paginated format.
-   * @param options The optional object for the pagination options.
-   */
-  async getAccounts(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/accounts", options);
-  }
-
   /**
    * Updates the given server account's trust on the bank.
    * @param accountNumber the account number of the server to update
@@ -95,24 +86,6 @@ export class Bank extends ServerNode {
    */
   async getInvalidBlocks(options: Partial<PaginationOptions> = {}) {
     return await this.getPaginatedData("/invalid_blocks", options);
-  }
-
-  /**
-   * Sends a connection request to this current bank with the data about the new server.
-   * @param ipAddress the new bank's ip address
-   * @param port the new bank's port
-   * @param protocol the new bank's protocol
-   * @param serverAccount the server account to validate the request
-   */
-  async sendConnectionRequest(ipAddress: string, port: string, protocol: Protocol, serverAccount: Account) {
-    return await this.postData(
-      "/connection_requests",
-      serverAccount.createSignedMessage({
-        ip_address: ipAddress,
-        port,
-        protocol,
-      })
-    );
   }
 
   /**

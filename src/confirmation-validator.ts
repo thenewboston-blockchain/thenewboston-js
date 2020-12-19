@@ -11,8 +11,6 @@ export class ConfirmationValidator extends Validator {
 
   // TODO: POST /confirmation_blocks
 
-  // TODO: POST /connection_requests
-
   /**
    * Sends a notification to the bank that a primary validator has left the network.
    * @param ipAddress the ip address of the primary validator that is leaving
