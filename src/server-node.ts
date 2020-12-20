@@ -1,6 +1,6 @@
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
-import type { PaginationOptions, ServerNodeOptions } from "./models";
+import type { AccountBalanceLockResponse, PaginationOptions, ServerNodeOptions } from "./models";
 import type { Account } from "./account";
 import type { Protocol } from "./models/responses/constants";
 
@@ -84,7 +84,7 @@ export abstract class ServerNode {
    * Gets the balance lock of the given account.
    * @param id the id of the account
    */
-  async getAccountBalanceLock(id: string) {
+  async getAccountBalanceLock(id: string): Promise<AccountBalanceLockResponse> {
     return await this.getData(`/accounts/${id}/balance_lock`);
   }
 
