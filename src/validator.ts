@@ -13,6 +13,22 @@ export abstract class Validator extends ServerNode {
     return await this.getPaginatedData("/banks", options);
   }
 
+  /**
+   * Gets the account balance with the given account number (id).
+   * @param id the account number
+   */
+  async getAccountBalance(id: string) {
+    return await this.getData(`/accounts/${id}/balance`);
+  }
+
+  /**
+   * Gets the balance lock of the given account.
+   * @param id the id of the account
+   */
+  async getAccountBalanceLock(id: string): Promise<AccountBalanceLockResponse> {
+    return await this.getData(`/accounts/${id}/balance_lock`);
+  }
+
   /** Gets the current config data for the current validator. */
   async getConfig() {
     return await this.getData("/config");

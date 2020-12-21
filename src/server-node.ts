@@ -73,22 +73,6 @@ export abstract class ServerNode {
   }
 
   /**
-   * Gets the account balance with the given account number (id).
-   * @param id the account number
-   */
-  async getAccountBalance(id: string) {
-    return await this.getData(`/accounts/${id}/balance`);
-  }
-
-  /**
-   * Gets the balance lock of the given account.
-   * @param id the id of the account
-   */
-  async getAccountBalanceLock(id: string): Promise<AccountBalanceLockResponse> {
-    return await this.getData(`/accounts/${id}/balance_lock`);
-  }
-
-  /**
    * Sends a connection request to this current network with the data about the new server.
    * @param ipAddress the new server node's ip address
    * @param port the new node's port
