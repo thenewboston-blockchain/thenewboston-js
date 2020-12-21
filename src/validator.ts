@@ -1,7 +1,6 @@
 import { ServerNode } from "./server-node";
-import type { PaginationOptions } from "./models";
-import type { Account } from "./account";
-import type { Protocol } from "./models/responses/constants";
+import type { AccountBalanceLockResponse, PaginationOptions } from "./models";
+
 /**
  * Used as a base for all types of validator nodes.
  *

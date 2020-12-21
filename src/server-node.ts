@@ -1,6 +1,6 @@
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
-import type { AccountBalanceLockResponse, PaginationOptions, ServerNodeOptions } from "./models";
+import type { PaginationOptions, ServerNodeOptions } from "./models";
 import type { Account } from "./account";
 import type { Protocol } from "./models/responses/constants";
 
