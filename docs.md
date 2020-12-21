@@ -74,7 +74,7 @@ account.accountNumberHex; // random account number hex string
 account.signingKeyHex; // random account signing key hex string
 ```
 
-As you can tell, if you don't pass in anything into the `Account` class, then it just generates a random account for you. Now, let's get a little more complex, you can passs in the `signingKey` as the first parameter within `Account` and it will set the `signingKeyHex` of the `Account` as it. Also, due to the fact that we are using the signing-based cryptographic algorithms, the `accountNumberHex` is able to be generated automatically. Here is an example of this behavior in action:
+As you can tell, if you don't pass in anything into the `Account` class, then it just generates a random account for you. Now, let's get a little more complex, you can pass in the `signingKey` as the first parameter within `Account` and it will set the `signingKeyHex` of the `Account` as it. Also, since we are using the signing-based cryptographic algorithms, the `accountNumberHex` can be generated automatically. Here is an example of this behavior in action:
 
 ```ts
 const accountSigningKey = "61647c0dd309646ea5b3868c8c237158483a10484b0485663e4f82a68a10535e";
@@ -84,7 +84,7 @@ account.accountNumberHex; // the corresponding account number hex
 account.signingKeyHex; // the account signing key
 ```
 
-> Remember: You **must** keep your account signing key secret at all times. If someone has obtained your signing key, then your account is compromised along with all of its funds.
+> Remember: You **must** keep your account signing key secret at all times. If someone obtains your signing key, then your account is compromised along with all of its funds.
 
 Alright, so we have checked out all of the other ways of instantiating an `Account` with this library, but we haven't learned how to give it both the `accountNumber` and `signingKey`. To do that, you must pass in the `signingKey` first, with the `accountNumber` second. Here is an example of that in the wild:
 
@@ -716,7 +716,7 @@ In this section we will be going over the base Validator node that both the Prim
 
 ### Creating Validators
 
-To create a Validator we must pass in the url of the Validator you wish to interact with, into a constructor.
+To create a Validator, we must pass in the url of the Validator you wish to interact with, into a constructor.
 
 ```ts
 // create object with access to the API and basic functions of a Validator.
@@ -781,11 +781,11 @@ console.log(confirmationValidatorConfig);
 }
 */
 ```
-Now we know how to create a Validator and access it's configurations in our code, we can move on to the methods that work with the accounts that use it's services and the other nodes which are on it's network.
+Now we know how to create a Validator and access its configurations in our code, we can move on to the methods that work with the accounts that use its services and the other nodes which are on it's network.
 
 ### Working With Accounts
 
-To see all the acounts on the network your Validator is connected to, there is a `getAccounts` method. This method will return the total amount of accounts in the `count` property, and you can access more or past `results` with the URL links that the `next` and `previous` properties provide.  
+To see all the accounts on the network your Validator is connected to, there is a `getAccounts` method. This method will return the total amount of accounts in the `count` property, and you can access more or past `results` with the URL links that the `next` and `previous` properties provide.  
 
 ```ts
 const primaryValidator = new PrimaryValidator("http://157.230.75.212");
@@ -912,7 +912,7 @@ console.log(banks);
 
 ### Working With Blocks
 
-Any validators main purpose is to validate the transactions that a Bank creates, these transactions are called Blocks.  All Validators share the `getValidConfirmationBlock` and `getQueuedConfirmationBlock` methods to view the Blocks that a Bank using their services are asking/asked them to validate. If you got to Your TNB Account Manager, click on a Validator and then its "confirmations", you will see a list of all the confirmed blocks that Validator proccessed and if you take the "Block Identifier" and pass it as a string to the `getValidConfirmationBlock` method, you will see the in depth details of a Block.
+A validator's main purpose is to validate the transactions that a Bank creates. These transactions are called Blocks.  All Validators share the `getValidConfirmationBlock` and `getQueuedConfirmationBlock` methods to view the blocks that a Bank is asking them to validate. If you go to your TNB Account Manager, click on a Validator and then its "confirmations", you will see a list of all the confirmed blocks that the Validator processed and if you take the "Block Identifier" and pass it as a string to the `getValidConfirmationBlock` method, you will see the in depth details of a Block.
 
 ```ts
 
@@ -972,7 +972,7 @@ console.log(valConfBlock);
 To get an unconfirmed or queued Block is a little more difficult since the network is very fast, what we would have to do to get that information is have a bank to make a transaction, send it as a Block and then immediately grab the "Block ID" and pass it into the `getQueuedConfirmationBlocks` of a Validator that's services are being used by the bank.  Making bank transactions and sending them as blocks is a little out of the scope of this section, but all together it may look like this.
 
 ```ts
-// let's assume this Confirmation Validator has it's services subscribed to by this Bank.
+// let's assume this Confirmation Validator has its services subscribed to by this Bank.
 const CV = new ConfirmationValidator("http://157.230.10.237");
 const bank = new tnb.Bank("http://143.110.137.54");
 const transactionsData = await bank.getTransactions();
@@ -987,12 +987,12 @@ await bank.addBlocks(
   transactions,
   new tnb.Account("fakeSigningKey", "fakeAccountNumber")
 );
-/* the above code is explained in the Banks section, and for the sake not being repitive, 
-please refer to the "Adding Blocks" subsection of Banks for a explination of this code*/
+/* the above code is explained in the Banks section, and for the sake not being repetitive, 
+please refer to the "Adding Blocks" subsection of Banks for explanation of this code*/
 
 // get the last Block ID
 const amountOfBlocks = await bank.getConfirmationBlocks().count;
-const lastBlockID = await bank.getConfirmationBlocks({limit=1, offest=amountOfBlocks}).results[0].block_identifier;
+const lastBlockID = await bank.getConfirmationBlocks({limit=1, offset=amountOfBlocks}).results[0].block_identifier;
 
 const queuedConfBlock = await CV.getQueuedConfirmationBlock(lastBlockID);
 console.log(queuedConfBlock);
