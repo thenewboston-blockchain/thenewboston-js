@@ -46,7 +46,7 @@ Currently, the only way to use the library is to clone the repository and downlo
 
 - [Validator](#validator)
 
-  - [Creating Validators](#creating-banks)
+  - [Creating Validators](#creating-validators)
 
   - [Working With Accounts](#working-with-accounts)
 
@@ -57,6 +57,11 @@ Currently, the only way to use the library is to clone the repository and downlo
 - [Primary Validator](#primary-validator)
 
 - [Confirmation Validator](#confirmation-validator)
+
+  - [Connecting to Other Nodes and Checking Services](#connecting-to-other-nodes-and-checking-services)
+
+  - [The Resync Process Methods](#the-resync-process-methods)
+
 
 ### Account
 
@@ -912,59 +917,81 @@ console.log(banks);
 
 ### Working With Blocks
 
-A validator's main purpose is to validate the transactions that a Bank creates. These transactions are called Blocks.  All Validators share the `getValidConfirmationBlock` and `getQueuedConfirmationBlock` methods to view the blocks that a Bank is asking them to validate. If you go to your TNB Account Manager, click on a Validator and then its "confirmations", you will see a list of all the confirmed blocks that the Validator processed and if you take the "Block Identifier" and pass it as a string to the `getValidConfirmationBlock` method, you will see the in depth details of a Block.
+A validator's main purpose is to validate the transactions that a Bank creates. These transactions are called Blocks.  All Validators share the `getValidConfirmationBlock` and `getQueuedConfirmationBlock` methods to view the blocks that a Bank is asking them to validate. You can make API calls to a bank with this library to see a list of all the confirmed blocks that a validator processed and if you take a `block_identifier` and pass it as a string to the `getValidConfirmationBlock` method, you will see the in depth details of a Block.
 
 ```ts
 
-const PV = new PrimaryValidator("http://157.230.75.212");
-const valConfBlock = await PV.getValidConfirmationBlock("b30231d7b4b3a00222d96340d3e89bb969f0476836402386f8ac334ac456b4ac");
-console.log(valConfBlock);
+const PrimaryValidator = new tnb.PrimaryValidator("http://157.245.15.217");
+// Please refer to the Banks section for futher explination of this code.
+const Bank = new tnb.Bank("http://104.236.15.70"); // make a bank
+const blocks = await Bank.getConfirmationBlocks(); // get banks confirmation blocks
+const count = blocks.count; // grab the count
+const lastBlock = await Bank.getConfirmationBlocks({limit:1, offset:count-1}); // use count to grab most recent block
+const lastBlockID = lastBlock.results[0].block_identifier; // grab the block_identifier, 
+// back to Validator code
+const validConfBlock = await PrimaryValidator.getValidConfirmationBlock(lastBlockID);
+console.log(validConfBlock);
 /*{
+  count: 41,
+  next: null,
+  previous: 'http://104.236.15.70/confirmation_blocks?limit=1&offset=39',
+  results: [
+    {
+      id: '737480d1-0108-4c5f-8184-4389a940a5ed',
+      created_date: '2020-12-22T12:52:17.043289Z',
+      modified_date: '2020-12-22T12:52:17.043321Z',
+      block_identifier: '41647bafa5c2c4d39a83054d7fe2e7c82ed9ae883d3fc9d9db66c7d43cd4563d',
+      block: 'ed0706dc-e7f3-4525-ab12-87d98505289e',
+      validator: 'c55c188b-0a21-4ca9-8a99-757d10189122'
+    }
+  ]
+}
+{
   message: {
     block: {
-      account_number: '15e164325715c9552911caf7e3ea1759f4c2ccba5fd82864a4d811d67935c4f9',
+      account_number: 'aacda0b5cf869337dbcce9b9da2e84d0b54e464e4a56ebdecf7e07598f16c673',
       message: {
-        balance_key: '8d26ea32062dcb96fbda2b736b180c5435ab7a236e0f555ca32de75fd57627eb',
+        balance_key: 'a0ea45418b81d4f60ef3e6131fe06af402dcaf74812356da2a6e4ee6abb897be',
         txs: [
           {
             amount: 1,
-            recipient: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035'
+            recipient: 'a6a4409a35b2c5b1d98e8f72f7a3713110a6bac2affcd76ae13962083df585d8'
           },
           {
             amount: 1,
-            recipient: '7b2a3a94bdbb8911f7da685e3c545e24c862b4440b5fa0768cfbdfbdfb8a9ea4'
+            recipient: 'b67235aa8ad1741e521d7651affa09ee297286501f20dcc013bb7cc6d6669c30'
           },
           {
-            amount: 10,
-            recipient: '8cec39d67cd5d3e3e487b944b5c7029c6bd51cfcc8855a9fd1e679defe0669f0'
+            amount: 50,
+            recipient: 'b974f2d0ed808187701b0b7ccf44d901047e8585a09aa6860bdf663f63c40c9b'
           }
-        ],
+        ]
       },
-      signature: '6dcb5dad55497a1b3e87df32194c9de459854f2ec1681dc7dee28d6e00a3a26814464be3a3861893141867b26ee4e9afdb0573872a6a8dffa72c819ad799d00e'
+      signature: 'd59509f7ca646a6c54bd4d74fadf56ef6e1a0c2cf4450ae88e98d3d62164592685ab3299cae3beba2264c06c32c767749c0ed312a7ae913a357f4476b33a1b0a'
     },
-    block_identifier: 'b30231d7b4b3a00222d96340d3e89bb969f0476836402386f8ac334ac456b4ac',
+    block_identifier: '41647bafa5c2c4d39a83054d7fe2e7c82ed9ae883d3fc9d9db66c7d43cd4563d',
     updated_balances: [
       {
-        account_number: '15e164325715c9552911caf7e3ea1759f4c2ccba5fd82864a4d811d67935c4f9',
-        balance: 92207,
-        balance_lock: '76e6153a051dc305be7c8a30cba630b400506f9f843ec80c2a9f78e926264cad'
+        account_number: 'a6a4409a35b2c5b1d98e8f72f7a3713110a6bac2affcd76ae13962083df585d8',
+        balance: 41
       },
       {
-        account_number: '6649dde16e1e56e27157d32fe37f7534d9f547436605fe44b550f5a7b9473035',
-        balance: 221
+        account_number: 'aacda0b5cf869337dbcce9b9da2e84d0b54e464e4a56ebdecf7e07598f16c673',
+        balance: 281474976703124,
+        balance_lock: '1bfbe76ae7dc04ba02b4c6fd10cd7c05dfbe3ab61bbafedd65d3d1a4bf94b06e'
       },
       {
-        account_number: '7b2a3a94bdbb8911f7da685e3c545e24c862b4440b5fa0768cfbdfbdfb8a9ea4',
-        balance: 17
+        account_number: 'b67235aa8ad1741e521d7651affa09ee297286501f20dcc013bb7cc6d6669c30',
+        balance: 41
       },
       {
-        account_number: '8cec39d67cd5d3e3e487b944b5c7029c6bd51cfcc8855a9fd1e679defe0669f0',
-        balance: 10
+        account_number: 'b974f2d0ed808187701b0b7ccf44d901047e8585a09aa6860bdf663f63c40c9b',
+        balance: 7450
       }
     ]
   },
-  node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
-  signature: '0770f2c3c434bf2e88c907e08eda168395fb544d9c33cabc74342db01364e39885ecde1503231cea9fc537e11f8c1028d4aae5f98ea80c2fcfe1ccdd2f6a8b0a'
+  node_identifier: 'ef709ef9c257a7c5bb67eac0847a8dd801780ee86fe51848dd71de817bbacc9f',
+  signature: '0f9858d3b806faf143d447616f359910ca0dd119531cfb726ba835a576d99d30b733700e884f95de4f4b392a19363ff154a49e5e9e7870f7bdea791f0ff20c09'
 }*/
 
 ```
@@ -973,26 +1000,38 @@ To get an unconfirmed or queued Block is a little more difficult since the netwo
 
 ```ts
 // let's assume this Confirmation Validator has its services subscribed to by this Bank.
-const CV = new ConfirmationValidator("http://157.230.10.237");
-const bank = new tnb.Bank("http://143.110.137.54");
-const transactionsData = await bank.getTransactions();
-const transactions = transactionsData.results.map(({ amount, recipient }) => ({
-  // Destructuring
-  amount,
-  recipient,
-}));
-
-await bank.addBlocks(
-  "fakeBalanceLock",
-  transactions,
-  new tnb.Account("fakeSigningKey", "fakeAccountNumber")
+const Bank = new tnb.Bank("http://104.236.15.70");
+const C_V = new tnb.ConfirmationValidator("http://104.236.20.16");
+// this account has no coins but, if it did this would work, obviously we aren't going to expose a real account
+const MyAccount =  new tnb.Account();
+const AccLockReponse = await P_V.getAccountBalanceLock(MyAcount.accountNumber);
+const BalanceLock = accLockReponse.balance_lock;
+// create a transaction
+const tx = [
+  {
+    amount: 50,
+    recipient: "b974f2d0ed808187701b0b7ccf44d901047e8585a09aa6860bdf663f63c40c9b"
+  }, 
+  {
+    amount: 1,
+    recipient: "b67235aa8ad1741e521d7651affa09ee297286501f20dcc013bb7cc6d6669c30"
+  },
+  {
+    amount: 1,
+    recipient: "a6a4409a35b2c5b1d98e8f72f7a3713110a6bac2affcd76ae13962083df585d8"
+  },
+];
+// add new block to bank
+const result = await Bank.addBlocks(
+  BalanceLock,
+  tx,
+  MyAccount
 );
-/* the above code is explained in the Banks section, and for the sake not being repetitive, 
-please refer to the "Adding Blocks" subsection of Banks for explanation of this code*/
+// for a more in depth explination of the above code, please refer to the "Adding Blocks" subsection of Banks
 
 // get the last Block ID
-const amountOfBlocks = await bank.getConfirmationBlocks().count;
-const lastBlockID = await bank.getConfirmationBlocks({limit=1, offset=amountOfBlocks}).results[0].block_identifier;
+const amountOfBlocks = await Bank.getConfirmationBlocks().count;
+const lastBlockID = await Bank.getConfirmationBlocks({limit=1, offset=amountOfBlocks}).results[0].block_identifier;
 
 const queuedConfBlock = await CV.getQueuedConfirmationBlock(lastBlockID);
 console.log(queuedConfBlock);
@@ -1005,7 +1044,7 @@ console.log(queuedConfBlock);
         "balance_key": "e6a41b658e17ab2db4355176c8160de6a66b07e5cbdd85244b55b38b4fd26e92",
         "txs": [
           {
-            "amount": 60,
+            "amount": 50,
             "recipient": "484b3176c63d5f37d808404af1a12c4b9649cd6f6769f35bdf5a816133623fbc"
           },
           {
@@ -1013,7 +1052,7 @@ console.log(queuedConfBlock);
             "recipient": "5e12967707909e62b2bb2036c209085a784fabbc3deccefee70052b6181c8ed8"
           },
           {
-            "amount": 4,
+            "amount": 1,
             "recipient": "ad1f8845c6a1abb6011a2a434a079a087c460657aad54329a84b406dce8bf314"
           }
         ]
@@ -1047,3 +1086,39 @@ console.log(queuedConfBlock);
 */
 ```
 This basically puts out the same information as `getVaildConfirmationBlocks` but the difference is that this "queued" block will be deemed valid or invalid soon.  The window to see it is very small because of the speed of the network, but if you grab the `block_identifier` of a newly created block you can keep track of it as it hits all the Validators that will be processing it.
+
+### Confirmation Validators
+
+Now we are going to build up on what we went over in the "Validators" section covering the methods this library currently extends for Confirmation Validators.  This section will be updated along side the code, but for now we will mark missing features as ToDo.
+
+#### Connecting to Other Nodes and Checking Services
+
+We can use the `getBankConfirmationServices` method to see what Banks are currently using a Confirmation Validators services and the details attached.
+
+```ts
+const confirmationValidator = new tnb.ConfirmationValidator("http://157.230.10.237");
+const result = await confirmationValidator.getBankConfirmationServices();
+console.log(result);
+/*
+{
+  count: 1,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 'ee60d715-3520-4e3b-a80e-074d994b7ec4',
+      created_date: '2020-12-16T01:01:59.263371Z',
+      modified_date: '2020-12-16T01:01:59.263392Z',
+      end: '2020-12-16T01:01:23Z',
+      start: '2021-12-16T01:01:33Z',
+      bank: '0f709ca1-adaa-488d-adf1-a91933c5f2b8'
+    }
+  ]
+}
+*/
+```
+
+The Confirmation Validator API says that they can make signed connection requests to other nodes and that it can accept confirmation blocks for re-validation from the Primary Validator, but those are currently ToDo's. 
+
+#### The Resync Process Methods
+
