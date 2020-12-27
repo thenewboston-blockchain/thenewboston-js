@@ -1,3 +1,3 @@
 export interface AccountBalanceLockResponse {
-  balance_lock: string;
+  balance_lock: string | null;
 }

@@ -1,5 +1,11 @@
 import { ServerNode } from "./server-node";
-import type { AccountBalanceLockResponse, PaginationOptions } from "./models";
+import type {
+  AccountBalanceResponse,
+  AccountBalanceLockResponse,
+  PaginatedBankEntry,
+  PaginatedTransactionEntry,
+  PaginationOptions,
+} from "./models";
 
 /**
  * Used as a base for all types of validator nodes.
@@ -9,7 +15,7 @@ import type { AccountBalanceLockResponse, PaginationOptions } from "./models";
 export abstract class Validator extends ServerNode {
   /** Gets all of the banks connected to the current validator. */
   async getBanks(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/banks", options);
+    return await super.getPaginatedData<PaginatedBankEntry>("/banks", options);
   }
 
   /**
@@ -17,20 +23,15 @@ export abstract class Validator extends ServerNode {
    * @param id the account number
    */
   async getAccountBalance(id: string) {
-    return await this.getData(`/accounts/${id}/balance`);
+    return await super.getData<AccountBalanceResponse>(`/accounts/${id}/balance`);
   }
 
   /**
    * Gets the balance lock of the given account.
    * @param id the id of the account
    */
-  async getAccountBalanceLock(id: string): Promise<AccountBalanceLockResponse> {
-    return await this.getData(`/accounts/${id}/balance_lock`);
-  }
-
-  /** Gets the current config data for the current validator. */
-  async getConfig() {
-    return await this.getData("/config");
+  async getAccountBalanceLock(id: string) {
+    return await super.getData<AccountBalanceLockResponse>(`/accounts/${id}/balance_lock`);
   }
 
   /**
@@ -38,7 +39,7 @@ export abstract class Validator extends ServerNode {
    * @param id the block identifier
    */
   async getQueuedConfirmationBlock(id: string) {
-    return await this.getData(`/confirmation_blocks/${id}/queued`);
+    return await super.getData(`/confirmation_blocks/${id}/queued`);
   }
 
   /**
@@ -46,7 +47,7 @@ export abstract class Validator extends ServerNode {
    * @param id the block identifier
    */
   async getValidConfirmationBlock(id: string) {
-    return await this.getData(`/confirmation_blocks/${id}/valid`);
+    return await super.getData(`/confirmation_blocks/${id}/valid`);
   }
 
   /**
@@ -54,6 +55,6 @@ export abstract class Validator extends ServerNode {
    * @param options the pagination options
    */
   async getValidators(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData(`/validators`, options);
+    return await super.getPaginatedData<PaginatedTransactionEntry>(`/validators`, options);
   }
 }

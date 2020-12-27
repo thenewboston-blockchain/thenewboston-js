@@ -1,5 +1,15 @@
 import { ServerNode } from "./server-node";
-import type { PaginationOptions, BankConfigResponse, Transaction } from "./models";
+import type {
+  PaginationOptions,
+  BankConfigResponse,
+  Transaction,
+  PaginatedTransactionEntry,
+  PaginatedEntry,
+  PaginatedBankEntry,
+  PaginatedEntryMetadata,
+  PaginatedBlockEntry,
+  PaginatedValidatorEntry,
+} from "./models";
 import type { Account } from "./account";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
@@ -11,7 +21,7 @@ export class Bank extends ServerNode {
    * @param account the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
    */
   async updateAccount(accountNumber: string, trust: number, account: Account) {
-    return await this.patchData(`/accounts/${accountNumber}`, account.createSignedMessage({ trust }));
+    return await super.patchData(`/accounts/${accountNumber}`, account.createSignedMessage({ trust }));
   }
 
   /**
@@ -19,7 +29,7 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getTransactions(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/bank_transactions", options);
+    return await super.getPaginatedData<PaginatedTransactionEntry & PaginatedEntry>("/bank_transactions", options);
   }
 
   /**
@@ -27,7 +37,7 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getBanks(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/banks", options);
+    return await super.getPaginatedData<PaginatedBankEntry>("/banks", options);
   }
 
   /**
@@ -37,7 +47,7 @@ export class Bank extends ServerNode {
    * @param account the account to sign the request
    */
   async updateBankTrust(nodeIdentifier: string, trust: number, account: Account) {
-    return await this.patchData(
+    return await super.patchData(
       `/banks/${nodeIdentifier}`,
       account.createSignedMessage({
         trust,
@@ -50,7 +60,7 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getBlocks(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/blocks", options);
+    return await super.getPaginatedData<PaginatedBlockEntry & PaginatedEntryMetadata>("/blocks", options);
   }
 
   /**
@@ -60,14 +70,14 @@ export class Bank extends ServerNode {
    * @param account the account that is sending the transactions
    */
   async addBlocks(balanceLock: string, transactions: Transaction[], account: Account) {
-    return await this.postData("/blocks", account.createBlockMessage(balanceLock, transactions));
+    return await super.postData("/blocks", account.createBlockMessage(balanceLock, transactions));
   }
 
   /**
    * Gets the current bank's config data.
    */
   async getConfig() {
-    return await this.getData<BankConfigResponse>("/config");
+    return await super.getData<BankConfigResponse>("/config");
   }
 
   /**
@@ -75,7 +85,7 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getConfirmationBlocks(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/confirmation_blocks", options);
+    return await super.getPaginatedData("/confirmation_blocks", options);
   }
 
   // TODO: POST /confirmation_blocks
@@ -85,7 +95,7 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getInvalidBlocks(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/invalid_blocks", options);
+    return await super.getPaginatedData("/invalid_blocks", options);
   }
 
   /**
@@ -93,7 +103,7 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getValidatorConfirmationServices(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/validator_confirmation_services", options);
+    return await super.getPaginatedData("/validator_confirmation_services", options);
   }
 
   /**
@@ -103,7 +113,7 @@ export class Bank extends ServerNode {
    * @param account the server's account to validate the requests
    */
   async updateValidatorConfirmationServices(start: string, end: string, account: Account) {
-    return await this.postData(
+    return await super.postData(
       "/validator_confirmation_services",
       account.createSignedMessage({
         start,
@@ -118,7 +128,7 @@ export class Bank extends ServerNode {
    * @param account the current bank server's account
    */
   async sendUpgradeNotice(nodeIdentifier: string, account: Account) {
-    return await this.postData(
+    return await super.postData(
       "/upgrade_notice",
       account.createSignedMessage({ bank_node_identifier: nodeIdentifier })
     );
@@ -129,6 +139,6 @@ export class Bank extends ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getValidators(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/validators", options);
+    return await super.getPaginatedData<PaginatedValidatorEntry>("/validators", options);
   }
 }

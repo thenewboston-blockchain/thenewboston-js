@@ -1,12 +1,12 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse } from "./models";
+import type { ConfirmationValidatorConfigResponse, PaginatedResponse } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
   /** Gets the current confirmation confirmation validator's listed services. */
   async getBankConfirmationServices() {
-    return await this.getData("/bank_confirmation_services");
+    return await super.getData("/bank_confirmation_services");
   }
 
   // TODO: POST /confirmation_blocks
@@ -19,7 +19,7 @@ export class ConfirmationValidator extends Validator {
    * @param account the account that the current `ConfirmationValidator` is connected to
    */
   async sendPrimaryValidatorUpdatedPing(ipAddress: string, port: string, protocol: string, account: Account) {
-    return await this.postData(
+    return await super.postData(
       "/primary_validator_updated",
       account.createSignedMessage({ ip_address: ipAddress, port, protocol })
     );
@@ -31,7 +31,7 @@ export class ConfirmationValidator extends Validator {
    * @param account the current confirmation validator server's account
    */
   async sendUpgradeRequest(nodeIdentifier: string, account: Account) {
-    return await this.postData(
+    return await super.postData(
       "/upgrade_request",
       account.createSignedMessage({ validator_node_identifier: nodeIdentifier })
     );
@@ -39,6 +39,6 @@ export class ConfirmationValidator extends Validator {
 
   /** Gets the current confirmation validator's config data. */
   async getConfig() {
-    return await this.getData<ConfirmationValidatorConfigResponse>("/config");
+    return super._getConfig<ConfirmationValidatorConfigResponse>();
   }
 }

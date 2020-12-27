@@ -1,6 +1,12 @@
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
-import type { PaginationOptions, ServerNodeOptions } from "./models";
+import type {
+  PaginatedAccountEntry,
+  PaginatedEntryMetadata,
+  PaginatedResponse,
+  PaginationOptions,
+  ServerNodeOptions,
+} from "./models";
 import type { Account } from "./account";
 import type { Protocol } from "./models/responses/constants";
 
@@ -38,7 +44,7 @@ export abstract class ServerNode {
    * @param options the optional object for the pagination options
    */
   async getPaginatedData<T>(endpoint: string, options: Partial<PaginationOptions>) {
-    return await this.getData<T>(endpoint, {
+    return await this.getData<PaginatedResponse<T>>(endpoint, {
       ...this.options.defaultPagination,
       ...options,
     });
@@ -69,7 +75,12 @@ export abstract class ServerNode {
    * @param options The optional object for the pagination options.
    */
   async getAccounts(options: Partial<PaginationOptions> = {}) {
-    return await this.getPaginatedData("/accounts", options);
+    return await this.getPaginatedData<PaginatedAccountEntry & PaginatedEntryMetadata>("/accounts", options);
+  }
+
+  /** Gets the current config data for the current validator. */
+  protected async _getConfig<T>() {
+    return await this.getData<T>("/config");
   }
 
   /**
@@ -80,7 +91,7 @@ export abstract class ServerNode {
    * @param account the server account to validate the request
    */
   async sendConnectionRequest(ipAddress: string, port: string, protocol: Protocol, account: Account) {
-    return await this.postData(
+    return await this.postData<{}>(
       "/connection_requests",
       account.createSignedMessage({
         ip_address: ipAddress,
