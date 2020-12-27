@@ -56,6 +56,8 @@ Currently, the only way to use the library is to clone the repository and downlo
 
 - [Primary Validator](#primary-validator)
 
+  - [Adding Bank Blocks](#adding-bank-blocks)
+
 - [Confirmation Validator](#confirmation-validator)
 
 ### Account
@@ -273,6 +275,7 @@ console.log(config);
 //   "node_type": "BANK"
 // }
 ```
+
 The config includes data like selected primary validator, IP address, port, node identifier and so on.
 
 #### Getting and Updating Accounts
@@ -709,10 +712,9 @@ console.log(res);
 
 > If you don't understand upgradeRequest and upgradeNotice, check out the [documentation](https://thenewboston.com/guide/resync-process) at thenewboston.com
 
-
 ### Validator
 
-In this section we will be going over the base Validator node that both the Primary Validator and the Confirmation Validator inherit from. This will cover the basic usage of any Validator, but to learn more about where they deviate you can refer to their respective sections.  
+In this section we will be going over the base Validator node that both the Primary Validator and the Confirmation Validator inherit from. This will cover the basic usage of any Validator, but to learn more about where they deviate you can refer to their respective sections.
 
 ### Creating Validators
 
@@ -723,6 +725,7 @@ To create a Validator, we must pass in the url of the Validator you wish to inte
 const primaryValidator = new PrimaryValidator("http://157.230.75.212");
 const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 ```
+
 We can check the basic configuration of the Validator with a call to `getConfig`.
 
 ```ts
@@ -781,11 +784,12 @@ console.log(confirmationValidatorConfig);
 }
 */
 ```
+
 Now we know how to create a Validator and access its configurations in our code, we can move on to the methods that work with the accounts that use its services and the other nodes which are on it's network.
 
 ### Working With Accounts
 
-To see all the accounts on the network your Validator is connected to, there is a `getAccounts` method. This method will return the total amount of accounts in the `count` property, and you can access more or past `results` with the URL links that the `next` and `previous` properties provide.  
+To see all the accounts on the network your Validator is connected to, there is a `getAccounts` method. This method will return the total amount of accounts in the `count` property, and you can access more or past `results` with the URL links that the `next` and `previous` properties provide.
 
 ```ts
 const primaryValidator = new PrimaryValidator("http://157.230.75.212");
@@ -830,6 +834,7 @@ console.log(firstAccount);
 }
 */
 ```
+
 You can also get the balance and balance lock of a single account with the following methods, given the account number.
 
 ```ts
@@ -837,12 +842,16 @@ const primaryValidator = new PrimaryValidator("http://157.230.75.212");
 const confirmationValidator = new ConfirmationValidator("http://157.230.10.237");
 
 // call to getAccountBalance
-const balance = await primaryValidator.getAccountBalance("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+const balance = await primaryValidator.getAccountBalance(
+  "57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce"
+);
 console.log(balance);
 // { balance: 2000 }
 
 // call to getAccountBalanceLock
-const balLock = await confirmationValidator.getAccountBalanceLock("57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce");
+const balLock = await confirmationValidator.getAccountBalanceLock(
+  "57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce"
+);
 console.log(balLock);
 // { balance_lock: '57c10f3554872103c9b91e481347c2522dd5a13757831a51b12180c09e2e50ce' }
 ```
@@ -883,7 +892,7 @@ console.log(allConfirmationValidators);
 }
 */
 
-// See all the Banks connected to this Confirmation Validator 
+// See all the Banks connected to this Confirmation Validator
 const banks = await confirmationValidator.getBanks();
 console.log(banks);
 /*
@@ -907,17 +916,17 @@ console.log(banks);
   ]
 }
 */
-
 ```
 
 ### Working With Blocks
 
-A validator's main purpose is to validate the transactions that a Bank creates. These transactions are called Blocks.  All Validators share the `getValidConfirmationBlock` and `getQueuedConfirmationBlock` methods to view the blocks that a Bank is asking them to validate. If you go to your TNB Account Manager, click on a Validator and then its "confirmations", you will see a list of all the confirmed blocks that the Validator processed and if you take the "Block Identifier" and pass it as a string to the `getValidConfirmationBlock` method, you will see the in depth details of a Block.
+A validator's main purpose is to validate the transactions that a Bank creates. These transactions are called Blocks. All Validators share the `getValidConfirmationBlock` and `getQueuedConfirmationBlock` methods to view the blocks that a Bank is asking them to validate. If you go to your TNB Account Manager, click on a Validator and then its "confirmations", you will see a list of all the confirmed blocks that the Validator processed and if you take the "Block Identifier" and pass it as a string to the `getValidConfirmationBlock` method, you will see the in depth details of a Block.
 
 ```ts
-
 const PV = new PrimaryValidator("http://157.230.75.212");
-const valConfBlock = await PV.getValidConfirmationBlock("b30231d7b4b3a00222d96340d3e89bb969f0476836402386f8ac334ac456b4ac");
+const valConfBlock = await PV.getValidConfirmationBlock(
+  "b30231d7b4b3a00222d96340d3e89bb969f0476836402386f8ac334ac456b4ac"
+);
 console.log(valConfBlock);
 /*{
   message: {
@@ -966,10 +975,9 @@ console.log(valConfBlock);
   node_identifier: '9dd8825ae8bce326df4da8a02ab4345d3f5cb63f579e88018d8b480fdafe2a8d',
   signature: '0770f2c3c434bf2e88c907e08eda168395fb544d9c33cabc74342db01364e39885ecde1503231cea9fc537e11f8c1028d4aae5f98ea80c2fcfe1ccdd2f6a8b0a'
 }*/
-
 ```
 
-To get an unconfirmed or queued Block is a little more difficult since the network is very fast, what we would have to do to get that information is have a bank to make a transaction, send it as a Block and then immediately grab the "Block ID" and pass it into the `getQueuedConfirmationBlocks` of a Validator that's services are being used by the bank.  Making bank transactions and sending them as blocks is a little out of the scope of this section, but all together it may look like this.
+To get an unconfirmed or queued Block is a little more difficult since the network is very fast, what we would have to do to get that information is have a bank to make a transaction, send it as a Block and then immediately grab the "Block ID" and pass it into the `getQueuedConfirmationBlocks` of a Validator that's services are being used by the bank. Making bank transactions and sending them as blocks is a little out of the scope of this section, but all together it may look like this.
 
 ```ts
 // let's assume this Confirmation Validator has its services subscribed to by this Bank.
@@ -982,17 +990,14 @@ const transactions = transactionsData.results.map(({ amount, recipient }) => ({
   recipient,
 }));
 
-await bank.addBlocks(
-  "fakeBalanceLock",
-  transactions,
-  new tnb.Account("fakeSigningKey", "fakeAccountNumber")
-);
+await bank.addBlocks("fakeBalanceLock", transactions, new tnb.Account("fakeSigningKey", "fakeAccountNumber"));
 /* the above code is explained in the Banks section, and for the sake not being repetitive, 
 please refer to the "Adding Blocks" subsection of Banks for explanation of this code*/
 
 // get the last Block ID
 const amountOfBlocks = await bank.getConfirmationBlocks().count;
-const lastBlockID = await bank.getConfirmationBlocks({limit=1, offset=amountOfBlocks}).results[0].block_identifier;
+const lastBlockID = await bank.getConfirmationBlocks({ limit = 1, offset = amountOfBlocks }).results[0]
+  .block_identifier;
 
 const queuedConfBlock = await CV.getQueuedConfirmationBlock(lastBlockID);
 console.log(queuedConfBlock);
@@ -1046,4 +1051,38 @@ console.log(queuedConfBlock);
 }
 */
 ```
-This basically puts out the same information as `getVaildConfirmationBlocks` but the difference is that this "queued" block will be deemed valid or invalid soon.  The window to see it is very small because of the speed of the network, but if you grab the `block_identifier` of a newly created block you can keep track of it as it hits all the Validators that will be processing it.
+
+This basically puts out the same information as `getVaildConfirmationBlocks` but the difference is that this "queued" block will be deemed valid or invalid soon. The window to see it is very small because of the speed of the network, but if you grab the `block_identifier` of a newly created block you can keep track of it as it hits all the Validators that will be processing it.
+
+### Primary Validator
+
+In this section, we will look at the methods of the `Primary Validator` class, which extends the `Validator` class.
+
+> It is recommended that you read the [documentation for the `Validator` Class](#Validator) first, to understand the base methods before reading this section.
+
+#### Adding Bank Blocks
+
+Bank Blocks are blocks which have been signed by banks to show that they have passed initial validation.
+
+We add Bank blocks via the `PrimaryValidator.addBankBlocks` method.
+
+```ts
+const primaryValidator = new tnb.PrimaryValidator("http://157.230.75.212");
+const transactions = [
+  {
+    amount: 1,
+    recipient: "fakeAccountNumber",
+  },
+  {
+    amount: 1,
+    recipient: "fakeAccountNumber",
+  },
+  {
+    amount: 1,
+    recipient: "fakeAccountNumber",
+  },
+];
+const res = await primaryValidator.addBankBlocks("fakeBalanceLock", transactions, new tnb.Account());
+```
+
+As you can see, this method takes 3 parameters, the balanceLock of the account you are sending from, the list of transactions, and an account object with the correct accountNumber and signingKey.
