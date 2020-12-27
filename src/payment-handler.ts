@@ -39,7 +39,7 @@ export class PaymentHandler {
     const config = await this.primaryValidator
       .getConfig()
       .catch((err) => throwError("Failed to load the primary validator's config.", err));
-    this.primaryValidatorConfig = config as PrimaryValidatorConfigResponse;
+    this.primaryValidatorConfig = config;
   }
 
   /**
@@ -60,30 +60,12 @@ export class PaymentHandler {
         amount,
         recipient: typeof recipient === "string" ? recipient : recipient.accountNumberHex,
       },
+      ...[this.bankConfig!, this.primaryValidatorConfig!].map((config) => ({
+        amount: config.default_transaction_fee,
+        recipient: config.account_number,
+      })),
     ];
 
-    if (this.bankConfig) {
-      transactions.push({
-        amount: this.bankConfig.default_transaction_fee,
-        recipient: this.bankConfig.account_number,
-      });
-    } else {
-      console.error(
-        "Failed to use the bank's config for paying the transaction fees. Did you run the `init` method before using the class?"
-      );
-    }
-
-    if (this.primaryValidatorConfig) {
-      transactions.push({
-        amount: this.primaryValidatorConfig.default_transaction_fee,
-        recipient: this.primaryValidatorConfig.account_number,
-      });
-    } else {
-      console.error(
-        "Failed to use the bank's config for paying the transaction fees. Did you run the `init` method before using the class?"
-      );
-    }
-
-    await this.bank.addBlocks(balanceLock, transactions, sender);
+    await this.bank.addBlocks(balanceLock!, transactions, sender);
   }
 }
