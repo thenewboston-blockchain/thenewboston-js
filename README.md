@@ -38,6 +38,10 @@ main();
 
 Some day...
 
+## Documentation
+
+Check out the [documentation here](docs/index.md).
+
 ## Community
 
 Join the community to stay updated on the most recent developments, project roadmaps, and random discussions about
