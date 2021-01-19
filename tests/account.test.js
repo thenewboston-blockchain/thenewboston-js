@@ -39,6 +39,13 @@ describe("Account", () => {
     assertAccountBasicValues(account, defaultAccount.signingKey, defaultAccount.accountNumber);
   });
 
+  it("isValidPair(signingKey, accountNumber)", () => {
+    expect(Account.isValidPair(defaultAccount.signingKey, defaultAccount.accountNumber)).toBeTruthy();
+    expect(Account.isValidPair(defaultAccount.accountNumber, defaultAccount.accountNumber)).toBeFalsy();
+    expect(Account.isValidPair(defaultAccount.signingKey, defaultAccount.signingKey)).toBeFalsy();
+    expect(Account.isValidPair(defaultAccount.accountNumber, defaultAccount.signingKey)).toBeFalsy();
+  });
+
   it("createSignature(message)", () => {
     const account = createDefaultAccount();
     assertAccountBasics(account);
