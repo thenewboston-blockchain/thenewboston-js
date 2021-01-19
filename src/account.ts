@@ -46,6 +46,15 @@ export class Account {
     return [accountNumber, signingKey];
   }
 
+  /**
+   * Checks if the signing key pair is valid.
+   * @param signingKey the given signing key hex string
+   * @param accountNumber the given account number hex string
+   */
+  static isValidPair(signingKey: string, accountNumber: string) {
+    return new Account(signingKey).accountNumberHex === accountNumber;
+  }
+
   /** The 32 byte account number as a 32 byte hex string. */
   get accountNumberHex() {
     return uint8arrayToHex(this.accountNumber);
