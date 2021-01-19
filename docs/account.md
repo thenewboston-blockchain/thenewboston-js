@@ -70,6 +70,14 @@ From running that code, you can see that the `createSignature` method returned a
 
 > If you re-run that code multiple times, you will then notice that the generated signature is different. That is because the signature depends on two variables: the account signing key and the message. The account signing key also is changing on every run because we are generating a random `Account` to use, thus resulting in different outcomes.
 
+## Verifying Account Keys
+
+If you need to verify that the given signing key and account number are paired together, then you can easily use the `Account.isValidPair` static method. The method takes in the signing key first and the account number second. Here is example of how one might use this method:
+
+```ts
+Account.isValidPair("SIGNING_KEY", "ACCOUNT_NUMBER"); // returns true only if the two keys match
+```
+
 ## Using Signed Data and Signed Messages
 
 We have already talked about creating signatures, so let's learn how we can apply them to creating signed data and signed messages. Signed data and signed messages are very similar, with the only difference being that signed messages have an extra `node_identifier` property. Here is an example of us creating signed data and a signed message:
