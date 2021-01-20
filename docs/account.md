@@ -75,7 +75,7 @@ From running that code, you can see that the `createSignature` method returned a
 If you need to verify that the given signing key and account number are paired together, then you can easily use the `Account.isValidPair` static method. The method takes in the signing key first and the account number second. Here is example of how one might use this method:
 
 ```ts
-Account.isValidPair("SIGNING_KEY", "ACCOUNT_NUMBER"); // returns true only if the two keys match
+Account.isValidPair("SIGNING_KEY", "ACCOUNT_NUMBER"); // returns true only if the signing key's public key is the given account number
 ```
 
 ## Using Signed Data and Signed Messages
