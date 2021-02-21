@@ -43,12 +43,12 @@ export class PaymentHandler {
   }
 
   /**
-   * Sends a specific amount of coins to a given account from the sender.
+   * Creates a transaction with a specific amount of coins to a given account from the sender.
    * @param sender the authenticated account which is sending the coins
    * @param recipient the account number or `Account` of the recipient recieving the coins
    * @param amount the amount of coins to send
    */
-  async sendCoins(sender: Account, recipient: Account | string, amount: number) {
+  async createTransaction(sender: Account, recipient: Account | string, amount: number) {
     const { balance_lock: balanceLock } = await this.primaryValidator!.getAccountBalanceLock(
       sender.accountNumberHex
     ).catch((err) =>
@@ -65,7 +65,20 @@ export class PaymentHandler {
         recipient: config.account_number,
       })),
     ];
+    return { balanceLock, transactions, sender };
+  }
 
-    await this.bank.addBlocks(balanceLock!, transactions, sender);
+  /**
+   * Sends a specific amount of coins to a given account from the sender.
+   * @param sender the authenticated account which is sending the coins
+   * @param recipient the account number or `Account` of the recipient recieving the coins
+   * @param amount the amount of coins to send
+   */
+  async broadcastTransaction(transaction: {
+    balanceLock: string | null;
+    transactions: Transaction[];
+    sender: Account;
+  }) {
+    await this.bank.addBlocks(transaction.balanceLock!, transaction.transactions, transaction.sender);
   }
 }

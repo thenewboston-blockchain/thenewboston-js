@@ -16,6 +16,7 @@ export class AccountPaymentHandler {
   }
 
   async sendCoins(recipient: Account | string, amount: number) {
-    await this.client.sendCoins(this.account, recipient, amount);
+    const transaction = await this.client.createTransaction(this.account, recipient, amount);
+    await this.client.broadcastTransaction(transaction);
   }
 }
