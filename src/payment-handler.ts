@@ -2,12 +2,11 @@ import type { Account } from "./account";
 import { Bank } from "./bank";
 import { PrimaryValidator } from "./primary-validator";
 import type { BankConfigResponse, PrimaryValidatorConfigResponse, Transaction } from "./models";
-import { throwError } from "./utils";
+import { throwError, TransferDetails } from "./utils";
 
 export interface PaymentHandlerOptions {
   bankUrl: string;
 }
-
 export class PaymentHandler {
   private bank: Bank;
   private bankConfig?: BankConfigResponse;
@@ -44,11 +43,9 @@ export class PaymentHandler {
 
   /**
    * Creates a transaction with a specific amount of coins to a given account from the sender.
-   * @param sender the authenticated account which is sending the coins
-   * @param recipient the account number or `Account` of the recipient recieving the coins
-   * @param amount the amount of coins to send
+   * @param transferDetails The object with transfer details like sender, recipient and amount
    */
-  async createTransaction(sender: Account, recipient: Account | string, amount: number) {
+  async createTransaction({ sender, recipient, amount }: TransferDetails) {
     const { balance_lock: balanceLock } = await this.primaryValidator!.getAccountBalanceLock(
       sender.accountNumberHex
     ).catch((err) =>
@@ -70,9 +67,7 @@ export class PaymentHandler {
 
   /**
    * Sends a specific amount of coins to a given account from the sender.
-   * @param sender the authenticated account which is sending the coins
-   * @param recipient the account number or `Account` of the recipient recieving the coins
-   * @param amount the amount of coins to send
+   * @param transaction the object containing transaction details
    */
   async broadcastTransaction(transaction: {
     balanceLock: string | null;
@@ -80,5 +75,14 @@ export class PaymentHandler {
     sender: Account;
   }) {
     await this.bank.addBlocks(transaction.balanceLock!, transaction.transactions, transaction.sender);
+  }
+
+  /**
+   * Sends a specific amount of coins to a given account from the sender.
+   * @param transferDetails The object with transfer details like sender, recipient and amount
+   */
+  async sendCoins(transferDetails: TransferDetails) {
+    const transaction = await this.createTransaction(transferDetails);
+    await this.broadcastTransaction(transaction);
   }
 }
