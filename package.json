@@ -13,7 +13,8 @@
     "build:node": "rollup -c",
     "build:web": "browserify dist/index.js -p tinyify --no-flat -o dist/tnb.min.js -s tnb",
     "test:no-build": "jest",
-    "test": "npm run build && npm run test:no-build"
+    "test": "npm run build && npm run test:no-build",
+    "prepare": "npm run build && npm run test:no-build"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
