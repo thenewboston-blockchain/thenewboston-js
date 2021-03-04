@@ -62,6 +62,7 @@ export class PaymentHandler {
       },
       ...[this.bankConfig!, this.primaryValidatorConfig!].map((config) => ({
         amount: config.default_transaction_fee,
+        fee: config.node_type,
         recipient: config.account_number,
       })),
     ];
