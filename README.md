@@ -34,6 +34,10 @@ async function main() {
 main();
 ```
 
+### Contributing
+
+Create your fork / branch from the development branch, All pull requests to be made to development branch for review.
+
 ### Testing
 
 Some day...
