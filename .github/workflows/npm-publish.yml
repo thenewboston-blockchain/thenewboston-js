@@ -3,17 +3,21 @@ name: Npm Publish
 on:
  push:
     branches: [master]
- 
+
 jobs:
   build:
-   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
-      — uses: actions/checkout@v2
-      — uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
           node-version: '12.x'
           registry-url: https://registry.npmjs.org/
-      — run: yarn install
-      — run: npm publish — access public
+      - name: Install Dependencies
+        run: yarn install
+      - name: Publish
+        run: npm publish — access public
         env:
          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
