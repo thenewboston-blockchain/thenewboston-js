@@ -1,6 +1,7 @@
 import type { Account } from "./account";
 import type { AccountPaymentHandlerOptions } from "./models";
 import { PaymentHandler } from "./payment-handler";
+import { TransferDetails } from "./utils";
 
 export class AccountPaymentHandler {
   private client: PaymentHandler;
@@ -16,6 +17,6 @@ export class AccountPaymentHandler {
   }
 
   async sendCoins(recipient: Account | string, amount: number) {
-    await this.client.sendCoins(this.account, recipient, amount);
+    await this.client.sendCoins(new TransferDetails(this.account, recipient, amount));
   }
 }
