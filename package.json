@@ -30,6 +30,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.7.0",
+    "regenerator-runtime": "^0.13.7",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
