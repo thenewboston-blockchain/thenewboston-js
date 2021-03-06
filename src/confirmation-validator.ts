@@ -1,6 +1,6 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse, PaginatedResponse } from "./models";
+import type { ConfirmationValidatorConfigResponse } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
