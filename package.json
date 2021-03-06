@@ -14,7 +14,8 @@
     "build:web": "browserify dist/index.js -p tinyify --no-flat -o dist/tnb.min.js -s tnb",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
-    "prepare": "npm run build && npm run test:no-build",
+    "prepack": "npm run build && npm run test:no-build",
+    "postinstall": "npm run build",
     "lint": "echo linting not available for project"
   },
   "main": "dist/index.js",
@@ -25,7 +26,9 @@
   "license": "MIT",
   "files": [
     "dist",
-    "src"
+    "src",
+    "rollup.config.js",
+    "tsconfig.json"
   ],
   "dependencies": {
     "axios": "^0.21.0",
@@ -51,3 +54,4 @@
     "typescript": "^4.0.5"
   }
 }
+
