@@ -15,7 +15,6 @@
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
     "prepack": "npm run build && npm run test:no-build",
-    "postinstall": "npm run build",
     "lint": "eslint \"./src/**/*.{js,ts}\""
   },
   "main": "dist/index.js",
@@ -26,9 +25,7 @@
   "license": "MIT",
   "files": [
     "dist",
-    "src",
-    "rollup.config.js",
-    "tsconfig.json"
+    "src"
   ],
   "dependencies": {
     "axios": "^0.21.0",
@@ -56,4 +53,3 @@
     "typescript": "^4.0.5"
   }
 }
-
