@@ -16,7 +16,7 @@
     "test": "npm run build && npm run test:no-build",
     "prepack": "npm run build && npm run test:no-build",
     "postinstall": "npm run build",
-    "lint": "echo linting not available for project"
+    "lint": "eslint \"./src/**/*.{js,ts}\""
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -41,6 +41,8 @@
     "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@types/jest": "^26.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
     "browserify": "^17.0.0",
     "eslint": "^7.21.0",
     "jest": "^26.6.3",

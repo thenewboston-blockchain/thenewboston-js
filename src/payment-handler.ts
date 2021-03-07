@@ -29,7 +29,10 @@ export class PaymentHandler {
   }
 
   async updatePrimaryValidator() {
-    const { ip_address: ip, port, protocol } = this.bankConfig?.primary_validator!;
+    if (!this.bankConfig) {
+      return;
+    }
+    const { ip_address: ip, port, protocol } = this.bankConfig.primary_validator!;
     let url = `${protocol}://${ip}`;
     if (port !== null) {
       url += `:${port}`;
