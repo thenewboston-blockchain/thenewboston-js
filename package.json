@@ -14,7 +14,7 @@
     "build:web": "browserify dist/index.js -p tinyify --no-flat -o dist/tnb.min.js -s tnb",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
-    "prepare": "npm run build && npm run test:no-build",
+    "prepack": "npm run build && npm run test:no-build",
     "lint": "eslint \"./src/**/*.{js,ts}\""
   },
   "main": "dist/index.js",
@@ -28,6 +28,7 @@
     "src"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.13.9",
     "axios": "^0.21.0",
     "core-js": "^3.7.0",
     "tweetnacl": "^1.0.3"
