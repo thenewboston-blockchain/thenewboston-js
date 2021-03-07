@@ -1,6 +1,6 @@
 {
   "name": "thenewboston",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "JavaScript library for thenewboston.",
   "author": {
     "name": "thenewboston-developers",
@@ -14,8 +14,8 @@
     "build:web": "browserify dist/index.js -p tinyify --no-flat -o dist/tnb.min.js -s tnb",
     "test:no-build": "jest",
     "test": "npm run build && npm run test:no-build",
-    "prepare": "npm run build && npm run test:no-build",
-    "lint": "echo linting not available for project"
+    "prepack": "npm run build && npm run test:no-build",
+    "lint": "eslint \"./src/**/*.{js,ts}\""
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -28,6 +28,7 @@
     "src"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.13.9",
     "axios": "^0.21.0",
     "core-js": "^3.7.0",
     "tweetnacl": "^1.0.3"
@@ -37,6 +38,8 @@
     "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@types/jest": "^26.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
     "browserify": "^17.0.0",
     "eslint": "^7.21.0",
     "jest": "^26.6.3",

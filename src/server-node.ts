@@ -91,7 +91,7 @@ export abstract class ServerNode {
    * @param account the server account to validate the request
    */
   async sendConnectionRequest(ipAddress: string, port: string, protocol: Protocol, account: Account) {
-    return await this.postData<{}>(
+    return await this.postData(
       "/connection_requests",
       account.createSignedMessage({
         ip_address: ipAddress,
