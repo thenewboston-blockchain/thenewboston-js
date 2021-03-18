@@ -78,7 +78,7 @@ console.log(response);
 
 A Request sent to Confirmation Validator requesting one of them to upgrade to a Primary Validator
 
-The Ypgrade Request can be sent using the `sendUpgradeRequest()` method
+The Upgrade Request can be sent using the `sendUpgradeRequest()` method
 
 ```ts
 const CV = new tnb.ConfirmationValidator("http://54.177.174.219");
