@@ -48,9 +48,9 @@ export class PaymentHandler {
    * Creates a transaction with a specific amount of coins to a given account from the sender.
    * @param sender Theobject with the sender's account details
    * @param txs An array with multiple transactions with details of the amount and recipient
-   * 
+   *
    */
-  async createTransaction(sender:Account, txs: Transaction[]) {
+  async createTransaction(sender: Account, txs: Transaction[]) {
     const { balance_lock: balanceLock } = await this.primaryValidator!.getAccountBalanceLock(
       sender.accountNumberHex
     ).catch((err) =>
@@ -84,18 +84,18 @@ export class PaymentHandler {
    * Sends a specific amount of coins to a given account from the sender.
    * @param transferDetails The object with transfer details like sender, recipient and amount
    */
-  async sendCoins({sender, recipient, amount}: TransferDetails) {
+  async sendCoins({ sender, recipient, amount }: TransferDetails) {
     const recipientAccount = typeof recipient === "string" ? recipient : recipient.accountNumberHex;
-    const transaction = await this.createTransaction(sender, [{recipient: recipientAccount, amount}]);
+    const transaction = await this.createTransaction(sender, [{ recipient: recipientAccount, amount }]);
     await this.broadcastTransaction(transaction);
   }
 
-    /**
+  /**
    * Sends multiple amounts of coins to multiple recipients.
    * @param sender Theobject with the sender's account details
    * @param txs An array with multiple transactions with details of the amount and recipient
    */
-  async sendBulkTransactions(sender:Account, txs: Transaction[]) {
+  async sendBulkTransactions(sender: Account, txs: Transaction[]) {
     const transaction = await this.createTransaction(sender, txs);
     await this.broadcastTransaction(transaction);
   }
