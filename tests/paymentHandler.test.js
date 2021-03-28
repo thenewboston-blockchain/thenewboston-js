@@ -15,13 +15,21 @@ describe("PaymentHandler", () => {
     assertPaymentHandlerBasics(paymentHandler);
   });
 
-  it("createTransaction(transferDetails)", async () => {
+  it("sender: Account, txs: Transaction[]", async () => {
     paymentHandler.init();
     const sender = new tnb.Account();
     const recipient = new tnb.Account();
-    const transaction = await paymentHandler.createTransaction({ sender, recipient, amount: 1 });
+
+    const txs = [
+      {
+        amount: 100,
+        recipient: recipient.accountNumberHex,
+      },
+    ];
+
+    const transaction = await paymentHandler.createTransaction(sender, txs);
     expect(transaction.sender).toBe(sender);
     expect(transaction.balanceLock).toBe((await pv.getAccountBalanceLock(sender.accountNumberHex)).balance_lock);
-    expect(transaction.transactions[0]).toStrictEqual({ amount: 1, recipient: recipient.accountNumberHex });
+    expect(transaction.transactions[0]).toStrictEqual(txs[0]);
   });
 });
