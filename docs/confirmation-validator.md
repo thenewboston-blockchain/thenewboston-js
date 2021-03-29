@@ -2,20 +2,19 @@
 
 In this section, we will look at the methods of the Primary Validator class, which extends the Validator class.
 
->It is recommended that you read the [documentation for the `Validator` Class](#Validator) Class first, to understand the base methods before reading this section.
+> It is recommended that you read the [documentation for the `Validator` Class](#Validator) Class first, to understand the base methods before reading this section.
 
- ## Get Bank Confirmation Services
+## Get Bank Confirmation Services
 
 Confirmation Services are services rendered by a CV for validating a Bank's transactions
 
-We can see what Banks are currently using a Confirmation Validators services and the details attached by using  the `getBankConfirmationServices()` method
-
+We can see what Banks are currently using a Confirmation Validators services and the details attached by using the `getBankConfirmationServices()` method
 
 ```ts
 const CV = new tnb.ConfirmationValidator("http://54.177.174.219");
 
 // retrive confirmation services handled by CV
-const paginationOptions = { limit: 2, offset: 0 } 
+const paginationOptions = { limit: 2, offset: 0 };
 const confirmationServices = await CV.getBankConfirmationServices(paginationOptions);
 
 console.log(confirmationServices);
@@ -84,15 +83,14 @@ The Upgrade Request can be sent using the `sendUpgradeRequest()` method
 const CV = new tnb.ConfirmationValidator("http://54.177.174.219");
 
 //the node identifier of the confirmation validator that is receiving the upgrade notice
-const nodeIdentifier = "9bfa37627e2dba0ae48165b219e76ceaba036b3db8e84108af73a1cce01fad35"
+const nodeIdentifier = "9bfa37627e2dba0ae48165b219e76ceaba036b3db8e84108af73a1cce01fad35";
 
 //Account of current CV
-const account = new  tnb.Account(CV.getConfig().account_number, "fakeSigningKeyHex");
+const account = new tnb.Account(CV.getConfig().account_number, "fakeSigningKeyHex");
 
 const response = await CV.sendUpgradeRequest(nodeIdentifier, account);
 
 console.log(response);
-
 
 // Status Code 200 if the CV Accepted the request and upgraded to a Primary Validator
 // Status Code 400 if the CV Rejected the request
@@ -129,5 +127,64 @@ console.log(response);
 */
 ```
 
+## Crawl
 
+A network crawl is the process of browsing nodes in order to discover new one. A crawl can be triggered by any client, given that it knows the Node's signing key.
 
+### Retrieve Crawl Status
+
+To retrieve the current crawl status of the bank we can use the `getCrawlStatus()` method
+
+```ts
+const crawlStatus = CV.getCrawlStatus();
+
+console.log(crawlStatus);
+
+//  {
+//   crawl_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   crawl_status: 'crawling',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Start Crawl
+
+To initiate a network crawl we need to send a request to the bank using the `startCrawl()` method
+
+```ts
+const CV_NetworkId = new Account("BankNetworkIdSigingKey");
+
+const response = CV.startCrawl(CV_NetworkId);
+
+console.log(response);
+
+//  {
+//   crawl_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   crawl_status: 'crawling',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Stopping Crawl
+
+To stop the network crawl process we can send a request to the bank using the `stopCrawl()` method
+
+```ts
+const CV_NetworkId = new Account("BankNetworkIdSigingKey");
+
+const response = CV.stopCrawl(CV_NetworkId);
+
+console.log(response);
+
+// {
+//   crawl_last_completed: '2021-03-29 14:20:29.265859+00:00',
+//   crawl_status: 'stop_requested',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```

@@ -508,6 +508,7 @@ console.log(res);
 
 > If you don't understand upgradeRequest and upgradeNotice, check out the [documentation](https://thenewboston.com/guide/resync-process) at thenewboston.com
 
+
 ## Getting the Bank's Primary Validator
 
 Simply use the `Bank.getBankPV` method which returns the formatted url of the Primary Validator
@@ -525,4 +526,66 @@ Use the `Bank.getTxFee` method to get the transaction fee
 const bank = new tnb.Bank("http://143.110.137.54");
 console.log(await bank.getTxFee());
 // 1
+
+## Crawl
+
+A network crawl is the process of browsing nodes in order to discover new one. A crawl can be triggered by any client, given that it knows the Node's signing key.
+
+### Retrieve Crawl Status
+
+To retrieve the current crawl status of the bank we can use the `getCrawlStatus()` method
+
+```ts
+const crawlStatus = bank.getCrawlStatus();
+
+console.log(crawlStatus);
+
+//  {
+//   crawl_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   crawl_status: 'crawling',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Start Crawl
+
+To initiate a network crawl we need to send a request to the bank using the `startCrawl()` method
+
+```ts
+const bankNetworkId = new Account("BankNetworkIdSigingKey");
+
+const response = bank.startCrawl(bankNetworkId);
+
+console.log(response);
+
+//  {
+//   crawl_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   crawl_status: 'crawling',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Stopping Crawl
+
+To stop the network crawl process we can send a request to the bank using the `stopCrawl()` method
+
+```ts
+const bankNetworkId = new Account("BankNetworkIdSigingKey");
+
+const response = bank.stopCrawl(bankNetworkId);
+
+console.log(response);
+
+// {
+//   crawl_last_completed: '2021-03-29 14:20:29.265859+00:00',
+//   crawl_status: 'stop_requested',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+
 ```

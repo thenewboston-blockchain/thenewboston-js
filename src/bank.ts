@@ -1,6 +1,7 @@
 import { ServerNode } from "./server-node";
 import { PrimaryValidator } from "./primary-validator";
 import type {
+  CrawlCommand,
   PaginationOptions,
   BankConfigResponse,
   Transaction,
@@ -79,6 +80,31 @@ export class Bank extends ServerNode {
    */
   async getConfig() {
     return await super.getData<BankConfigResponse>("/config");
+  }
+
+  /** Gets the current crawl status */
+  async getCrawlStatus() {
+    return await super.getData("/crawl");
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async startCrawl(account: Account) {
+    const command: CrawlCommand = "start";
+
+    return await super._postCrawl(command, account);
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async stopCrawl(account: Account) {
+    const command: CrawlCommand = "stop";
+
+    return await super._postCrawl(command, account);
   }
 
   /**
