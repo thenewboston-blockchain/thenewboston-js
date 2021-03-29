@@ -508,6 +508,25 @@ console.log(res);
 
 > If you don't understand upgradeRequest and upgradeNotice, check out the [documentation](https://thenewboston.com/guide/resync-process) at thenewboston.com
 
+
+## Getting the Bank's Primary Validator
+
+Simply use the `Bank.getBankPV` method which returns the formatted url of the Primary Validator
+
+```ts
+const bank = new tnb.Bank("http://143.110.137.54");
+const pv = await bank.getBankPV();
+```
+
+## Getting the Bank's Transaction Fee
+
+Use the `Bank.getTxFee` method to get the transaction fee
+
+```ts
+const bank = new tnb.Bank("http://143.110.137.54");
+console.log(await bank.getTxFee());
+// 1
+
 ## Crawl
 
 A network crawl is the process of browsing nodes in order to discover new one. A crawl can be triggered by any client, given that it knows the Node's signing key.
@@ -568,4 +587,5 @@ console.log(response);
 //   port: 80,
 //   protocol: 'http'
 // }
+
 ```

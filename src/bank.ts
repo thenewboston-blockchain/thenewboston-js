@@ -1,4 +1,5 @@
 import { ServerNode } from "./server-node";
+import { PrimaryValidator } from "./primary-validator";
 import type {
   CrawlCommand,
   PaginationOptions,
@@ -166,5 +167,22 @@ export class Bank extends ServerNode {
    */
   async getValidators(options: Partial<PaginationOptions> = {}) {
     return await super.getPaginatedData<PaginatedValidatorEntry>("/validators", options);
+  }
+
+  /**
+   * Gets the PrimaryValidator for the current bank.
+   */
+  async getBankPV() {
+    const { primary_validator } = await this.getConfig();
+    return new PrimaryValidator(
+      `${primary_validator.protocol}://${primary_validator.ip_address}:${primary_validator.port}`
+    );
+  }
+
+  /**
+   * Get transaction fee of the current Primary Validator
+   */
+  async getTxFee() {
+    return (await this.getConfig()).default_transaction_fee;
   }
 }

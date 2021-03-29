@@ -30,3 +30,13 @@ const res = await primaryValidator.addBankBlocks("fakeBalanceLock", transactions
 ```
 
 As you can see, this method takes 3 parameters, the balanceLock of the account you are sending from, the list of transactions, and an account object with the correct accountNumber and signingKey.
+
+## Getting the Primary Validator's Transaction Fee
+
+Simply use the `PrimaryValidator.getTxFee` method to get the transaction fee
+
+```ts
+const primaryValidator = new tnb.PrimaryValidator("http://157.230.75.212");
+console.log(await primaryValidator.getTxFee());
+// 1
+```
