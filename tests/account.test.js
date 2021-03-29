@@ -56,20 +56,6 @@ describe("Account", () => {
     );
   });
 
-  it("createSignedData(data)", () => {
-    const account = createDefaultAccount();
-    assertAccountBasics(account);
-    assertAccountBasicValues(account, defaultAccount.signingKey, defaultAccount.accountNumber);
-    const signedData = account.createSignedData({ trust: "23.90" });
-    expect(signedData).toStrictEqual({
-      data: {
-        trust: "23.90",
-      },
-      signature:
-        "2b8d39b2eb528a8667475ac363cb2c84e5aeadef21ba07a80bc7a0c53e4b926ad79de242601b7810407da562c8092889321d7af9ca71911abc5af14538344c06",
-    });
-  });
-
   it("createSignedMessage(data)", () => {
     const account = createDefaultAccount();
     assertAccountBasics(account);

@@ -6,7 +6,6 @@ export type { ServerNodeOptions } from "./server-node-options";
 export type { PaymentHandlerOptions } from "./payment-handler-options";
 export type { AccountPaymentHandlerOptions } from "./account-payment-handler-options";
 export type { PaginationOptions } from "./pagination-options";
-export type { SignedData } from "./signed-data";
 export type { SignedMessage } from "./signed-message";
 export type { Transaction } from "./transaction";
 export * from "./responses";

@@ -96,7 +96,7 @@ export abstract class ServerNode {
       crawl: status,
     };
 
-    return await this.postData<CrawlResponse>("/crawl", account.createSignedData(data));
+    return await this.postData<CrawlResponse>("/crawl", account.createSignedMessage(data));
   }
 
   /**

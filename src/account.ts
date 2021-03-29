@@ -1,5 +1,5 @@
 import { createAccountData, uint8arrayToHex, hexToUint8Array } from "./utils";
-import type { BlockData, BlockMessage, SignedData, SignedMessage, Transaction } from "./models";
+import type { BlockData, BlockMessage, SignedMessage, Transaction } from "./models";
 import { sign } from "tweetnacl";
 
 type AccountKeys = [Uint8Array, Uint8Array];
@@ -78,28 +78,15 @@ export class Account {
   }
 
   /**
-   * Creates a signed data object.
-   * @param data the data to be used to generate the signature
-   * @returns the signed data object
-   */
-  createSignedData<T>(data: T): SignedData<T> {
-    return {
-      data,
-      signature: this.createSignature(JSON.stringify(data)),
-    };
-  }
-
-  /**
    * Creates a signed data message with the given data.
    * @param data the data to be passed along in the message
    * @returns the signed message
    */
   createSignedMessage<T>(data: T): SignedMessage<T> {
-    const { data: _data, signature } = this.createSignedData(data);
     return {
-      data: _data,
+      message: data,
       node_identifier: this.accountNumberHex,
-      signature,
+      signature: this.createSignature(JSON.stringify(data)),
     };
   }
 

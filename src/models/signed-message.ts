@@ -1,6 +1,7 @@
-import type { SignedData } from "./signed-data";
+/** The interface for the signed message that can send data to the server nodes. */
 
-/** The interface for user authenticated messages. */
-export interface SignedMessage<T> extends SignedData<T> {
+export interface SignedMessage<T> {
+  message: T;
   node_identifier: string;
+  signature: string;
 }
