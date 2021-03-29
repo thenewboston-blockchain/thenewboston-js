@@ -1,4 +1,5 @@
 import { ServerNode } from "./server-node";
+import { PrimaryValidator } from "./primary-validator";
 import type {
   PaginationOptions,
   BankConfigResponse,
@@ -147,6 +148,8 @@ export class Bank extends ServerNode {
    */
   async getBankPV() {
     const { primary_validator } = await this.getConfig();
-    return `${primary_validator.protocol}://${primary_validator.ip_address}:${primary_validator.port}`;
+    return new PrimaryValidator(
+      `${primary_validator.protocol}://${primary_validator.ip_address}:${primary_validator.port}`
+    );
   }
 }
