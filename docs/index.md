@@ -5,9 +5,10 @@ Here, you will learn about how to use all of what thenewboston-js has to offer. 
 ## Getting Started
 
 There are two ways to use the library.
- - Clone the repository / download the files and load them into your project. 
- - Using NPM ``npm install thenewboston ``, this will install the library to your package.json file
- 
+
+- Clone the repository / download the files and load them into your project.
+- Using NPM `npm install thenewboston `, this will install the library to your package.json file
+
 > For simplicity, we will not be including `import` or `require` statements in our examples.
 
 ## Table of Contents
@@ -45,6 +46,8 @@ There are two ways to use the library.
   - [Getting Validators and Validator Confirmation Services](bank.md#getting-validators-and-validator-confirmation-services)
 
   - [Sending Upgrade Notice and Upgrade Request](bank.md#sending-upgrade-notice-and-upgrade-request)
+
+  - [Getting the Bank's Primary Validator](bank.md#getting-the-bank's-primary-validator)
 
 - [Validator](validator.md#validator)
 
