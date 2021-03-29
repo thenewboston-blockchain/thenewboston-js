@@ -49,6 +49,8 @@ There are two ways to use the library.
 
   - [Getting the Bank's Primary Validator](bank.md#getting-the-bank's-primary-validator)
 
+  - [Getting the Bank's Transaction Fee](bank.md#getting-the-bank's-transaction-fee)
+
 - [Validator](validator.md#validator)
 
   - [Creating Validators](validator.md#creating-banks)
@@ -62,5 +64,7 @@ There are two ways to use the library.
 - [Primary Validator](validator.md#primary-validator)
 
   - [Adding Bank Blocks](validator.md#adding-bank-blocks)
+
+  - [Getting the Primary Validator's Transaction Fee](primary-validator.md#getting-the-primary-validator's-transaction-fee)
 
 - [Confirmation Validator](validator.md#confirmation-validator)

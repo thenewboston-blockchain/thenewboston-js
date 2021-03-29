@@ -516,3 +516,13 @@ Simply use the `Bank.getBankPV` method which returns the formatted url of the Pr
 const bank = new tnb.Bank("http://143.110.137.54");
 const pv = await bank.getBankPV();
 ```
+
+## Getting the Bank's Transaction Fee
+
+Use the `Bank.getTxFee` method to get the transaction fee
+
+```ts
+const bank = new tnb.Bank("http://143.110.137.54");
+console.log(await bank.getTxFee());
+// 1
+```
