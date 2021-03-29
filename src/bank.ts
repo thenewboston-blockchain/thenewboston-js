@@ -141,4 +141,12 @@ export class Bank extends ServerNode {
   async getValidators(options: Partial<PaginationOptions> = {}) {
     return await super.getPaginatedData<PaginatedValidatorEntry>("/validators", options);
   }
+
+  /**
+   * Gets the PrimaryValidator for the current bank.
+   */
+  async getBankPV() {
+    const { primary_validator } = await await this.getConfig();
+    return `${primary_validator.protocol}://${primary_validator.ip_address}:${primary_validator.port}`;
+  }
 }
