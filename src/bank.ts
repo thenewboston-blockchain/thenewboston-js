@@ -146,7 +146,7 @@ export class Bank extends ServerNode {
    * Gets the PrimaryValidator for the current bank.
    */
   async getBankPV() {
-    const { primary_validator } = await await this.getConfig();
+    const { primary_validator } = await this.getConfig();
     return `${primary_validator.protocol}://${primary_validator.ip_address}:${primary_validator.port}`;
   }
 }
