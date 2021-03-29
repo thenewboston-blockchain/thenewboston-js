@@ -514,5 +514,5 @@ Simply use the `Bank.getBankPV` method which returns the formatted url of the Pr
 
 ```ts
 const bank = new tnb.Bank("http://143.110.137.54");
-const pv = new tnb.PrimaryValidator(await bank.getBankPV());
+const pv = await bank.getBankPV();
 ```
