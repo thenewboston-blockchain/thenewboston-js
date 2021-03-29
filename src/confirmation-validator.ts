@@ -1,6 +1,6 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlStatus } from "./models";
+import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlCommand } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
@@ -12,6 +12,26 @@ export class ConfirmationValidator extends Validator {
   /** Gets the current crawl status */
   async getCrawlStatus() {
     return await super.getData("/crawl");
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
+   */
+  async startCrawl(account: Account) {
+    const command: CrawlCommand = "start";
+
+    return await super._postCrawl(command, account);
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
+   */
+  async stopCrawl(account: Account) {
+    const command: CrawlCommand = "stop";
+
+    return await super._postCrawl(command, account);
   }
 
   // TODO: POST /confirmation_blocks

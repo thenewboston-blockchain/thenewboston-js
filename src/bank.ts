@@ -1,6 +1,6 @@
 import { ServerNode } from "./server-node";
 import type {
-  CrawlStatus,
+  CrawlCommand,
   PaginationOptions,
   BankConfigResponse,
   Transaction,
@@ -88,12 +88,22 @@ export class Bank extends ServerNode {
 
   /**
    * Sends a Post Request to the bank to start crawl process
-   * @param account Any valid thenewboston account
+   * @param account An Account created with the Network Id Signing key of the current Bank
    */
   async startCrawl(account: Account) {
-    const status: CrawlStatus = "start";
+    const command: CrawlCommand = "start";
 
-    return await super._postCrawl(status, account);
+    return await super._postCrawl(command, account);
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async stopCrawl(account: Account) {
+    const command: CrawlCommand = "stop";
+
+    return await super._postCrawl(command, account);
   }
 
   /**
