@@ -1,5 +1,6 @@
 import { ServerNode } from "./server-node";
 import type {
+  CrawlStatus,
   PaginationOptions,
   BankConfigResponse,
   Transaction,
@@ -78,6 +79,21 @@ export class Bank extends ServerNode {
    */
   async getConfig() {
     return await super.getData<BankConfigResponse>("/config");
+  }
+
+  /** Gets the current crawl status */
+  async getCrawlStatus() {
+    return await super.getData("/crawl");
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account Any valid thenewboston account
+   */
+  async startCrawl(account: Account) {
+    const status: CrawlStatus = "start";
+
+    return await super._postCrawl(status, account);
   }
 
   /**

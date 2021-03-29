@@ -1,6 +1,8 @@
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type {
+  CrawlData,
+  CrawlStatus,
   PaginatedAccountEntry,
   PaginatedEntryMetadata,
   PaginatedResponse,
@@ -10,6 +12,7 @@ import type {
 import type { Account } from "./account";
 import type { Protocol } from "./models/responses/constants";
 import { throwError } from "./utils";
+import { CrawlResponse } from "./models/responses/generic/crawl";
 
 /**
  * Used internally for all server nodes.
@@ -85,6 +88,15 @@ export abstract class ServerNode {
   /** Gets the current config data for the current validator. */
   protected async _getConfig<T>() {
     return await this.getData<T>("/config");
+  }
+
+  /** Sends the crawl Request. */
+  protected async _postCrawl(status: CrawlStatus, account: Account) {
+    const data: CrawlData = {
+      crawl: status,
+    };
+
+    return await this.postData<CrawlResponse>("/crawl", account.createSignedData(data));
   }
 
   /**

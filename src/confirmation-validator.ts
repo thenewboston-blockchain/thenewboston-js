@@ -1,12 +1,17 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse } from "./models";
+import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlStatus } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
   /** Gets the current confirmation confirmation validator's listed services. */
   async getBankConfirmationServices() {
     return await super.getData("/bank_confirmation_services");
+  }
+
+  /** Gets the current crawl status */
+  async getCrawlStatus() {
+    return await super.getData("/crawl");
   }
 
   // TODO: POST /confirmation_blocks
