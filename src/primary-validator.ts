@@ -19,4 +19,11 @@ export class PrimaryValidator extends Validator {
   async addBankBlocks(balanceLock: string, transactions: Transaction[], account: Account) {
     return await this.postData("/bank_blocks", account.createBlockMessage(balanceLock, transactions));
   }
+
+  /**
+   * Get transaction fee of the current Primary Validator
+   */
+  async getTxFee() {
+    return (await this.getConfig()).default_transaction_fee;
+  }
 }

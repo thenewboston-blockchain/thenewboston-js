@@ -152,4 +152,11 @@ export class Bank extends ServerNode {
       `${primary_validator.protocol}://${primary_validator.ip_address}:${primary_validator.port}`
     );
   }
+
+  /**
+   * Get transaction fee of the current Primary Validator
+   */
+  async getTxFee() {
+    return (await this.getConfig()).default_transaction_fee;
+  }
 }
