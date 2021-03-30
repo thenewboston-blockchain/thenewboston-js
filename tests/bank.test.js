@@ -9,6 +9,7 @@ describe("Bank", () => {
       .query({ limit: 20, offset: 0 })
       .reply(200, data.bank_transactions);
   });
+  afterAll(() => nock.cleanAll());
 
   const bank = new tnb.Bank("http://13.57.215.62");
 
