@@ -1,8 +1,6 @@
 import axios from "axios";
 import { formatUrl, formatDefaultOptions } from "./utils";
 import type {
-  CrawlData,
-  CrawlCommand,
   PaginatedAccountEntry,
   PaginatedEntryMetadata,
   PaginatedResponse,
@@ -88,18 +86,6 @@ export abstract class ServerNode {
   /** Gets the current config data for the current validator. */
   protected async _getConfig<T>() {
     return await this.getData<T>("/config");
-  }
-
-  /**
-   * Sends the crawl Request.
-   * @param command Command for crawl request
-   * @param account An Account created with the Network Id Signing key of the current node */
-  protected async _postCrawl(command: CrawlCommand, account: Account) {
-    const data: CrawlData = {
-      crawl: command,
-    };
-
-    return await this.postData<CrawlResponse>("/crawl", account.createSignedMessage(data));
   }
 
   /**

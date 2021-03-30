@@ -11,8 +11,12 @@ import type {
   PaginatedEntryMetadata,
   PaginatedBlockEntry,
   PaginatedValidatorEntry,
+  CleanResponse,
+  CleanData,
+  CrawlData,
 } from "./models";
 import type { Account } from "./account";
+import { CrawlResponse } from "./models/responses/generic/crawl";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
@@ -84,7 +88,7 @@ export class Bank extends ServerNode {
 
   /** Gets the current crawl status */
   async getCrawlStatus() {
-    return await super.getData("/crawl");
+    return await super.getData<CrawlResponse>("/crawl");
   }
 
   /**
@@ -92,9 +96,10 @@ export class Bank extends ServerNode {
    * @param account An Account created with the Network Id Signing key of the current Bank
    */
   async startCrawl(account: Account) {
-    const command: CrawlCommand = "start";
-
-    return await super._postCrawl(command, account);
+    return await super.postData<CleanResponse>(
+      "/crawl",
+      account.createSignedMessage<CrawlData>({ crawl: "start" })
+    );
   }
 
   /**
@@ -102,9 +107,37 @@ export class Bank extends ServerNode {
    * @param account An Account created with the Network Id Signing key of the current Bank
    */
   async stopCrawl(account: Account) {
-    const command: CrawlCommand = "stop";
+    return await super.postData<CleanResponse>(
+      "/crawl",
+      account.createSignedMessage<CrawlData>({ crawl: "stop" })
+    );
+  }
 
-    return await super._postCrawl(command, account);
+  /** Gets the current clean status */
+  async getCleanStatus() {
+    return await super.getData<CleanResponse>("/clean");
+  }
+
+  /**
+   * Sends a Post Request to the bank to start clean process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async startClean(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/clean",
+      account.createSignedMessage<CleanData>({ clean: "start" })
+    );
+  }
+
+  /**
+   * Sends a Post Request to the bank to start clean process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async stopClean(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/clean",
+      account.createSignedMessage<CleanData>({ clean: "stop" })
+    );
   }
 
   /**
