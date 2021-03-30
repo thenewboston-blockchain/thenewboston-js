@@ -62,7 +62,7 @@ describe("Account", () => {
     assertAccountBasicValues(account, defaultAccount.signingKey, defaultAccount.accountNumber);
     const message = account.createSignedMessage({ trust: "26.90" });
     expect(message).toStrictEqual({
-      data: {
+      message: {
         trust: "26.90",
       },
       node_identifier: defaultAccount.accountNumber,
