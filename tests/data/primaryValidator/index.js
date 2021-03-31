@@ -1,2 +1,3 @@
 const config = require("./config");
-module.exports = { config };
+const bank_blocks = require("./bank_blocks");
+module.exports = { config, bank_blocks };
