@@ -32,12 +32,9 @@ export class PaymentHandler {
     if (!this.bankConfig) {
       return;
     }
-    const { ip_address: ip, port, protocol } = this.bankConfig.primary_validator!;
-    let url = `${protocol}://${ip}`;
-    if (port !== null) {
-      url += `:${port}`;
-    }
-    this.primaryValidator = new PrimaryValidator(url);
+
+    this.primaryValidator = await this.bank.getBankPV();
+
     const config = await this.primaryValidator
       .getConfig()
       .catch((err) => throwError("Failed to load the primary validator's config.", err));

@@ -154,9 +154,9 @@ console.log(crawlStatus);
 To initiate a network crawl we need to send a request to the bank using the `startCrawl()` method
 
 ```ts
-const CV_NetworkId = new Account("BankNetworkIdSigingKey");
+const account = new Account("CV_NetworkIdSigningKey");
 
-const response = CV.startCrawl(CV_NetworkId);
+const response = CV.startCrawl(account);
 
 console.log(response);
 
@@ -174,15 +174,77 @@ console.log(response);
 To stop the network crawl process we can send a request to the bank using the `stopCrawl()` method
 
 ```ts
-const CV_NetworkId = new Account("BankNetworkIdSigingKey");
+const account = new Account("CV_NetworkIdSigningKey");
 
-const response = CV.stopCrawl(CV_NetworkId);
+const response = CV.stopCrawl(account);
 
 console.log(response);
 
 // {
 //   crawl_last_completed: '2021-03-29 14:20:29.265859+00:00',
 //   crawl_status: 'stop_requested',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+## Clean
+
+A network clean is the process of updating the network (mainly to remove disconected nodes). A clean can be triggered by any client, given that it knows the Node's signing key.
+
+### Retrieve Clean Status
+
+To retrieve the current clean status of the bank we can use the `getCleanStatus()` method
+
+```ts
+const cleanStatus = CV.getCleanStatus();
+
+console.log(cleanStatus);
+
+//  {
+//   clean_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   clean_status: 'cleaning',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Start Clean
+
+To initiate a network clean we need to send a request to the bank using the `startClean()` method
+
+```ts
+const account = new Account("CV_NetworkIdSigningKey");
+
+const response = CV.startClean(account);
+
+console.log(response);
+
+//  {
+//   clean_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   clean_status: 'cleaning',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Stopping Clean
+
+To stop the network clean process we can send a request to the bank using the `stopClean()` method
+
+```ts
+const account = new Account("CV_NetworkIdSigningKey");
+
+const response = CV.stopClean(account);
+
+console.log(response);
+
+// {
+//   clean_last_completed: '2021-03-29 14:20:29.265859+00:00',
+//   clean_status: 'stop_requested',
 //   ip_address: '18.218.193.164',
 //   port: 80,
 //   protocol: 'http'

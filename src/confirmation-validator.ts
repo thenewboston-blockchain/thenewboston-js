@@ -1,6 +1,6 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlCommand } from "./models";
+import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlCommand, CleanResponse, CleanData } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
@@ -15,23 +15,52 @@ export class ConfirmationValidator extends Validator {
   }
 
   /**
-   * Sends a Post Request to the bank to start crawl process
+   * Sends a Post Request to the confirmation validator to start crawl process
    * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
    */
   async startCrawl(account: Account) {
-    const command: CrawlCommand = "start";
-
-    return await super._postCrawl(command, account);
+    return await super.postData<CleanResponse>(
+      "/crawl",
+      account.createSignedMessage<CleanData>({ clean: "start" })
+    );
   }
 
   /**
-   * Sends a Post Request to the bank to start crawl process
+   * Sends a Post Request to the confirmation validator to start crawl process
    * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
    */
   async stopCrawl(account: Account) {
-    const command: CrawlCommand = "stop";
+    return await super.postData<CleanResponse>(
+      "/crawl",
+      account.createSignedMessage<CleanData>({ clean: "stop" })
+    );
+  }
 
-    return await super._postCrawl(command, account);
+  /** Gets the current clean status */
+  async getCleanStatus() {
+    return await super.getData<CleanResponse>("/clean");
+  }
+
+  /**
+   * Sends a Post Request to the confirmation validator to start clean process
+   * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
+   */
+  async startClean(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/clean",
+      account.createSignedMessage<CleanData>({ clean: "start" })
+    );
+  }
+
+  /**
+   * Sends a Post Request to the confirmation validator to start clean process
+   * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
+   */
+  async stopClean(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/clean",
+      account.createSignedMessage<CleanData>({ clean: "stop" })
+    );
   }
 
   // TODO: POST /confirmation_blocks
