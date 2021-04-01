@@ -30,3 +30,6 @@ A description of how the contributor's work should behave.
 <!-- Do not remove these notices! -->
 #### Please ask for this task to be assigned to you and earn and its sweet reward 😉
 #### Remember to include your account number in your PR description for us to pay you 💰
+
+** Pull Requests **
+All Pull Request should be made to development branch, read contributors guild for more information about contributing

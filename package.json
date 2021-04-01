@@ -1,6 +1,6 @@
 {
   "name": "thenewboston",
-  "version": "1.0.3",
+  "version": "1.1.0-alpha.0",
   "description": "JavaScript library for thenewboston.",
   "author": {
     "name": "thenewboston-developers",
@@ -31,6 +31,7 @@
     "@babel/runtime": "^7.13.9",
     "axios": "^0.21.0",
     "core-js": "^3.7.0",
+    "nock": "^13.0.11",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {

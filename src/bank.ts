@@ -1,5 +1,7 @@
 import { ServerNode } from "./server-node";
+import { PrimaryValidator } from "./primary-validator";
 import type {
+  CrawlCommand,
   PaginationOptions,
   BankConfigResponse,
   Transaction,
@@ -9,8 +11,12 @@ import type {
   PaginatedEntryMetadata,
   PaginatedBlockEntry,
   PaginatedValidatorEntry,
+  CleanResponse,
+  CleanData,
+  CrawlData,
 } from "./models";
 import type { Account } from "./account";
+import { CrawlResponse } from "./models/responses/generic/crawl";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
@@ -80,6 +86,60 @@ export class Bank extends ServerNode {
     return await super.getData<BankConfigResponse>("/config");
   }
 
+  /** Gets the current crawl status */
+  async getCrawlStatus() {
+    return await super.getData<CrawlResponse>("/crawl");
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async startCrawl(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/crawl",
+      account.createSignedMessage<CrawlData>({ crawl: "start" })
+    );
+  }
+
+  /**
+   * Sends a Post Request to the bank to start crawl process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async stopCrawl(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/crawl",
+      account.createSignedMessage<CrawlData>({ crawl: "stop" })
+    );
+  }
+
+  /** Gets the current clean status */
+  async getCleanStatus() {
+    return await super.getData<CleanResponse>("/clean");
+  }
+
+  /**
+   * Sends a Post Request to the bank to start clean process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async startClean(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/clean",
+      account.createSignedMessage<CleanData>({ clean: "start" })
+    );
+  }
+
+  /**
+   * Sends a Post Request to the bank to start clean process
+   * @param account An Account created with the Network Id Signing key of the current Bank
+   */
+  async stopClean(account: Account) {
+    return await super.postData<CleanResponse>(
+      "/clean",
+      account.createSignedMessage<CleanData>({ clean: "stop" })
+    );
+  }
+
   /**
    * Gets the confirmation blocks for the given bank.
    * @param options The optional object for the pagination options.
@@ -140,5 +200,24 @@ export class Bank extends ServerNode {
    */
   async getValidators(options: Partial<PaginationOptions> = {}) {
     return await super.getPaginatedData<PaginatedValidatorEntry>("/validators", options);
+  }
+
+  /**
+   * Gets the PrimaryValidator for the current bank.
+   */
+  async getBankPV() {
+    const { primary_validator } = await this.getConfig();
+    return new PrimaryValidator(
+      `${primary_validator.protocol}://${primary_validator.ip_address}${
+        primary_validator.port === null ? "" : ":" + primary_validator.port
+      }`
+    );
+  }
+
+  /**
+   * Get transaction fee of the current Primary Validator
+   */
+  async getTxFee() {
+    return (await this.getConfig()).default_transaction_fee;
   }
 }

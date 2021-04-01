@@ -36,3 +36,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+** Pull Requests **
+All Pull Request should be made against development branch read contributors guide for more information about contributing

@@ -507,3 +507,146 @@ console.log(res);
 ```
 
 > If you don't understand upgradeRequest and upgradeNotice, check out the [documentation](https://thenewboston.com/guide/resync-process) at thenewboston.com
+
+## Getting the Bank's Primary Validator
+
+Simply use the `Bank.getBankPV` method which returns the formatted url of the Primary Validator
+
+```ts
+const bank = new tnb.Bank("http://143.110.137.54");
+const pv = await bank.getBankPV();
+```
+
+## Getting the Bank's Transaction Fee
+
+Use the `Bank.getTxFee` method to get the transaction fee
+
+```ts
+const bank = new tnb.Bank("http://143.110.137.54");
+console.log(await bank.getTxFee());
+// 1
+```
+
+## Crawl
+
+A network crawl is the process of browsing nodes in order to discover new one. A crawl can be triggered by any client, given that it knows the Node's signing key.
+
+### Retrieve Crawl Status
+
+To retrieve the current crawl status of the bank we can use the `getCrawlStatus()` method
+
+```ts
+const crawlStatus = bank.getCrawlStatus();
+
+console.log(crawlStatus);
+
+//  {
+//   crawl_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   crawl_status: 'crawling',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Start Crawl
+
+To initiate a network crawl we need to send a request to the bank using the `startCrawl()` method
+
+```ts
+const account = new Account("BankNetworkIdSigingKey");
+
+const response = bank.startCrawl(account);
+
+console.log(response);
+
+//  {
+//   crawl_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   crawl_status: 'crawling',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Stopping Crawl
+
+To stop the network crawl process we can send a request to the bank using the `stopCrawl()` method
+
+```ts
+const account = new Account("BankNetworkIdSigingKey");
+
+const response = bank.stopCrawl(account);
+
+console.log(response);
+
+// {
+//   crawl_last_completed: '2021-03-29 14:20:29.265859+00:00',
+//   crawl_status: 'stop_requested',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+## Clean
+
+A network clean is the process of updating the network (mainly to remove disconected nodes). A clean can be triggered by any client, given that it knows the Node's signing key.
+
+### Retrieve Clean Status
+
+To retrieve the current clean status of the bank we can use the `getCleanStatus()` method
+
+```ts
+const cleanStatus = bank.getCleanStatus();
+
+console.log(cleanStatus);
+
+//  {
+//   clean_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   clean_status: 'cleaning',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Start Clean
+
+To initiate a network clean we need to send a request to the bank using the `startClean()` method
+
+```ts
+const account = new Account("BankNetworkIdSigingKey");
+
+const response = bank.startClean(account);
+
+console.log(response);
+
+//  {
+//   clean_last_completed: '2021-03-29 14:07:26.218216+00:00',
+//   clean_status: 'cleaning',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```
+
+### Stopping Clean
+
+To stop the network clean process we can send a request to the bank using the `stopClean()` method
+
+```ts
+const account = new Account("BankNetworkIdSigingKey");
+
+const response = bank.stopClean(account);
+
+console.log(response);
+
+// {
+//   clean_last_completed: '2021-03-29 14:20:29.265859+00:00',
+//   clean_status: 'stop_requested',
+//   ip_address: '18.218.193.164',
+//   port: 80,
+//   protocol: 'http'
+// }
+```

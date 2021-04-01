@@ -9,6 +9,8 @@ import type {
 } from "./models";
 import type { Account } from "./account";
 import type { Protocol } from "./models/responses/constants";
+import { throwError } from "./utils";
+import { CrawlResponse } from "./models/responses/generic/crawl";
 
 /**
  * Used internally for all server nodes.
@@ -56,7 +58,10 @@ export abstract class ServerNode {
    * @param data what is sent along with the POST request
    */
   async postData<T>(endpoint: string, data: any) {
-    const res = await axios.post<T>(`${this.url}${endpoint}`, data);
+    const res = await axios.post<T>(`${this.url}${endpoint}`, data).catch((err) => {
+      console.log(err.response.data);
+      throwError("Failed to postData:", err);
+    });
     return res.data;
   }
 

@@ -127,3 +127,5 @@ types
 
 # Development File
 dev.js
+dev.ts
+
