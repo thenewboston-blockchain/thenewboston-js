@@ -108,11 +108,15 @@ console.log(accounts);
 
 We can also update the trust of a specific account.
 
-This is an API call to update the level of trust of a specific account. We use `Bank.updateAccount` for this.
+This is an API call to update the level of trust of a specific account. We use `Bank.updateAccountTrust` for this.
 
 ```ts
 const account = new Account("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", "fakeSigningKeyHex");
-const res = await bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account);
+const res = await bank.updateAccountTrust(
+  "0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb",
+  32,
+  account
+);
 console.log(res);
 // {
 //   "id": "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",
