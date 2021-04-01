@@ -61,7 +61,16 @@ describe("Bank", () => {
       .reply(200, data.config)
 
       .get("/config")
-      .reply(200, data.config);
+      .reply(200, data.config)
+
+      .get("/clean")
+      .reply(200, data.clean.get)
+
+      .post("/clean")
+      .reply(200, data.clean.post)
+
+      .post("/clean")
+      .reply(200, data.clean.post);
   });
   afterAll(() => nock.cleanAll());
 
@@ -426,5 +435,38 @@ describe("Bank", () => {
     const txFee = await bank.getTxFee();
     expect(typeof txFee).toBe("number");
     expect(txFee).toBe(1);
+  });
+
+  it("getCleanStatus()", async () => {
+    const cleanStatus = await bank.getCleanStatus();
+    expect(typeof cleanStatus).toBe("object");
+    expect(cleanStatus).toStrictEqual({
+      clean_last_completed: "2020-11-21 11:15:07.923380+00:00",
+      clean_status: "cleaning",
+      ip_address: "20.188.56.203",
+      protocol: "http",
+    });
+  });
+
+  it("startClean(account)", async () => {
+    const res = await bank.startClean(new tnb.Account());
+    expect(typeof res).toBe("object");
+    expect(res).toStrictEqual({
+      clean_last_completed: "2020-11-21 11:15:07.923380+00:00",
+      clean_status: "cleaning",
+      ip_address: "20.188.56.203",
+      protocol: "http",
+    });
+  });
+
+  it("stopClean(account)", async () => {
+    const res = await bank.stopClean(new tnb.Account());
+    expect(typeof res).toBe("object");
+    expect(res).toStrictEqual({
+      clean_last_completed: "2020-11-21 11:15:07.923380+00:00",
+      clean_status: "cleaning",
+      ip_address: "20.188.56.203",
+      protocol: "http",
+    });
   });
 });
