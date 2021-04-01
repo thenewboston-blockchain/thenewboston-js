@@ -8,6 +8,7 @@ const crawl = require("./crawl");
 const invalid_blocks = require("./invalid_blocks");
 const validators = require("./validators");
 const validator_confirmation_services = require("./validator_confirmation_services");
+const clean = require("./clean");
 module.exports = {
   bank_transactions,
   accounts,
@@ -19,4 +20,5 @@ module.exports = {
   invalid_blocks,
   validator_confirmation_services,
   validators,
+  clean,
 };
