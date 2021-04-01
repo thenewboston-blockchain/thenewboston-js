@@ -45,6 +45,16 @@ console.log(confirmationServices);
 }*/
 ```
 
+## Validating Confirmation Blocks
+
+Primary validators will send confirmation blocks to confirmation validators for re-validation after a block has been added to the blockchain.
+
+The Primay validator will achieve this by calling the `validateConfirmationBlock()` method on the **ConfirmationValidator** class
+
+```ts
+
+```
+
 ## Send Primary Validator Updated Ping
 
 The CV sends a notice back to the bank that indicates that they are leaving the current network and switching to a new PV (a new network)

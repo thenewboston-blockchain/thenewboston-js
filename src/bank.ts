@@ -1,7 +1,6 @@
 import { ServerNode } from "./server-node";
 import { PrimaryValidator } from "./primary-validator";
 import type {
-  CrawlCommand,
   PaginationOptions,
   BankConfigResponse,
   Transaction,
@@ -14,6 +13,7 @@ import type {
   CleanResponse,
   CleanData,
   CrawlData,
+  ConfirmationBlock,
 } from "./models";
 import type { Account } from "./account";
 import { CrawlResponse } from "./models/responses/generic/crawl";
@@ -148,7 +148,14 @@ export class Bank extends ServerNode {
     return await super.getPaginatedData("/confirmation_blocks", options);
   }
 
-  // TODO: POST /confirmation_blocks
+  /**
+   * Send confirmation blocks from a Confirmation Validator to current Bank.
+   * @param confirmationBlock blocks signed by Confirmation Validator
+   * @param account An Account created with the Confirmation Validator's Network ID Signing key
+   */
+  async sendConfirmationBlocks(confirmationBlock: ConfirmationBlock, account: Account) {
+    await super.postData("/confirmation_blocks", account.createSignedMessage(confirmationBlock));
+  }
 
   /**
    * Gets the invalid blocks for the given bank.

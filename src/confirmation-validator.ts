@@ -1,6 +1,12 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlCommand, CleanResponse, CleanData } from "./models";
+import type {
+  ConfirmationValidatorConfigResponse,
+  ConfirmationBlock,
+  SignedMessage,
+  CleanResponse,
+  CleanData,
+} from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
@@ -63,7 +69,17 @@ export class ConfirmationValidator extends Validator {
     );
   }
 
-  // TODO: POST /confirmation_blocks
+  /**
+   * Send confirmation blocks from a Confirmation Validator to current Bank.
+   * @param confirmationBlock blocks signed by Confirmation Validator
+   * @param account An Account created with the Confirmation Validator's Network ID Signing key
+   */
+  async sendConfirmationBlocks(confirmationBlock: ConfirmationBlock, account: Account) {
+    return await super.postData<ConfirmationBlock>(
+      "/confirmation_blocks",
+      account.createSignedMessage(confirmationBlock)
+    );
+  }
 
   /**
    * Sends a notification to the bank that a primary validator has left the network.

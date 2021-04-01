@@ -452,6 +452,7 @@ console.log(res);
 
 We use `Bank.getValidatorConfirmationServices` to get all the Validator Confirmation Services of the bank.
 
+
 ```ts
 const validatorConfirmationServices = await bank.getValidatorConfirmationServices();
 console.log(validatorConfirmationServices);
@@ -478,6 +479,16 @@ console.log(validatorConfirmationServices);
 > This method also supports an options object
 
 > Check [this](https://thenewboston.com/guide/confirmation-services) out to get a better overview of Confirmation Services
+
+
+## Sending Confirmation Blocks From Validator to Bank
+After successful validation of a bank block, the validator will send a confirmation block back to the Bank
+
+The validator an semd this confirmation block to the bank using the `sendConfirmationBlock()` method
+
+```ts
+
+```
 
 ## Sending Upgrade Notice and Upgrade Request
 

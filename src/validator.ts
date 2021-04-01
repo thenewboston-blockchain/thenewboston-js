@@ -1,4 +1,5 @@
 import { ServerNode } from "./server-node";
+
 import type {
   AccountBalanceResponse,
   AccountBalanceLockResponse,
