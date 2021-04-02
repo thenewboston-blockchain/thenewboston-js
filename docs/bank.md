@@ -265,6 +265,29 @@ console.log(banks);
 
 > As expected, the options object can also be used with this.
 
+#### Getting a single Bank
+
+The `getBank()` method is used to get a specified bank of the bank.
+
+```ts
+const bankNodeId = "//   node_identifier: '59af0721c572e6032b835722b5fec22110daad069dc135f1e81794747dbe626f',
+";
+
+const res = await bank.getBank(bankNodeId);
+console.log(res);
+
+// {
+//   account_number: '9a275161478536d0a5b88ff05d429b9a9e63d0032a46e7a6a8f088da89c69da5',
+//   ip_address: '13.57.215.62',
+//   node_identifier: '59af0721c572e6032b835722b5fec22110daad069dc135f1e81794747dbe626f',
+//   port: 80,
+//   protocol: 'http',
+//   version: 'v1.0',
+//   default_transaction_fee: 1,
+//   trust: '50.00'
+// }
+```
+
 #### Updating Bank Trust
 
 We can also update the trust of a specific bank by using the `updateBankTrust` method.
@@ -481,6 +504,28 @@ console.log(res);
 //     },
 //    ...18 more validators
 //   ]
+// }
+```
+
+#### Getting a single Validator
+
+The `getValidator()` method is used to get a specified validator of the bank.
+
+```ts
+const validatorNodeId = "01181490ac0fa6f73bd980adb81f1a3e72f81eb6b4ccab4dac8b6db7544e5eb1";
+
+const res = await bank.getValidator(validatorNodeId);
+console.log(res);
+
+// {
+//   account_number: 'd2018eb4a13ea1ed307aa8f73207bc1cbad3fac0070899ff5af158982ae7a804',
+//   ip_address: '18.218.193.164',
+//   node_identifier: '01181490ac0fa6f73bd980adb81f1a3e72f81eb6b4ccab4dac8b6db7544e5eb1',
+//   port: 80,
+//   protocol: 'http',
+//   version: 'v1.0',
+//   default_transaction_fee: 1,
+//   trust: '100.00'
 // }
 ```
 

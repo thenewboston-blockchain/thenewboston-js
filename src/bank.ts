@@ -39,6 +39,14 @@ export class Bank extends ServerNode {
   }
 
   /**
+   * Gets the bank with the specified node identifier.
+   * @param nodeIdentifier Node Identifier of a bank.
+   */
+  async getBank(nodeIdentifier: string) {
+    return await super.getData<PaginatedBankEntry>(`/banks/${nodeIdentifier}`);
+  }
+
+  /**
    * Gets the connected banks for the given bank.
    * @param options The optional object for the pagination options.
    */
@@ -207,6 +215,14 @@ export class Bank extends ServerNode {
       "/upgrade_notice",
       account.createSignedMessage({ bank_node_identifier: nodeIdentifier })
     );
+  }
+
+  /**
+   * Gets the validator with the specified node identifier.
+   * @param nodeIdentifier Node Identifier of a validator.
+   */
+  async getValidator(nodeIdentifier: string) {
+    return await super.getData<PaginatedValidatorEntry>(`/validators/${nodeIdentifier}`);
   }
 
   /**
