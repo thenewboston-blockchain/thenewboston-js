@@ -1,3 +1,4 @@
+import { Account } from "./account";
 import { ServerNode } from "./server-node";
 import type {
   AccountBalanceResponse,
@@ -56,5 +57,34 @@ export abstract class Validator extends ServerNode {
    */
   async getValidators(options: Partial<PaginationOptions> = {}) {
     return await super.getPaginatedData<PaginatedTransactionEntry>(`/validators`, options);
+  }
+  /**
+   * Updates a given bank's trust.
+   * @param nodeIdentifier the bank to update's node identifier
+   * @param trust the new bank's trust
+   * @param account the current validators's network Id to sign the request
+   */
+  async updateBankTrust(nodeIdentifier: string, trust: number, account: Account) {
+    return await super.patchData(
+      `/banks/${nodeIdentifier}`,
+      account.createSignedMessage({
+        trust,
+      })
+    );
+  }
+
+  /**
+   * Updates a given validators's trust.
+   * @param nodeIdentifier the validator to update's node identifier
+   * @param trust the new validator's trust
+   * @param account the current validators's network Id to sign the request
+   */
+  async updateValidatorTrust(nodeIdentifier: string, trust: number, account: Account) {
+    return await super.patchData(
+      `/validators/${nodeIdentifier}`,
+      account.createSignedMessage({
+        trust,
+      })
+    );
   }
 }
