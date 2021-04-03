@@ -4,6 +4,7 @@ import type {
   AccountBalanceResponse,
   AccountBalanceLockResponse,
   PaginatedBankEntry,
+  PaginatedValidatorEntry,
   PaginatedTransactionEntry,
   PaginationOptions,
 } from "./models";
@@ -14,6 +15,14 @@ import type {
  * Note: this class is meant to be extended.
  */
 export abstract class Validator extends ServerNode {
+  /**
+   * Gets the bank with the specified node identifier.
+   * @param nodeIdentifier Node Identifier of a bank.
+   */
+  async getBank(nodeIdentifier: string) {
+    return await super.getData<PaginatedBankEntry>(`/banks/${nodeIdentifier}`);
+  }
+
   /** Gets all of the banks connected to the current validator. */
   async getBanks(options: Partial<PaginationOptions> = {}) {
     return await super.getPaginatedData<PaginatedBankEntry>("/banks", options);
@@ -52,11 +61,19 @@ export abstract class Validator extends ServerNode {
   }
 
   /**
+   * Gets the validator with the specified node identifier.
+   * @param nodeIdentifier Node Identifier of a validator.
+   */
+  async getValidator(nodeIdentifier: string) {
+    return await super.getData<PaginatedValidatorEntry>(`/validators/${nodeIdentifier}`);
+  }
+
+  /**
    * Gets all of the connected validators to the current validator.
    * @param options the pagination options
    */
   async getValidators(options: Partial<PaginationOptions> = {}) {
-    return await super.getPaginatedData<PaginatedTransactionEntry>(`/validators`, options);
+    return await super.getPaginatedData<PaginatedValidatorEntry>(`/validators`, options);
   }
   /**
    * Updates a given bank's trust.
