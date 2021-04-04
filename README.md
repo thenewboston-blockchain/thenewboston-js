@@ -1,3 +1,5 @@
+ [ ![Issues](https://img.shields.io/github/issues/thenewboston-developers/thenewboston-js?color=0088ff) ](https://github.com/thenewboston-developers/thenewboston-js/issues) [ ![GitHub pull requests](https://img.shields.io/github/issues-pr/thenewboston-developers/thenewboston-js?color=0088ff) ](https://github.com/thenewboston-developers/thenewboston-js/pulls)  [![Thenewboston on npm](https://img.shields.io/npm/v/thenewboston?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)](https://www.npmjs.com/package/thenewboston)   [ ![Discord conversation](https://img.shields.io/discord/463752820026376202.svg?logo=discord&logoColor=fff&label=Discord&color=7389d8) ](https://discord.com/invite/thenewboston) 
+ 
 ## Overview
 
 JavaScript library for thenewboston.
