@@ -70,6 +70,7 @@ All donations will go to thenewboston to help fund the team to continue to devel
 | ![Bitcoin Logo](https://github.com/thenewboston-developers/Website/raw/development/src/assets/images/bitcoin.png)           | 3GZYi3w3BXQfyb868K2phHjrS4i8LooaHh                               |
 | ![Ethereum Logo](https://github.com/thenewboston-developers/Website/raw/development/src/assets/images/ethereum.png)         | 0x0E38e2a838F0B20872E5Ff55c82c2EE7509e6d4A                       |
 
+
 ## License
 
 thenewboston is [MIT licensed](http://opensource.org/licenses/MIT).
