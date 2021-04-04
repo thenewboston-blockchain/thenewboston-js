@@ -2,41 +2,10 @@
 
 JavaScript library for thenewboston.
 
-## Contributing Guide
-
-Here you can learn about how you can help make thenewboston-js a robust and simple JavaScript library to use!
-
-### Setup
-
-Make sure you clone the official repository. Here is the command to run if you want to clone with git:
-
-```sh
-> git clone https://github.com/thenewboston-developers/thenewboston-js.git
-```
-
-After that, you should see a new folder named `thenewboston-js` in your current working directory. Navigate into that project and you're ready to go!
-
-### Development
-
-Before you are able to access any of the npm commands, you must first run `npm install` or `npm i` to get all of the modules loaded into your local project.
-
-### Building
-
-If you are ready to test out your changes, run `npm run build`. After that, you should see the CommonJS module located in the `dist` directory. You can create a `dev.js` file with something like the following code if you want to test out your changes:
-
-```js
-const tnb = require("./"); // loads the module from the path in the `package.json`
-
-async function main() {
-  /* Code! */
-}
-
-main();
-```
 
 ### Contributing
 
-Create your fork / branch from the development branch, All pull requests to be made to development branch for review.
+Find out how you can contribute [here](https://github.com/thenewboston-developers/thenewboston-js/blob/master/docs/CONTRIBUTING.md).
 
 ### Testing
 
@@ -44,7 +13,7 @@ Some day...
 
 ## Documentation
 
-Check out the [documentation here](docs/index.md).
+Check out the [documentation here](https://github.com/thenewboston-developers/thenewboston-js/blob/master/docs/index.md).
 
 ## Community
 
@@ -73,3 +42,5 @@ All donations will go to thenewboston to help fund the team to continue to devel
 ## License
 
 thenewboston is [MIT licensed](http://opensource.org/licenses/MIT).
+
+ [ ![Issues](https://img.shields.io/github/issues/anuraghazra/github-readme-stats?color=0088ff) ](https://github.com/thenewboston-developers/thenewboston-js/issues) [ ![GitHub pull requests](https://img.shields.io/github/issues-pr/anuraghazra/github-readme-stats?color=0088ff) ](https://github.com/thenewboston-developers/thenewboston-js/pulls)  [![Thenewboston on npm](https://img.shields.io/npm/v/@angular/core.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)](https://www.npmjs.com/package/thenewboston)   [ ![Discord conversation](https://img.shields.io/discord/463752820026376202.svg?logo=discord&logoColor=fff&label=Discord&color=7389d8) ](https://discord.com/invite/thenewboston) 
