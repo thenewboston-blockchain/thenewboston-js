@@ -26,7 +26,7 @@ export class Bank extends ServerNode {
    * @param trust the trust of the the server
    * @param account the account for the server node in which the account number is the node identifier and the signing key is the node identifier signing key
    */
-  async updateAccount(accountNumber: string, trust: number, account: Account) {
+  async updateAccountTrust(accountNumber: string, trust: number, account: Account) {
     return await super.patchData(`/accounts/${accountNumber}`, account.createSignedMessage({ trust }));
   }
 
@@ -36,6 +36,14 @@ export class Bank extends ServerNode {
    */
   async getTransactions(options: Partial<PaginationOptions> = {}) {
     return await super.getPaginatedData<PaginatedTransactionEntry & PaginatedEntry>("/bank_transactions", options);
+  }
+
+  /**
+   * Gets the bank with the specified node identifier.
+   * @param nodeIdentifier Node Identifier of a bank.
+   */
+  async getBank(nodeIdentifier: string) {
+    return await super.getData<PaginatedBankEntry>(`/banks/${nodeIdentifier}`);
   }
 
   /**
@@ -55,6 +63,21 @@ export class Bank extends ServerNode {
   async updateBankTrust(nodeIdentifier: string, trust: number, account: Account) {
     return await super.patchData(
       `/banks/${nodeIdentifier}`,
+      account.createSignedMessage({
+        trust,
+      })
+    );
+  }
+
+  /**
+   * Updates a given validators's trust.
+   * @param nodeIdentifier the validator to update's node identifier
+   * @param trust the new validator's trust
+   * @param account the current bank's network Id to sign the request
+   */
+  async updateValidatorTrust(nodeIdentifier: string, trust: number, account: Account) {
+    return await super.patchData(
+      `/validators/${nodeIdentifier}`,
       account.createSignedMessage({
         trust,
       })
@@ -192,6 +215,14 @@ export class Bank extends ServerNode {
       "/upgrade_notice",
       account.createSignedMessage({ bank_node_identifier: nodeIdentifier })
     );
+  }
+
+  /**
+   * Gets the validator with the specified node identifier.
+   * @param nodeIdentifier Node Identifier of a validator.
+   */
+  async getValidator(nodeIdentifier: string) {
+    return await super.getData<PaginatedValidatorEntry>(`/validators/${nodeIdentifier}`);
   }
 
   /**

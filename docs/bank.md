@@ -108,11 +108,15 @@ console.log(accounts);
 
 We can also update the trust of a specific account.
 
-This is an API call to update the level of trust of a specific account. We use `Bank.updateAccount` for this.
+This is an API call to update the level of trust of a specific account. We use `Bank.updateAccountTrust` for this.
 
 ```ts
 const account = new Account("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", "fakeSigningKeyHex");
-const res = await bank.updateAccount("0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb", 32, account);
+const res = await bank.updateAccountTrust(
+  "0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb",
+  32,
+  account
+);
 console.log(res);
 // {
 //   "id": "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",
@@ -219,7 +223,7 @@ console.log(transactions);
 
 > Just like with `Bank.getAccounts`, you can also pass in an options object here.
 
-## Getting Banks
+## Getting Banks and Updating Trust
 
 This is similar to the [previous section](#getting-transactions), we are just making an API call.
 
@@ -260,6 +264,59 @@ console.log(banks);
 ```
 
 > As expected, the options object can also be used with this.
+
+#### Getting a single Bank
+
+The `getBank()` method is used to get a specified bank of the bank.
+
+```ts
+const bankNodeId = "//   node_identifier: '59af0721c572e6032b835722b5fec22110daad069dc135f1e81794747dbe626f',
+";
+
+const res = await bank.getBank(bankNodeId);
+console.log(res);
+
+// {
+//   account_number: '9a275161478536d0a5b88ff05d429b9a9e63d0032a46e7a6a8f088da89c69da5',
+//   ip_address: '13.57.215.62',
+//   node_identifier: '59af0721c572e6032b835722b5fec22110daad069dc135f1e81794747dbe626f',
+//   port: 80,
+//   protocol: 'http',
+//   version: 'v1.0',
+//   default_transaction_fee: 1,
+//   trust: '50.00'
+// }
+```
+
+#### Updating Bank Trust
+
+We can also update the trust of a specific bank by using the `updateBankTrust` method.
+
+```ts
+const networkIdKeyPair = new Account("fakeSigningKeyHex");
+
+const bankToUpdate = "0cdd4ba04456ca169baca3d66eace869520c62fe84421329086e03d91a68acdb";
+
+const res = await bank.updateAccountTrust(bankToUpdate, 50, networkIdKeyPair);
+
+console.log(res);
+// {
+//   account_number: 'd62165ea6102a74fd484176226cd6ed8f7fc779117138e3ee2d9881ff4fc5a04',
+//   ip_address: '144.126.219.17',
+//   node_identifier: '38ce9d9a245b2c5c923b1a6e8bbf5324a8cd57d71c977aef6a457740d7fd6451',
+//   port: 80,
+//   protocol: 'http',
+//   version: 'v1.4',
+//   default_transaction_fee: 1,
+//   root_account_file: 'http://144.126.219.17:80/media/root_account_file.json',
+//   root_account_file_hash: 'ab9b95e5bb1dc66dd57ebf2cb8a8dece41748389d68077f74c916659f4bd2f1b',
+//   seed_block_identifier: '',
+//   daily_confirmation_rate: 1,
+//   trust: '50.00'
+// }
+```
+
+<br>
 
 ## Getting and Adding Blocks
 
@@ -405,7 +462,7 @@ We use `Bank.getConfirmationBlocks` to get the confirmation blocks and `Bank.get
 
 > Both of these methods support the options object
 
-## Getting Validators and Validator Confirmation Services
+## Getting Validators and Updating Trust
 
 The `Bank.getValidators` method is used to get all connected validators of the bank.
 
@@ -449,6 +506,60 @@ console.log(res);
 //   ]
 // }
 ```
+
+#### Getting a single Validator
+
+The `getValidator()` method is used to get a specified validator of the bank.
+
+```ts
+const validatorNodeId = "01181490ac0fa6f73bd980adb81f1a3e72f81eb6b4ccab4dac8b6db7544e5eb1";
+
+const res = await bank.getValidator(validatorNodeId);
+console.log(res);
+
+// {
+//   account_number: 'd2018eb4a13ea1ed307aa8f73207bc1cbad3fac0070899ff5af158982ae7a804',
+//   ip_address: '18.218.193.164',
+//   node_identifier: '01181490ac0fa6f73bd980adb81f1a3e72f81eb6b4ccab4dac8b6db7544e5eb1',
+//   port: 80,
+//   protocol: 'http',
+//   version: 'v1.0',
+//   default_transaction_fee: 1,
+//   trust: '100.00'
+// }
+```
+
+#### Updating Validator Trust
+
+We can also update the trust of a specific validator by using the `updateValidatorTrust` method.
+
+```ts
+const networkIdKeyPair = new Account("validatorNetworkIdSigningKey");
+
+const validatorToUpdate = "38ce9d9a245b2c5c923b1a6e8bbf5324a8cd57d71c977aef6a457740d7fd6451";
+
+const res = await bank.updateAccountTrust(validatorToUpdate, 12, networkIdKeyPair);
+
+console.log(res);
+// {
+//   account_number: 'd62165ea6102a74fd484176226cd6ed8f7fc779117138e3ee2d9881ff4fc5a04',
+//   ip_address: '144.126.219.17',
+//   node_identifier: '38ce9d9a245b2c5c923b1a6e8bbf5324a8cd57d71c977aef6a457740d7fd6451',
+//   port: 80,
+//   protocol: 'http',
+//   version: 'v1.4',
+//   default_transaction_fee: 1,
+//   root_account_file: 'http://144.126.219.17:80/media/root_account_file.json',
+//   root_account_file_hash: 'ab9b95e5bb1dc66dd57ebf2cb8a8dece41748389d68077f74c916659f4bd2f1b',
+//   seed_block_identifier: '',
+//   daily_confirmation_rate: 1,
+//   trust: '12.00'
+// }
+```
+
+<br>
+
+## Getting Validator Confirmation Services
 
 We use `Bank.getValidatorConfirmationServices` to get all the Validator Confirmation Services of the bank.
 
