@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-alpha.1](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2021-04-09)
+
+
+### Bug Fixes
+
+* Updated CV and Pv response types ([#133](https://github.com/thenewboston-developers/thenewboston-js/issues/133)) ([7191322](https://github.com/thenewboston-developers/thenewboston-js/commit/7191322e956bc4e2ac4bf47c45a4a075917e8c0d))
+
 ## [1.1.0-alpha.0](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.0.3...v1.1.0-alpha.0) (2021-04-01)
 
 
