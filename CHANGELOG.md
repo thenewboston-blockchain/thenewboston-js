@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.1.0-alpha.1](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2021-04-09)
 
+### Features
+
+* feat: Get Methods for Single nodes ([#121](https://github.com/thenewboston-developers/thenewboston-js/issues/121)) ([be17ed9](https://github.com/thenewboston-developers/thenewboston-js/commit/be17ed9d1f50d6a439bbfd4efb1506b324b384e0))
+* feat: added updateBankTrust, updateValidatorTrust ([#118](https://github.com/thenewboston-developers/thenewboston-js/issues/118)) ([32e1e1c](https://github.com/thenewboston-developers/thenewboston-js/commit/32e1e1c2afd549bfde80ca4fccc29da55ab5ee32))
 
 ### Bug Fixes
 
