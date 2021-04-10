@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-alpha.2](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2021-04-10)
+
+
+### Bug Fixes
+
+* Replaced startCrawl and stopCrawl return types ([#136](https://github.com/thenewboston-developers/thenewboston-js/issues/136)) ([9f05092](https://github.com/thenewboston-developers/thenewboston-js/commit/9f05092d97e172eef5e1736a266795cfdc721632))
+
 ## [1.1.0-alpha.1](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2021-04-09)
 
 ### Features
