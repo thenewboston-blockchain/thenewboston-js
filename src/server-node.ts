@@ -10,7 +10,6 @@ import type {
 import type { Account } from "./account";
 import type { Protocol } from "./models/responses/constants";
 import { throwError } from "./utils";
-import { CrawlResponse } from "./models/responses/generic/crawl";
 
 /**
  * Used internally for all server nodes.
@@ -95,7 +94,7 @@ export abstract class ServerNode {
    * @param protocol the new node's protocol
    * @param account the server account to validate the request
    */
-  async sendConnectionRequest(ipAddress: string, port: string, protocol: Protocol, account: Account) {
+  async sendConnectionRequest(ipAddress: string, port: number, protocol: Protocol, account: Account) {
     return await this.postData(
       "/connection_requests",
       account.createSignedMessage({
