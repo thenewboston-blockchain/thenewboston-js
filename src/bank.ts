@@ -12,11 +12,11 @@ import type {
   PaginatedBlockEntry,
   PaginatedValidatorEntry,
   CleanResponse,
+  CrawlResponse,
   CleanData,
   CrawlData,
 } from "./models";
 import type { Account } from "./account";
-import { CrawlResponse } from "./models/responses/generic/crawl";
 
 /** Used for creating banks and sending requests easily to that specific bank server node. */
 export class Bank extends ServerNode {
@@ -119,7 +119,7 @@ export class Bank extends ServerNode {
    * @param account An Account created with the Network Id Signing key of the current Bank
    */
   async startCrawl(account: Account) {
-    return await super.postData<CleanResponse>(
+    return await super.postData<CrawlResponse>(
       "/crawl",
       account.createSignedMessage<CrawlData>({ crawl: "start" })
     );
@@ -130,7 +130,7 @@ export class Bank extends ServerNode {
    * @param account An Account created with the Network Id Signing key of the current Bank
    */
   async stopCrawl(account: Account) {
-    return await super.postData<CleanResponse>(
+    return await super.postData<CrawlResponse>(
       "/crawl",
       account.createSignedMessage<CrawlData>({ crawl: "stop" })
     );
