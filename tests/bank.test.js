@@ -82,8 +82,8 @@ describe("Bank", () => {
 
   const bank = new tnb.Bank("http://13.57.215.62");
 
-  it("updateAccount(accountNumber, trust, account)", async () => {
-    const res = await bank.updateAccount("fakeAccountNumber", 10, new tnb.Account());
+  it("updateAccountTrust(accountNumber, trust, account)", async () => {
+    const res = await bank.updateAccountTrust("fakeAccountNumber", 10, new tnb.Account());
     expect(typeof res).toBe("object");
     expect(res).toStrictEqual({
       id: "64426fc5-b3ac-42fb-b75b-d5ccfcdc6872",

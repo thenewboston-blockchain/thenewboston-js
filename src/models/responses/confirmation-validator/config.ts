@@ -22,5 +22,9 @@ export interface ConfirmationValidatorConfigResponse {
   protocol: Protocol;
   version: Version;
   default_transaction_fee: number;
+  root_account_file: Url;
+  root_account_file_hash: Hex;
+  seed_block_identifier: Hex;
+  daily_confirmation_rate: number;
   node_type: NodeType;
 }
