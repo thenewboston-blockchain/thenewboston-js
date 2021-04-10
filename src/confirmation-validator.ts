@@ -1,6 +1,6 @@
 import { Validator } from "./validator";
 import type { Account } from "./account";
-import type { ConfirmationValidatorConfigResponse, CrawlData, CrawlCommand, CleanResponse, CleanData } from "./models";
+import type { ConfirmationValidatorConfigResponse, CleanResponse, CrawlResponse, CleanData, CrawlData } from "./models";
 
 /** Used for connecting with and using confirmation validator server nodes. */
 export class ConfirmationValidator extends Validator {
@@ -11,7 +11,7 @@ export class ConfirmationValidator extends Validator {
 
   /** Gets the current crawl status */
   async getCrawlStatus() {
-    return await super.getData("/crawl");
+    return await super.getData<CrawlResponse>("/crawl");
   }
 
   /**
@@ -19,9 +19,9 @@ export class ConfirmationValidator extends Validator {
    * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
    */
   async startCrawl(account: Account) {
-    return await super.postData<CleanResponse>(
+    return await super.postData<CrawlResponse>(
       "/crawl",
-      account.createSignedMessage<CleanData>({ clean: "start" })
+      account.createSignedMessage<CrawlData>({ crawl: "start" })
     );
   }
 
@@ -30,9 +30,9 @@ export class ConfirmationValidator extends Validator {
    * @param account An Account created with the Network Id Signing key of the current Confirmation Validator
    */
   async stopCrawl(account: Account) {
-    return await super.postData<CleanResponse>(
+    return await super.postData<CrawlResponse>(
       "/crawl",
-      account.createSignedMessage<CleanData>({ clean: "stop" })
+      account.createSignedMessage<CrawlData>({ crawl: "stop" })
     );
   }
 
