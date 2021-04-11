@@ -1,6 +1,7 @@
 /** The model for thenewboston transactions. */
 export interface Transaction {
   amount: number;
-  recipient: string;
   fee?: string;
+  memo?: string;
+  recipient: string;
 }

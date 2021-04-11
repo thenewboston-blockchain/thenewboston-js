@@ -59,6 +59,7 @@ export class PaymentHandler {
       ...[this.bankConfig!, this.primaryValidatorConfig!].map((config) => ({
         amount: config.default_transaction_fee,
         fee: config.node_type,
+        memo: '',
         recipient: config.account_number,
       })),
     ];
@@ -81,9 +82,9 @@ export class PaymentHandler {
    * Sends a specific amount of coins to a given account from the sender.
    * @param transferDetails The object with transfer details like sender, recipient and amount
    */
-  async sendCoins({ sender, recipient, amount }: TransferDetails) {
+  async sendCoins({ sender, recipient, amount, memo='' }: TransferDetails) {
     const recipientAccount = typeof recipient === "string" ? recipient : recipient.accountNumberHex;
-    const transaction = await this.createTransaction(sender, [{ recipient: recipientAccount, amount }]);
+    const transaction = await this.createTransaction(sender, [{ recipient: recipientAccount, amount, memo }]);
     await this.broadcastTransaction(transaction);
   }
 
