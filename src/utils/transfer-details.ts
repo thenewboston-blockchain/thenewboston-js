@@ -11,7 +11,6 @@ export class TransferDetails {
     this.sender = sender;
     this.recipient = recipient;
     this.amount = amount;
-    if (memo.length > 64) throwError("Invalid memo!");
     this.memo = memo;
   }
 }

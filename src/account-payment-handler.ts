@@ -16,7 +16,7 @@ export class AccountPaymentHandler {
     await this.client.init();
   }
 
-  async sendCoins(recipient: Account | string, amount: number, memo='') {
+  async sendCoins(recipient: Account | string, amount: number, memo = "") {
     await this.client.sendCoins(new TransferDetails(this.account, recipient, amount, memo));
   }
 
