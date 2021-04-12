@@ -97,21 +97,21 @@ describe("Bank", () => {
   it("getTransactions()", async () => {
     const transactions = await bank.getTransactions();
     expect(typeof transactions).toBe("object");
-    expect(transactions.results[0]).toStrictEqual({
-      id: "a486f2ca-2431-455a-bdb2-6dccbf7e1ace",
-      block: {
-        id: "30b5bafb-139c-43ad-a03f-8c04e77c35a2",
-        created_date: "2021-03-30T03:38:45.827858Z",
-        modified_date: "2021-03-30T03:38:45.827884Z",
-        balance_key: "43731d388391f5a8b046066a4a3cf6164b16192a99fcd00bdeb627a98d31016e",
-        sender: "7c2d3b7774b494a496c00d175bd68d04280acb3fd1bac5dc46cae2b67d7f5a4f",
-        signature:
-          "d8b6d6f56149519d26ebb901702c078a0b75b4f153a84655f1a1b161c52aff65086c3a0195e91ee8504790cbc699d7f8189c680aa89d609b5d12101d7190d407",
-      },
-      amount: 1,
-      fee: "BANK",
-      recipient: "9a275161478536d0a5b88ff05d429b9a9e63d0032a46e7a6a8f088da89c69da5",
-    });
+    expect(transactions.results[0]).toStrictEqual(        {
+            "id": "443aabd9-d06b-4c4b-af3b-5a21cbee523d",
+            "block": {
+                "id": "04f407d2-35fa-4416-99f4-1ea39612a014",
+                "created_date": "2021-04-12T08:21:32.612926Z",
+                "modified_date": "2021-04-12T08:21:32.612953Z",
+                "balance_key": "d2af51bfc15be5af4c4120c488625b7b224f6acb84a4467a4dd8f1647a0ec8e8",
+                "sender": "22d0f0047b572a6acb6615f7aae646b0b96ddc58bfd54ed2775f885baeba3d6a",
+                "signature": "9e715ea8e5c173a87369215868c649fbe164444ea138d2fff4e4add80f4ccdb3a5ee6a529964b43a5b9fd611d504b58c52c380792ed359c036763942e003a002"
+            },
+            "amount": 1,
+            "fee": "PRIMARY_VALIDATOR",
+            "memo": "",
+            "recipient": "4afb3eaad999e4c073be0fbde86b76f9370d53b398b9cab9d760825709a1d6b3"
+        });
   });
 
   it("getBanks()", async () => {
@@ -195,7 +195,8 @@ describe("Bank", () => {
     const res = await bank.addBlocks(
       "fakeBalanceLock",
       [{ amount: 1, recipient: "fakeAccountNumber" }],
-      new tnb.Account()
+      new tnb.Account(),
+      'Memo'
     );
     expect(typeof res).toBe("object");
     expect(res).toStrictEqual({

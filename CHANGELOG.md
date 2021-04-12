@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-alpha.3](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2021-04-12)
+
+
+### Features
+
+* Added support for memo ([#140](https://github.com/thenewboston-developers/thenewboston-js/issues/140)) ([ad5ed54](https://github.com/thenewboston-developers/thenewboston-js/commit/ad5ed54efc1f09b0ec2525fc0255ab39ab1df61d))
+
 ## [1.1.0-alpha.2](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2021-04-10)
 
 
