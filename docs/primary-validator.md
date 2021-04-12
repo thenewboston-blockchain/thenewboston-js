@@ -19,6 +19,7 @@ const transactions = [
   },
   {
     amount: 1,
+    memo: "hi",
     recipient: "fakeAccountNumber",
   },
   {

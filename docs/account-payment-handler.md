@@ -29,7 +29,8 @@ await paymentHandler.init();
 const recipientAccount = new Account("fakeSigningKey");
 const amount = 1000;
 
-await sendCoins(recipientAccount, 1000);
+// You can use this method to send memos as well
+await sendCoins(recipientAccount, amount, "memo");
 ```
 
 ## Send Bulk Payments
@@ -58,6 +59,7 @@ await paymentHandler.init();
 /* Note
     The sender cannot be listed as a recipient
     A recipient cannot be listed more than once
+    You must follow this order of the fields
 */
 
 const txs = [
@@ -67,6 +69,7 @@ const txs = [
   },
   {
     amount: 100,
+    memo: "hi",
     recipient: "fakeAccountNumber2",
   },
   {
