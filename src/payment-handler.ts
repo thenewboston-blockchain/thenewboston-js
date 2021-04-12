@@ -48,6 +48,17 @@ export class PaymentHandler {
    *
    */
   async createTransaction(sender: Account, txs: Transaction[]) {
+    txs = txs.map((tx) => {
+      if (tx.memo) {
+        tx.memo?.trim();
+        if (!/^[a-zA-Z0-9_ ]*$/.test(tx.memo))
+          throwError("Invalid memo", "Memo can only contain alphanumeric characters, spaces, and underscores");
+        if (tx.memo.length > 64) throwError("Invalid memo", "Memo cannot exceed 64 characters");
+      }
+      if (tx.memo === "") delete tx.memo;
+      return tx;
+    });
+
     const { balance_lock: balanceLock } = await this.primaryValidator!.getAccountBalanceLock(
       sender.accountNumberHex
     ).catch((err) =>
@@ -81,9 +92,9 @@ export class PaymentHandler {
    * Sends a specific amount of coins to a given account from the sender.
    * @param transferDetails The object with transfer details like sender, recipient and amount
    */
-  async sendCoins({ sender, recipient, amount }: TransferDetails) {
+  async sendCoins({ sender, recipient, amount, memo = "" }: TransferDetails) {
     const recipientAccount = typeof recipient === "string" ? recipient : recipient.accountNumberHex;
-    const transaction = await this.createTransaction(sender, [{ recipient: recipientAccount, amount }]);
+    const transaction = await this.createTransaction(sender, [{ amount, memo, recipient: recipientAccount }]);
     await this.broadcastTransaction(transaction);
   }
 
