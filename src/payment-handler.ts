@@ -48,14 +48,16 @@ export class PaymentHandler {
    *
    */
   async createTransaction(sender: Account, txs: Transaction[]) {
-    txs.map((tx) => {
+    txs = txs.map((tx) => {
       if (tx.memo) {
         tx.memo?.trim();
-        if (/^[a-zA-Z0-9_ ]*$/.test(tx.memo))
+        if (!/^[a-zA-Z0-9_ ]*$/.test(tx.memo))
           throwError("Invalid memo", "Memo can only contain alphanumeric characters, spaces, and underscores");
         if (tx.memo.length > 64) throwError("Invalid memo", "Memo cannot exceed 64 characters");
-        if (tx.memo === "") delete tx.memo;
+        console.log(tx);
       }
+      if (tx.memo === "") delete tx.memo;
+      return tx;
     });
 
     const { balance_lock: balanceLock } = await this.primaryValidator!.getAccountBalanceLock(
@@ -69,7 +71,6 @@ export class PaymentHandler {
       ...[this.bankConfig!, this.primaryValidatorConfig!].map((config) => ({
         amount: config.default_transaction_fee,
         fee: config.node_type,
-        memo: "",
         recipient: config.account_number,
       })),
     ];
@@ -94,7 +95,7 @@ export class PaymentHandler {
    */
   async sendCoins({ sender, recipient, amount, memo = "" }: TransferDetails) {
     const recipientAccount = typeof recipient === "string" ? recipient : recipient.accountNumberHex;
-    const transaction = await this.createTransaction(sender, [{ recipient: recipientAccount, amount, memo }]);
+    const transaction = await this.createTransaction(sender, [{ amount, memo, recipient: recipientAccount }]);
     await this.broadcastTransaction(transaction);
   }
 
