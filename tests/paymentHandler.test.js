@@ -1,21 +1,18 @@
 const tnb = require("../");
 
 describe("PaymentHandler", () => {
-  const bank = new tnb.Bank("http://13.57.215.62");
-  const pv = new tnb.PrimaryValidator("http://54.241.124.162/");
+  const bank = new tnb.Bank("http://54.177.121.3");
   const paymentHandler = new tnb.PaymentHandler({ bankUrl: bank.url });
-
-  function assertPaymentHandlerBasics(paymentHandler) {
-    expect(paymentHandler.bank.url).toBe(bank.url);
-    expect(paymentHandler.primaryValidator.url).toBe(pv.url);
-  }
 
   it("constructor()", async () => {
     await paymentHandler.init();
-    assertPaymentHandlerBasics(paymentHandler);
+    const pv = await bank.getBankPV()
+    expect(paymentHandler.bank.url).toBe(bank.url);
+    expect(paymentHandler.primaryValidator.url).toBe(pv.url);
   });
 
   it("sender: Account, txs: Transaction[]", async () => {
+    const pv = await bank.getBankPV()
     paymentHandler.init();
     const sender = new tnb.Account();
     const recipient = new tnb.Account();
@@ -23,6 +20,7 @@ describe("PaymentHandler", () => {
     const txs = [
       {
         amount: 100,
+        memo: 'hi',
         recipient: recipient.accountNumberHex,
       },
     ];
@@ -30,6 +28,7 @@ describe("PaymentHandler", () => {
     const transaction = await paymentHandler.createTransaction(sender, txs);
     expect(transaction.sender).toBe(sender);
     expect(transaction.balanceLock).toBe((await pv.getAccountBalanceLock(sender.accountNumberHex)).balance_lock);
-    expect(transaction.transactions[0]).toStrictEqual(txs[0]);
+    expect(transaction.transactions[0].amount).toBe(100)
+    expect(transaction.transactions[0].memo).toBe('hi')
   });
 });
