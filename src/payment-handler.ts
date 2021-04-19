@@ -50,7 +50,7 @@ export class PaymentHandler {
   async createTransaction(sender: Account, txs: Transaction[]) {
     txs = txs.map((tx) => {
       if (tx.memo) {
-        tx.memo?.trim();
+        tx.memo = tx.memo.trim();
         if (!/^[a-zA-Z0-9_ ]*$/.test(tx.memo))
           throwError("Invalid memo", "Memo can only contain alphanumeric characters, spaces, and underscores");
         if (tx.memo.length > 64) throwError("Invalid memo", "Memo cannot exceed 64 characters");
