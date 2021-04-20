@@ -52,7 +52,11 @@ export class Account {
    * @param accountNumber the given account number hex string
    */
   static isValidPair(signingKey: string, accountNumber: string) {
-    return new Account(signingKey).accountNumberHex === accountNumber;
+    try {
+      return new Account(signingKey).accountNumberHex === accountNumber;
+    } catch (_) {
+      return false;
+    }
   }
 
   /** The 32 byte account number as a 32 byte hex string. */
