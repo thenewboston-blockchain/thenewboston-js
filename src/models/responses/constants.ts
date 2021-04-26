@@ -1,4 +1,8 @@
-export type NodeType = "BANK" | "CONFIRMATION_VALIDATOR" | "PRIMARY_VALIDATOR";
+export enum NodeType {
+  bank = "BANK",
+  confirmationValidator = "CONFIRMATION_VALIDATOR",
+  primaryValidator = "PRIMARY_VALIDATOR",
+}
 export type Version = "v1.0";
 export type Protocol = "http" | "https";
 export type Port = number;

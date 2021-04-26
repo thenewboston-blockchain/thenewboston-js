@@ -26,5 +26,5 @@ export interface ConfirmationValidatorConfigResponse {
   root_account_file_hash: Hex;
   seed_block_identifier: Hex;
   daily_confirmation_rate: number;
-  node_type: NodeType;
+  node_type: NodeType.confirmationValidator;
 }
