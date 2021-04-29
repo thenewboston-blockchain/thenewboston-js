@@ -1,4 +1,4 @@
-const tnb = require("../");
+const tnb = require("../dist");
 const nock = require("nock");
 const data = require("./data/primaryValidator");
 
