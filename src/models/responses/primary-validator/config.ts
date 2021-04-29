@@ -1,4 +1,4 @@
-import type { Hex, Origin, Port, Protocol, Url, Trust, Version, NodeType } from "../constants";
+import type { Hex, Origin, Port, Protocol, Url, Version, NodeType } from "../constants";
 
 export interface PrimaryValidatorConfigResponse {
   primary_validator: null;
@@ -13,5 +13,5 @@ export interface PrimaryValidatorConfigResponse {
   root_account_file_hash: Hex;
   seed_block_identifier: Hex;
   daily_confirmation_rate: number;
-  node_type: NodeType;
+  node_type: NodeType.primaryValidator;
 }

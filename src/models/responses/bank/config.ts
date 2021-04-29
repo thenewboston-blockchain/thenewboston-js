@@ -22,5 +22,5 @@ export interface BankConfigResponse {
   protocol: Protocol;
   version: Version;
   default_transaction_fee: number;
-  node_type: NodeType;
+  node_type: NodeType.bank;
 }
