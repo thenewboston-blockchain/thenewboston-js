@@ -7,6 +7,7 @@ import type {
   PaginatedValidatorEntry,
   PaginatedTransactionEntry,
   PaginationOptions,
+  ConfirmationBlock,
 } from "./models";
 
 /**
@@ -30,34 +31,34 @@ export abstract class Validator extends ServerNode {
 
   /**
    * Gets the account balance with the given account number (id).
-   * @param id the account number
+   * @param accountNumber the public key of the account
    */
-  async getAccountBalance(id: string) {
-    return await super.getData<AccountBalanceResponse>(`/accounts/${id}/balance`);
+  async getAccountBalance(accountNumber: string) {
+    return await super.getData<AccountBalanceResponse>(`/accounts/${accountNumber}/balance`);
   }
 
   /**
    * Gets the balance lock of the given account.
-   * @param id the id of the account
+   * @param accountNumber the public key of the account
    */
-  async getAccountBalanceLock(id: string) {
-    return await super.getData<AccountBalanceLockResponse>(`/accounts/${id}/balance_lock`);
+  async getAccountBalanceLock(accountNumber: string) {
+    return await super.getData<AccountBalanceLockResponse>(`/accounts/${accountNumber}/balance_lock`);
   }
 
   /**
    * Gets the details of given block identifier's queued transactions.
-   * @param id the block identifier
+   * @param blockId the block identifier
    */
-  async getQueuedConfirmationBlock(id: string) {
-    return await super.getData(`/confirmation_blocks/${id}/queued`);
+  async getQueuedConfirmationBlock(blockId: string) {
+    return await super.getData<ConfirmationBlock>(`/confirmation_blocks/${blockId}/queued`);
   }
 
   /**
    * Gets the details of given block identifier's valid transactions.
-   * @param id the block identifier
+   * @param blockId the block identifier
    */
-  async getValidConfirmationBlock(id: string) {
-    return await super.getData(`/confirmation_blocks/${id}/valid`);
+  async getValidConfirmationBlock(blockId: string) {
+    return await super.getData<ConfirmationBlock>(`/confirmation_blocks/${blockId}/valid`);
   }
 
   /**

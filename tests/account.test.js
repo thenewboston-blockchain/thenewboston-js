@@ -1,4 +1,4 @@
-const { Account } = require("../");
+const { Account } = require("../dist");
 
 describe("Account", () => {
   const defaultAccount = {
@@ -44,6 +44,15 @@ describe("Account", () => {
     expect(Account.isValidPair(defaultAccount.accountNumber, defaultAccount.accountNumber)).toBeFalsy();
     expect(Account.isValidPair(defaultAccount.signingKey, defaultAccount.signingKey)).toBeFalsy();
     expect(Account.isValidPair(defaultAccount.accountNumber, defaultAccount.signingKey)).toBeFalsy();
+  });
+
+  it("isValidPair doesn't throw errors", () => {
+    const results = [
+      Account.isValidPair("asdf", "asdf"),
+      Account.isValidPair(defaultAccount.signingKey, "asdf"),
+      Account.isValidPair("asdf", defaultAccount.accountNumber),
+    ];
+    expect(results.every((val) => typeof val === "boolean")).toBeTruthy();
   });
 
   it("createSignature(message)", () => {

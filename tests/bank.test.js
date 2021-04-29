@@ -1,4 +1,4 @@
-const tnb = require("../");
+const tnb = require("../dist");
 const nock = require("nock");
 const data = require("./data/bank");
 
@@ -97,21 +97,22 @@ describe("Bank", () => {
   it("getTransactions()", async () => {
     const transactions = await bank.getTransactions();
     expect(typeof transactions).toBe("object");
-    expect(transactions.results[0]).toStrictEqual(        {
-            "id": "443aabd9-d06b-4c4b-af3b-5a21cbee523d",
-            "block": {
-                "id": "04f407d2-35fa-4416-99f4-1ea39612a014",
-                "created_date": "2021-04-12T08:21:32.612926Z",
-                "modified_date": "2021-04-12T08:21:32.612953Z",
-                "balance_key": "d2af51bfc15be5af4c4120c488625b7b224f6acb84a4467a4dd8f1647a0ec8e8",
-                "sender": "22d0f0047b572a6acb6615f7aae646b0b96ddc58bfd54ed2775f885baeba3d6a",
-                "signature": "9e715ea8e5c173a87369215868c649fbe164444ea138d2fff4e4add80f4ccdb3a5ee6a529964b43a5b9fd611d504b58c52c380792ed359c036763942e003a002"
-            },
-            "amount": 1,
-            "fee": "PRIMARY_VALIDATOR",
-            "memo": "",
-            "recipient": "4afb3eaad999e4c073be0fbde86b76f9370d53b398b9cab9d760825709a1d6b3"
-        });
+    expect(transactions.results[0]).toStrictEqual({
+      id: "443aabd9-d06b-4c4b-af3b-5a21cbee523d",
+      block: {
+        id: "04f407d2-35fa-4416-99f4-1ea39612a014",
+        created_date: "2021-04-12T08:21:32.612926Z",
+        modified_date: "2021-04-12T08:21:32.612953Z",
+        balance_key: "d2af51bfc15be5af4c4120c488625b7b224f6acb84a4467a4dd8f1647a0ec8e8",
+        sender: "22d0f0047b572a6acb6615f7aae646b0b96ddc58bfd54ed2775f885baeba3d6a",
+        signature:
+          "9e715ea8e5c173a87369215868c649fbe164444ea138d2fff4e4add80f4ccdb3a5ee6a529964b43a5b9fd611d504b58c52c380792ed359c036763942e003a002",
+      },
+      amount: 1,
+      fee: "PRIMARY_VALIDATOR",
+      memo: "",
+      recipient: "4afb3eaad999e4c073be0fbde86b76f9370d53b398b9cab9d760825709a1d6b3",
+    });
   });
 
   it("getBanks()", async () => {
@@ -196,7 +197,7 @@ describe("Bank", () => {
       "fakeBalanceLock",
       [{ amount: 1, recipient: "fakeAccountNumber" }],
       new tnb.Account(),
-      'Memo'
+      "Memo"
     );
     expect(typeof res).toBe("object");
     expect(res).toStrictEqual({
