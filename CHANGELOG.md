@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-alpha.4](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2021-04-29)
+
+
+### Features
+
+* Replaced type with enum for types with multiple values ([#157](https://github.com/thenewboston-developers/thenewboston-js/issues/157)) ([cab172b](https://github.com/thenewboston-developers/thenewboston-js/commit/cab172be7a8d87713fa88ac601e916f99715c71d))
+
+
+### Bug Fixes
+
+* `Account.isValidPair` throwing on invalid seeds ([#152](https://github.com/thenewboston-developers/thenewboston-js/issues/152)) ([1a18fad](https://github.com/thenewboston-developers/thenewboston-js/commit/1a18fad5e143658e66b2beb01829fbd1c99780d1)), closes [#151](https://github.com/thenewboston-developers/thenewboston-js/issues/151)
+
 ## [1.1.0-alpha.3](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2021-04-12)
 
 
