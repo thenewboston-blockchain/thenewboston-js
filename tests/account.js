@@ -1,4 +1,4 @@
-const { Account } = require("../");
+const { Account } = require("../dist");
 
 describe("Account", () => {
   const defaultAccount = {

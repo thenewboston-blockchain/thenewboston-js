@@ -9,7 +9,7 @@ export enum CleanStatus {
 /** The response model for a crawl request. */
 export interface CleanResponse {
   clean_last_completed: string;
-  clean_status: string;
+  clean_status: CleanStatus | null;
   ip_address: Origin;
   port: Port;
   protocol: Protocol;
