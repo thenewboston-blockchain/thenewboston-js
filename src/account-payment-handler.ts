@@ -17,10 +17,10 @@ export class AccountPaymentHandler {
   }
 
   async sendCoins(recipient: Account | string, amount: number, memo = "") {
-    await this.client.sendCoins(new TransferDetails(this.account, recipient, amount, memo));
+    return await this.client.sendCoins(new TransferDetails(this.account, recipient, amount, memo));
   }
 
   async sendBulkTransactions(transactions: Transaction[]) {
-    await this.client.sendBulkTransactions(this.account, transactions);
+    return await this.client.sendBulkTransactions(this.account, transactions);
   }
 }
