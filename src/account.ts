@@ -60,12 +60,11 @@ export class Account {
   }
 
   /**
-   * Checks if the signing key pair is valid.
-   * @param message message to verify
+   * Checks if the message was signed by a specific account number.
+   * @param message the message to verify
    * @param signature the signed message
    * @param accountNumber the account number that signed the message
    */
-
   static verifySignature(message: string, signature: string, accountNumber: string) {
     const encodedMessage = new TextEncoder().encode(message);
     const encodedSignature = hexToUint8Array(signature);
