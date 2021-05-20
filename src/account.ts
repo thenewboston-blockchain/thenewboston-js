@@ -1,7 +1,6 @@
 import { createAccountData, uint8arrayToHex, hexToUint8Array } from "./utils";
 import type { BlockData, BlockMessage, SignedMessage, Transaction } from "./models";
 import { sign } from "tweetnacl";
-import * as nacl from "tweetnacl";
 
 type AccountKeys = [Uint8Array, Uint8Array];
 
@@ -65,7 +64,7 @@ export class Account {
     const encodedSignature = hexToUint8Array(signature);
     const encodedAccountNumber = hexToUint8Array(accountNumber);
     try {
-      return nacl.sign.detached.verify(encodedMessage, encodedSignature.slice(0, 64), encodedAccountNumber);
+      return sign.detached.verify(encodedMessage, encodedSignature.slice(0, 64), encodedAccountNumber);
     } catch {
       return false;
     }
