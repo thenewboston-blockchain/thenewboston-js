@@ -25,6 +25,12 @@ There are two ways to use the library.
 
   - [Using Block Data and Block Messages](account.md#using-block-data-and-block-messages)
 
+- [Account Payment Handler](account-payment-handler.md)
+  
+  - [Sending Coins](account-payment-handler.md#sending-coins)
+
+  - [Send Bulk Payments](account-payment-handler.md#sending-bulk-payments)
+
 - [Bank](bank.md#bank)
 
   - [Creating Banks](bank.md#creating-banks)
