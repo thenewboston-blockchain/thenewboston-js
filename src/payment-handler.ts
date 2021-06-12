@@ -77,7 +77,8 @@ export class PaymentHandler {
         fee: config.node_type,
         recipient: config.account_number,
       })),
-    ];
+    ].sort((a, b) => (a.recipient > b.recipient ? 1 : -1));
+
     return { balanceLock, transactions, sender };
   }
 
