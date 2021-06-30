@@ -70,6 +70,21 @@ From running that code, you can see that the `createSignature` method returned a
 
 > If you re-run that code multiple times, you will then notice that the generated signature is different. That is because the signature depends on two variables: the account signing key and the message. The account signing key also is changing on every run because we are generating a random `Account` to use, thus resulting in different outcomes.
 
+## Verifying Signatures
+
+If you need to verify a signature for a message, then you can easily use the `Account.verifySignature` static method. The method takes in the message first, the signature (signed message) second and then the account number last. Here is example of how one might use this method:
+
+```ts
+const account = new Account("SIGNING_KEY");
+
+const message = "Hello, world!" or JSON.stringify({greeting: "Hello World!"});
+
+const signature = account.createSignature(message);
+
+Account.verifySignature(message,signature, account.accountNumberHex);
+// returns true only if the account number was used to sign the message and the signed message matches the signature
+```
+
 ## Verifying Account Keys
 
 If you need to verify that the given signing key and account number are paired together, then you can easily use the `Account.isValidPair` static method. The method takes in the signing key first and the account number second. Here is example of how one might use this method:

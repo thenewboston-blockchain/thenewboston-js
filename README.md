@@ -9,13 +9,9 @@ JavaScript library for thenewboston.
 
 Find out how you can contribute [here](https://github.com/thenewboston-developers/thenewboston-js/blob/master/docs/CONTRIBUTING.md).
 
-### Testing
-
-Some day...
-
 ## Documentation
 
-Check out the [documentation here](https://github.com/thenewboston-developers/thenewboston-js/blob/master/docs/index.md).
+Check out the [documentation here](https://thenewboston-developers.github.io/thenewboston-js/).
 
 ## Community
 

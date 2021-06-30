@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-alpha.5](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.4...v1.1.0-alpha.5) (2021-06-30)
+
+
+### Features
+
+* Verify Signatures ([#164](https://github.com/thenewboston-developers/thenewboston-js/issues/164)) ([267e89b](https://github.com/thenewboston-developers/thenewboston-js/commit/267e89bae70466c8ff2550fdc0aa5e7005d30389))
+
 ## [1.1.0-alpha.4](https://github.com/thenewboston-developers/thenewboston-js/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2021-04-29)
 
 

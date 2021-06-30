@@ -59,6 +59,11 @@ export class PaymentHandler {
       return tx;
     });
 
+    if (!this.primaryValidator)
+      throwError(
+        "The Payment Handler is not initalized yet.\nTry calling the async '.init()' method on the Payment Handler before sending transactions"
+      );
+
     const { balance_lock: balanceLock } = await this.primaryValidator!.getAccountBalanceLock(
       sender.accountNumberHex
     ).catch((err) =>
@@ -72,7 +77,8 @@ export class PaymentHandler {
         fee: config.node_type,
         recipient: config.account_number,
       })),
-    ];
+    ].sort((a, b) => (a.recipient > b.recipient ? 1 : -1));
+
     return { balanceLock, transactions, sender };
   }
 
@@ -85,7 +91,7 @@ export class PaymentHandler {
     transactions: Transaction[];
     sender: Account;
   }) {
-    await this.bank.addBlocks(transaction.balanceLock!, transaction.transactions, transaction.sender);
+    return await this.bank.addBlocks(transaction.balanceLock!, transaction.transactions, transaction.sender);
   }
 
   /**
@@ -95,7 +101,7 @@ export class PaymentHandler {
   async sendCoins({ sender, recipient, amount, memo = "" }: TransferDetails) {
     const recipientAccount = typeof recipient === "string" ? recipient : recipient.accountNumberHex;
     const transaction = await this.createTransaction(sender, [{ amount, memo, recipient: recipientAccount }]);
-    await this.broadcastTransaction(transaction);
+    return await this.broadcastTransaction(transaction);
   }
 
   /**
@@ -105,6 +111,6 @@ export class PaymentHandler {
    */
   async sendBulkTransactions(sender: Account, txs: Transaction[]) {
     const transaction = await this.createTransaction(sender, txs);
-    await this.broadcastTransaction(transaction);
+    return await this.broadcastTransaction(transaction);
   }
 }
